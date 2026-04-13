@@ -1,0 +1,3243 @@
+{
+  "lastUpdated": "2026-04-12T03:06:31",
+  "gamesScraped": 35,
+  "lastGame": {
+    "date": "04/11/2026",
+    "opponent": "Tennessee"
+  },
+  "all": {
+    "columns": [
+      "with runrs",
+      "hits scorepos",
+      "vs LHP",
+      "vs RHP",
+      "leadoff pct",
+      "RBI3rd",
+      "H-Pinchit",
+      "Adv-Ops",
+      "with 2 outs",
+      "with runrs2",
+      "with scorepos2",
+      "bases empty",
+      "bases loaded"
+    ],
+    "players": [
+      {
+        "name": "Woodson, Ryder",
+        "pos": "ss",
+        "splits": {
+          "with runrs": [
+            22,
+            64
+          ],
+          "hits scorepos": [
+            19,
+            54
+          ],
+          "vs LHP": [
+            12,
+            37
+          ],
+          "vs RHP": [
+            26,
+            88
+          ],
+          "leadoff pct": [
+            18,
+            39
+          ],
+          "RBI3rd": [
+            6,
+            11
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            30,
+            68
+          ],
+          "with 2 outs": [
+            12,
+            44
+          ],
+          "with runrs2": [
+            13,
+            34
+          ],
+          "with scorepos2": [
+            12,
+            36
+          ],
+          "bases empty": [
+            16,
+            61
+          ],
+          "bases loaded": [
+            5,
+            9
+          ]
+        }
+      },
+      {
+        "name": "Reese, Ace",
+        "pos": "3b",
+        "splits": {
+          "with runrs": [
+            29,
+            71
+          ],
+          "hits scorepos": [
+            23,
+            59
+          ],
+          "vs LHP": [
+            19,
+            48
+          ],
+          "vs RHP": [
+            23,
+            86
+          ],
+          "leadoff pct": [
+            6,
+            26
+          ],
+          "RBI3rd": [
+            10,
+            12
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            44,
+            79
+          ],
+          "with 2 outs": [
+            6,
+            31
+          ],
+          "with runrs2": [
+            7,
+            22
+          ],
+          "with scorepos2": [
+            8,
+            33
+          ],
+          "bases empty": [
+            13,
+            63
+          ],
+          "bases loaded": [
+            6,
+            9
+          ]
+        }
+      },
+      {
+        "name": "Frei, Gehrig",
+        "pos": "2b",
+        "splits": {
+          "with runrs": [
+            28,
+            75
+          ],
+          "hits scorepos": [
+            24,
+            66
+          ],
+          "vs LHP": [
+            9,
+            27
+          ],
+          "vs RHP": [
+            30,
+            87
+          ],
+          "leadoff pct": [
+            7,
+            19
+          ],
+          "RBI3rd": [
+            4,
+            8
+          ],
+          "H-Pinchit": [
+            3,
+            6
+          ],
+          "Adv-Ops": [
+            37,
+            78
+          ],
+          "with 2 outs": [
+            13,
+            47
+          ],
+          "with runrs2": [
+            9,
+            36
+          ],
+          "with scorepos2": [
+            12,
+            42
+          ],
+          "bases empty": [
+            11,
+            39
+          ],
+          "bases loaded": [
+            3,
+            5
+          ]
+        }
+      },
+      {
+        "name": "Stallman, Reed",
+        "pos": "dh",
+        "splits": {
+          "with runrs": [
+            25,
+            62
+          ],
+          "hits scorepos": [
+            19,
+            46
+          ],
+          "vs LHP": [
+            5,
+            23
+          ],
+          "vs RHP": [
+            26,
+            79
+          ],
+          "leadoff pct": [
+            7,
+            21
+          ],
+          "RBI3rd": [
+            8,
+            16
+          ],
+          "H-Pinchit": [
+            2,
+            3
+          ],
+          "Adv-Ops": [
+            33,
+            70
+          ],
+          "with 2 outs": [
+            10,
+            32
+          ],
+          "with runrs2": [
+            14,
+            28
+          ],
+          "with scorepos2": [
+            12,
+            25
+          ],
+          "bases empty": [
+            6,
+            40
+          ],
+          "bases loaded": [
+            3,
+            6
+          ]
+        }
+      },
+      {
+        "name": "Chance, Bryce",
+        "pos": "lf",
+        "splits": {
+          "with runrs": [
+            21,
+            51
+          ],
+          "hits scorepos": [
+            15,
+            37
+          ],
+          "vs LHP": [
+            14,
+            30
+          ],
+          "vs RHP": [
+            27,
+            77
+          ],
+          "leadoff pct": [
+            14,
+            26
+          ],
+          "RBI3rd": [
+            6,
+            10
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            36,
+            62
+          ],
+          "with 2 outs": [
+            18,
+            41
+          ],
+          "with runrs2": [
+            10,
+            25
+          ],
+          "with scorepos2": [
+            11,
+            27
+          ],
+          "bases empty": [
+            20,
+            56
+          ],
+          "bases loaded": [
+            3,
+            5
+          ]
+        }
+      },
+      {
+        "name": "Sullivan, Noah",
+        "pos": "dh",
+        "splits": {
+          "with runrs": [
+            23,
+            51
+          ],
+          "hits scorepos": [
+            17,
+            43
+          ],
+          "vs LHP": [
+            9,
+            29
+          ],
+          "vs RHP": [
+            28,
+            75
+          ],
+          "leadoff pct": [
+            9,
+            19
+          ],
+          "RBI3rd": [
+            7,
+            10
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            32,
+            58
+          ],
+          "with 2 outs": [
+            11,
+            34
+          ],
+          "with runrs2": [
+            4,
+            12
+          ],
+          "with scorepos2": [
+            7,
+            23
+          ],
+          "bases empty": [
+            14,
+            53
+          ],
+          "bases loaded": [
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "name": "Teel, Aidan",
+        "pos": "cf",
+        "splits": {
+          "with runrs": [
+            17,
+            45
+          ],
+          "hits scorepos": [
+            13,
+            37
+          ],
+          "vs LHP": [
+            8,
+            30
+          ],
+          "vs RHP": [
+            21,
+            64
+          ],
+          "leadoff pct": [
+            21,
+            39
+          ],
+          "RBI3rd": [
+            7,
+            8
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            28,
+            52
+          ],
+          "with 2 outs": [
+            7,
+            32
+          ],
+          "with runrs2": [
+            7,
+            24
+          ],
+          "with scorepos2": [
+            7,
+            24
+          ],
+          "bases empty": [
+            12,
+            49
+          ],
+          "bases loaded": [
+            2,
+            5
+          ]
+        }
+      },
+      {
+        "name": "Parker, Jacob",
+        "pos": "dh",
+        "splits": {
+          "with runrs": [
+            11,
+            42
+          ],
+          "hits scorepos": [
+            8,
+            34
+          ],
+          "vs LHP": [
+            4,
+            22
+          ],
+          "vs RHP": [
+            20,
+            52
+          ],
+          "leadoff pct": [
+            6,
+            15
+          ],
+          "RBI3rd": [
+            6,
+            11
+          ],
+          "H-Pinchit": [
+            3,
+            5
+          ],
+          "Adv-Ops": [
+            27,
+            51
+          ],
+          "with 2 outs": [
+            8,
+            26
+          ],
+          "with runrs2": [
+            5,
+            17
+          ],
+          "with scorepos2": [
+            4,
+            18
+          ],
+          "bases empty": [
+            13,
+            32
+          ],
+          "bases loaded": [
+            2,
+            7
+          ]
+        }
+      },
+      {
+        "name": "Nunnallee, James",
+        "pos": "rf",
+        "splits": {
+          "with runrs": [
+            8,
+            27
+          ],
+          "hits scorepos": [
+            5,
+            25
+          ],
+          "vs LHP": [
+            1,
+            14
+          ],
+          "vs RHP": [
+            12,
+            36
+          ],
+          "leadoff pct": [
+            8,
+            16
+          ],
+          "RBI3rd": [
+            1,
+            4
+          ],
+          "H-Pinchit": [
+            3,
+            6
+          ],
+          "Adv-Ops": [
+            15,
+            30
+          ],
+          "with 2 outs": [
+            3,
+            9
+          ],
+          "with runrs2": [
+            2,
+            10
+          ],
+          "with scorepos2": [
+            2,
+            16
+          ],
+          "bases empty": [
+            5,
+            23
+          ],
+          "bases loaded": [
+            0,
+            2
+          ]
+        }
+      },
+      {
+        "name": "Raymond, Andrew",
+        "pos": "ph",
+        "splits": {
+          "with runrs": [
+            9,
+            26
+          ],
+          "hits scorepos": [
+            6,
+            22
+          ],
+          "vs LHP": [
+            2,
+            9
+          ],
+          "vs RHP": [
+            13,
+            36
+          ],
+          "leadoff pct": [
+            6,
+            12
+          ],
+          "RBI3rd": [
+            2,
+            4
+          ],
+          "H-Pinchit": [
+            1,
+            8
+          ],
+          "Adv-Ops": [
+            12,
+            25
+          ],
+          "with 2 outs": [
+            8,
+            18
+          ],
+          "with runrs2": [
+            5,
+            14
+          ],
+          "with scorepos2": [
+            5,
+            15
+          ],
+          "bases empty": [
+            6,
+            19
+          ],
+          "bases loaded": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "name": "Wyers, Drew",
+        "pos": "ss/3b",
+        "splits": {
+          "with runrs": [
+            10,
+            26
+          ],
+          "hits scorepos": [
+            8,
+            23
+          ],
+          "vs LHP": [
+            9,
+            23
+          ],
+          "vs RHP": [
+            7,
+            22
+          ],
+          "leadoff pct": [
+            5,
+            12
+          ],
+          "RBI3rd": [
+            4,
+            8
+          ],
+          "H-Pinchit": [
+            2,
+            4
+          ],
+          "Adv-Ops": [
+            23,
+            32
+          ],
+          "with 2 outs": [
+            4,
+            13
+          ],
+          "with runrs2": [
+            4,
+            10
+          ],
+          "with scorepos2": [
+            3,
+            9
+          ],
+          "bases empty": [
+            6,
+            19
+          ],
+          "bases loaded": [
+            3,
+            5
+          ]
+        }
+      },
+      {
+        "name": "Milewski, Kevin",
+        "pos": "c",
+        "splits": {
+          "with runrs": [
+            4,
+            30
+          ],
+          "hits scorepos": [
+            4,
+            20
+          ],
+          "vs LHP": [
+            1,
+            11
+          ],
+          "vs RHP": [
+            9,
+            41
+          ],
+          "leadoff pct": [
+            3,
+            8
+          ],
+          "RBI3rd": [
+            1,
+            5
+          ],
+          "H-Pinchit": [
+            1,
+            1
+          ],
+          "Adv-Ops": [
+            13,
+            34
+          ],
+          "with 2 outs": [
+            4,
+            15
+          ],
+          "with runrs2": [
+            2,
+            9
+          ],
+          "with scorepos2": [
+            2,
+            7
+          ],
+          "bases empty": [
+            6,
+            22
+          ],
+          "bases loaded": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "name": "Valincius, Vytas",
+        "pos": "lf",
+        "splits": {
+          "with runrs": [
+            7,
+            19
+          ],
+          "hits scorepos": [
+            5,
+            14
+          ],
+          "vs LHP": [
+            7,
+            19
+          ],
+          "vs RHP": [
+            10,
+            24
+          ],
+          "leadoff pct": [
+            5,
+            9
+          ],
+          "RBI3rd": [
+            5,
+            6
+          ],
+          "H-Pinchit": [
+            1,
+            5
+          ],
+          "Adv-Ops": [
+            13,
+            25
+          ],
+          "with 2 outs": [
+            2,
+            12
+          ],
+          "with runrs2": [
+            0,
+            4
+          ],
+          "with scorepos2": [
+            0,
+            6
+          ],
+          "bases empty": [
+            10,
+            24
+          ],
+          "bases loaded": [
+            0,
+            2
+          ]
+        }
+      },
+      {
+        "name": "James, Chone",
+        "pos": "c",
+        "splits": {
+          "with runrs": [
+            11,
+            23
+          ],
+          "hits scorepos": [
+            8,
+            20
+          ],
+          "vs LHP": [
+            9,
+            20
+          ],
+          "vs RHP": [
+            5,
+            15
+          ],
+          "leadoff pct": [
+            1,
+            7
+          ],
+          "RBI3rd": [
+            6,
+            7
+          ],
+          "H-Pinchit": [
+            2,
+            5
+          ],
+          "Adv-Ops": [
+            15,
+            25
+          ],
+          "with 2 outs": [
+            4,
+            10
+          ],
+          "with runrs2": [
+            3,
+            7
+          ],
+          "with scorepos2": [
+            3,
+            8
+          ],
+          "bases empty": [
+            3,
+            12
+          ],
+          "bases loaded": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "name": "Bevis, Blake",
+        "pos": "1b",
+        "splits": {
+          "with runrs": [
+            6,
+            15
+          ],
+          "hits scorepos": [
+            4,
+            12
+          ],
+          "vs LHP": [
+            6,
+            13
+          ],
+          "vs RHP": [
+            4,
+            15
+          ],
+          "leadoff pct": [
+            5,
+            9
+          ],
+          "RBI3rd": [
+            2,
+            4
+          ],
+          "H-Pinchit": [
+            2,
+            4
+          ],
+          "Adv-Ops": [
+            12,
+            18
+          ],
+          "with 2 outs": [
+            2,
+            6
+          ],
+          "with runrs2": [
+            1,
+            2
+          ],
+          "with scorepos2": [
+            2,
+            4
+          ],
+          "bases empty": [
+            4,
+            13
+          ],
+          "bases loaded": [
+            1,
+            3
+          ]
+        }
+      },
+      {
+        "name": "Mershon, Peter",
+        "pos": "dh",
+        "splits": {
+          "with runrs": [
+            3,
+            6
+          ],
+          "hits scorepos": [
+            3,
+            7
+          ],
+          "vs LHP": [
+            0,
+            4
+          ],
+          "vs RHP": [
+            3,
+            6
+          ],
+          "leadoff pct": [
+            1,
+            1
+          ],
+          "RBI3rd": [
+            3,
+            5
+          ],
+          "H-Pinchit": [
+            0,
+            5
+          ],
+          "Adv-Ops": [
+            7,
+            9
+          ],
+          "with 2 outs": [
+            2,
+            3
+          ],
+          "with runrs2": [
+            2,
+            2
+          ],
+          "with scorepos2": [
+            2,
+            3
+          ],
+          "bases empty": [
+            0,
+            4
+          ],
+          "bases loaded": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "name": "Sanders, Gatlin",
+        "pos": "2b",
+        "splits": {
+          "with runrs": [
+            0,
+            4
+          ],
+          "hits scorepos": [
+            0,
+            4
+          ],
+          "vs LHP": [
+            0,
+            1
+          ],
+          "vs RHP": [
+            0,
+            9
+          ],
+          "leadoff pct": [
+            0,
+            3
+          ],
+          "RBI3rd": [
+            0,
+            0
+          ],
+          "H-Pinchit": [
+            0,
+            2
+          ],
+          "Adv-Ops": [
+            2,
+            6
+          ],
+          "with 2 outs": [
+            0,
+            6
+          ],
+          "with runrs2": [
+            0,
+            4
+          ],
+          "with scorepos2": [
+            0,
+            4
+          ],
+          "bases empty": [
+            0,
+            6
+          ],
+          "bases loaded": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "name": "Owen, Jackson",
+        "pos": "ph/1b",
+        "splits": {
+          "with runrs": [
+            0,
+            3
+          ],
+          "hits scorepos": [
+            0,
+            2
+          ],
+          "vs LHP": [
+            0,
+            2
+          ],
+          "vs RHP": [
+            0,
+            2
+          ],
+          "leadoff pct": [
+            2,
+            2
+          ],
+          "RBI3rd": [
+            0,
+            0
+          ],
+          "H-Pinchit": [
+            0,
+            2
+          ],
+          "Adv-Ops": [
+            0,
+            3
+          ],
+          "with 2 outs": [
+            0,
+            4
+          ],
+          "with runrs2": [
+            0,
+            3
+          ],
+          "with scorepos2": [
+            0,
+            2
+          ],
+          "bases empty": [
+            0,
+            1
+          ],
+          "bases loaded": [
+            0,
+            1
+          ]
+        }
+      }
+    ],
+    "totals": {
+      "with runrs": [
+        213,
+        619
+      ],
+      "hits scorepos": [
+        155,
+        425
+      ],
+      "vs LHP": [
+        115,
+        362
+      ],
+      "vs RHP": [
+        264,
+        814
+      ],
+      "leadoff pct": [
+        124,
+        283
+      ],
+      "RBI3rd": [
+        78,
+        129
+      ],
+      "H-Pinchit": [
+        20,
+        56
+      ],
+      "Adv-Ops": [
+        379,
+        725
+      ],
+      "with 2 outs": [
+        114,
+        383
+      ],
+      "with runrs2": [
+        88,
+        263
+      ],
+      "with scorepos2": [
+        92,
+        302
+      ],
+      "bases empty": [
+        145,
+        536
+      ],
+      "bases loaded": [
+        32,
+        68
+      ]
+    }
+  },
+  "sec": {
+    "columns": [
+      "with runrs",
+      "hits scorepos",
+      "vs LHP",
+      "vs RHP",
+      "leadoff pct",
+      "RBI3rd",
+      "H-Pinchit",
+      "Adv-Ops",
+      "with 2 outs",
+      "with runrs2",
+      "with scorepos2",
+      "bases empty",
+      "bases loaded"
+    ],
+    "players": [
+      {
+        "name": "Teel, Aidan",
+        "pos": "cf",
+        "splits": {
+          "with runrs": [
+            4,
+            23
+          ],
+          "hits scorepos": [
+            2,
+            14
+          ],
+          "vs LHP": [
+            4,
+            17
+          ],
+          "vs RHP": [
+            9,
+            35
+          ],
+          "leadoff pct": [
+            13,
+            23
+          ],
+          "RBI3rd": [
+            1,
+            2
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            8,
+            25
+          ],
+          "with 2 outs": [
+            4,
+            21
+          ],
+          "with runrs2": [
+            3,
+            14
+          ],
+          "with scorepos2": [
+            1,
+            9
+          ],
+          "bases empty": [
+            9,
+            29
+          ],
+          "bases loaded": [
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "name": "Reese, Ace",
+        "pos": "3b",
+        "splits": {
+          "with runrs": [
+            9,
+            28
+          ],
+          "hits scorepos": [
+            7,
+            17
+          ],
+          "vs LHP": [
+            6,
+            19
+          ],
+          "vs RHP": [
+            6,
+            38
+          ],
+          "leadoff pct": [
+            2,
+            14
+          ],
+          "RBI3rd": [
+            3,
+            3
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            17,
+            32
+          ],
+          "with 2 outs": [
+            2,
+            13
+          ],
+          "with runrs2": [
+            2,
+            9
+          ],
+          "with scorepos2": [
+            2,
+            7
+          ],
+          "bases empty": [
+            3,
+            29
+          ],
+          "bases loaded": [
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "name": "Stallman, Reed",
+        "pos": "1b",
+        "splits": {
+          "with runrs": [
+            8,
+            28
+          ],
+          "hits scorepos": [
+            3,
+            14
+          ],
+          "vs LHP": [
+            3,
+            16
+          ],
+          "vs RHP": [
+            10,
+            40
+          ],
+          "leadoff pct": [
+            4,
+            13
+          ],
+          "RBI3rd": [
+            4,
+            8
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            11,
+            30
+          ],
+          "with 2 outs": [
+            4,
+            16
+          ],
+          "with runrs2": [
+            4,
+            11
+          ],
+          "with scorepos2": [
+            2,
+            6
+          ],
+          "bases empty": [
+            5,
+            28
+          ],
+          "bases loaded": [
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "name": "Chance, Bryce",
+        "pos": "lf",
+        "splits": {
+          "with runrs": [
+            9,
+            24
+          ],
+          "hits scorepos": [
+            5,
+            12
+          ],
+          "vs LHP": [
+            7,
+            12
+          ],
+          "vs RHP": [
+            12,
+            40
+          ],
+          "leadoff pct": [
+            6,
+            12
+          ],
+          "RBI3rd": [
+            1,
+            3
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            14,
+            28
+          ],
+          "with 2 outs": [
+            10,
+            22
+          ],
+          "with runrs2": [
+            5,
+            13
+          ],
+          "with scorepos2": [
+            4,
+            7
+          ],
+          "bases empty": [
+            10,
+            28
+          ],
+          "bases loaded": [
+            1,
+            3
+          ]
+        }
+      },
+      {
+        "name": "Frei, Gehrig",
+        "pos": "2b",
+        "splits": {
+          "with runrs": [
+            6,
+            25
+          ],
+          "hits scorepos": [
+            4,
+            17
+          ],
+          "vs LHP": [
+            2,
+            8
+          ],
+          "vs RHP": [
+            9,
+            38
+          ],
+          "leadoff pct": [
+            2,
+            8
+          ],
+          "RBI3rd": [
+            1,
+            2
+          ],
+          "H-Pinchit": [
+            0,
+            1
+          ],
+          "Adv-Ops": [
+            10,
+            27
+          ],
+          "with 2 outs": [
+            2,
+            22
+          ],
+          "with runrs2": [
+            1,
+            14
+          ],
+          "with scorepos2": [
+            1,
+            11
+          ],
+          "bases empty": [
+            5,
+            21
+          ],
+          "bases loaded": [
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "name": "Woodson, Ryder",
+        "pos": "ss",
+        "splits": {
+          "with runrs": [
+            5,
+            18
+          ],
+          "hits scorepos": [
+            4,
+            10
+          ],
+          "vs LHP": [
+            4,
+            15
+          ],
+          "vs RHP": [
+            10,
+            36
+          ],
+          "leadoff pct": [
+            10,
+            23
+          ],
+          "RBI3rd": [
+            2,
+            3
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            8,
+            20
+          ],
+          "with 2 outs": [
+            4,
+            13
+          ],
+          "with runrs2": [
+            3,
+            10
+          ],
+          "with scorepos2": [
+            2,
+            4
+          ],
+          "bases empty": [
+            9,
+            33
+          ],
+          "bases loaded": [
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "name": "Sullivan, Noah",
+        "pos": "dh",
+        "splits": {
+          "with runrs": [
+            8,
+            22
+          ],
+          "hits scorepos": [
+            5,
+            15
+          ],
+          "vs LHP": [
+            3,
+            14
+          ],
+          "vs RHP": [
+            14,
+            39
+          ],
+          "leadoff pct": [
+            1,
+            8
+          ],
+          "RBI3rd": [
+            1,
+            3
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            13,
+            25
+          ],
+          "with 2 outs": [
+            5,
+            17
+          ],
+          "with runrs2": [
+            1,
+            5
+          ],
+          "with scorepos2": [
+            1,
+            5
+          ],
+          "bases empty": [
+            9,
+            31
+          ],
+          "bases loaded": [
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "name": "Parker, Jacob",
+        "pos": "rf",
+        "splits": {
+          "with runrs": [
+            2,
+            15
+          ],
+          "hits scorepos": [
+            1,
+            9
+          ],
+          "vs LHP": [
+            1,
+            8
+          ],
+          "vs RHP": [
+            11,
+            27
+          ],
+          "leadoff pct": [
+            3,
+            7
+          ],
+          "RBI3rd": [
+            2,
+            4
+          ],
+          "H-Pinchit": [
+            0,
+            1
+          ],
+          "Adv-Ops": [
+            12,
+            21
+          ],
+          "with 2 outs": [
+            4,
+            12
+          ],
+          "with runrs2": [
+            1,
+            7
+          ],
+          "with scorepos2": [
+            1,
+            4
+          ],
+          "bases empty": [
+            10,
+            20
+          ],
+          "bases loaded": [
+            0,
+            3
+          ]
+        }
+      },
+      {
+        "name": "Milewski, Kevin",
+        "pos": "c",
+        "splits": {
+          "with runrs": [
+            3,
+            16
+          ],
+          "hits scorepos": [
+            3,
+            10
+          ],
+          "vs LHP": [
+            0,
+            7
+          ],
+          "vs RHP": [
+            7,
+            26
+          ],
+          "leadoff pct": [
+            1,
+            6
+          ],
+          "RBI3rd": [
+            1,
+            4
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            6,
+            18
+          ],
+          "with 2 outs": [
+            3,
+            8
+          ],
+          "with runrs2": [
+            2,
+            3
+          ],
+          "with scorepos2": [
+            2,
+            2
+          ],
+          "bases empty": [
+            4,
+            17
+          ],
+          "bases loaded": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "name": "Raymond, Andrew",
+        "pos": "c",
+        "splits": {
+          "with runrs": [
+            2,
+            6
+          ],
+          "hits scorepos": [
+            1,
+            4
+          ],
+          "vs LHP": [
+            0,
+            1
+          ],
+          "vs RHP": [
+            3,
+            11
+          ],
+          "leadoff pct": [
+            0,
+            1
+          ],
+          "RBI3rd": [
+            1,
+            1
+          ],
+          "H-Pinchit": [
+            0,
+            4
+          ],
+          "Adv-Ops": [
+            4,
+            6
+          ],
+          "with 2 outs": [
+            2,
+            4
+          ],
+          "with runrs2": [
+            2,
+            4
+          ],
+          "with scorepos2": [
+            1,
+            2
+          ],
+          "bases empty": [
+            1,
+            6
+          ],
+          "bases loaded": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "name": "Valincius, Vytas",
+        "pos": "ph/rf",
+        "splits": {
+          "with runrs": [
+            0,
+            3
+          ],
+          "hits scorepos": [
+            0,
+            1
+          ],
+          "vs LHP": [
+            1,
+            7
+          ],
+          "vs RHP": [
+            2,
+            5
+          ],
+          "leadoff pct": [
+            2,
+            3
+          ],
+          "RBI3rd": [
+            0,
+            0
+          ],
+          "H-Pinchit": [
+            1,
+            3
+          ],
+          "Adv-Ops": [
+            0,
+            3
+          ],
+          "with 2 outs": [
+            1,
+            5
+          ],
+          "with runrs2": [
+            0,
+            1
+          ],
+          "with scorepos2": [
+            0,
+            1
+          ],
+          "bases empty": [
+            3,
+            9
+          ],
+          "bases loaded": [
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "name": "Wyers, Drew",
+        "pos": "ph/2b",
+        "splits": {
+          "with runrs": [
+            1,
+            3
+          ],
+          "hits scorepos": [
+            1,
+            2
+          ],
+          "vs LHP": [
+            2,
+            6
+          ],
+          "vs RHP": [
+            1,
+            5
+          ],
+          "leadoff pct": [
+            0,
+            2
+          ],
+          "RBI3rd": [
+            0,
+            1
+          ],
+          "H-Pinchit": [
+            1,
+            1
+          ],
+          "Adv-Ops": [
+            4,
+            4
+          ],
+          "with 2 outs": [
+            1,
+            2
+          ],
+          "with runrs2": [
+            0,
+            0
+          ],
+          "with scorepos2": [
+            0,
+            0
+          ],
+          "bases empty": [
+            2,
+            8
+          ],
+          "bases loaded": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "name": "James, Chone",
+        "pos": "ph/c",
+        "splits": {
+          "with runrs": [
+            2,
+            3
+          ],
+          "hits scorepos": [
+            1,
+            1
+          ],
+          "vs LHP": [
+            3,
+            7
+          ],
+          "vs RHP": [
+            0,
+            0
+          ],
+          "leadoff pct": [
+            0,
+            2
+          ],
+          "RBI3rd": [
+            1,
+            1
+          ],
+          "H-Pinchit": [
+            2,
+            3
+          ],
+          "Adv-Ops": [
+            2,
+            3
+          ],
+          "with 2 outs": [
+            1,
+            3
+          ],
+          "with runrs2": [
+            0,
+            1
+          ],
+          "with scorepos2": [
+            0,
+            0
+          ],
+          "bases empty": [
+            1,
+            4
+          ],
+          "bases loaded": [
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "name": "Nunnallee, James",
+        "pos": "rf",
+        "splits": {
+          "with runrs": [
+            1,
+            3
+          ],
+          "hits scorepos": [
+            1,
+            2
+          ],
+          "vs LHP": [
+            0,
+            0
+          ],
+          "vs RHP": [
+            2,
+            5
+          ],
+          "leadoff pct": [
+            0,
+            1
+          ],
+          "RBI3rd": [
+            0,
+            0
+          ],
+          "H-Pinchit": [
+            0,
+            1
+          ],
+          "Adv-Ops": [
+            1,
+            3
+          ],
+          "with 2 outs": [
+            1,
+            3
+          ],
+          "with runrs2": [
+            0,
+            2
+          ],
+          "with scorepos2": [
+            0,
+            1
+          ],
+          "bases empty": [
+            1,
+            2
+          ],
+          "bases loaded": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "name": "Bevis, Blake",
+        "pos": "lf",
+        "splits": {
+          "with runrs": [
+            0,
+            1
+          ],
+          "hits scorepos": [
+            0,
+            1
+          ],
+          "vs LHP": [
+            0,
+            2
+          ],
+          "vs RHP": [
+            0,
+            0
+          ],
+          "leadoff pct": [
+            0,
+            0
+          ],
+          "RBI3rd": [
+            0,
+            0
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            1,
+            1
+          ],
+          "with 2 outs": [
+            0,
+            1
+          ],
+          "with runrs2": [
+            0,
+            0
+          ],
+          "with scorepos2": [
+            0,
+            0
+          ],
+          "bases empty": [
+            0,
+            1
+          ],
+          "bases loaded": [
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "name": "Mershon, Peter",
+        "pos": "ph",
+        "splits": {
+          "with runrs": [
+            0,
+            1
+          ],
+          "hits scorepos": [
+            0,
+            1
+          ],
+          "vs LHP": [
+            0,
+            1
+          ],
+          "vs RHP": [
+            0,
+            0
+          ],
+          "leadoff pct": [
+            0,
+            0
+          ],
+          "RBI3rd": [
+            0,
+            0
+          ],
+          "H-Pinchit": [
+            0,
+            1
+          ],
+          "Adv-Ops": [
+            0,
+            1
+          ],
+          "with 2 outs": [
+            0,
+            0
+          ],
+          "with runrs2": [
+            0,
+            0
+          ],
+          "with scorepos2": [
+            0,
+            0
+          ],
+          "bases empty": [
+            0,
+            0
+          ],
+          "bases loaded": [
+            0,
+            0
+          ]
+        }
+      }
+    ],
+    "totals": {
+      "with runrs": [
+        60,
+        219
+      ],
+      "hits scorepos": [
+        38,
+        130
+      ],
+      "vs LHP": [
+        36,
+        140
+      ],
+      "vs RHP": [
+        96,
+        345
+      ],
+      "leadoff pct": [
+        44,
+        123
+      ],
+      "RBI3rd": [
+        18,
+        35
+      ],
+      "H-Pinchit": [
+        4,
+        15
+      ],
+      "Adv-Ops": [
+        111,
+        247
+      ],
+      "with 2 outs": [
+        44,
+        162
+      ],
+      "with runrs2": [
+        24,
+        94
+      ],
+      "with scorepos2": [
+        17,
+        59
+      ],
+      "bases empty": [
+        72,
+        266
+      ],
+      "bases loaded": [
+        5,
+        16
+      ]
+    }
+  },
+  "nonsec": {
+    "columns": [
+      "with runrs",
+      "hits scorepos",
+      "vs LHP",
+      "vs RHP",
+      "leadoff pct",
+      "RBI3rd",
+      "H-Pinchit",
+      "Adv-Ops",
+      "with 2 outs",
+      "with runrs2",
+      "with scorepos2",
+      "bases empty",
+      "bases loaded"
+    ],
+    "players": [
+      {
+        "name": "Woodson, Ryder",
+        "pos": "ss",
+        "splits": {
+          "with runrs": [
+            17,
+            46
+          ],
+          "hits scorepos": [
+            15,
+            44
+          ],
+          "vs LHP": [
+            8,
+            22
+          ],
+          "vs RHP": [
+            16,
+            52
+          ],
+          "leadoff pct": [
+            8,
+            16
+          ],
+          "RBI3rd": [
+            4,
+            8
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            22,
+            48
+          ],
+          "with 2 outs": [
+            8,
+            31
+          ],
+          "with runrs2": [
+            10,
+            24
+          ],
+          "with scorepos2": [
+            10,
+            32
+          ],
+          "bases empty": [
+            7,
+            28
+          ],
+          "bases loaded": [
+            4,
+            7
+          ]
+        }
+      },
+      {
+        "name": "Frei, Gehrig",
+        "pos": "2b",
+        "splits": {
+          "with runrs": [
+            22,
+            50
+          ],
+          "hits scorepos": [
+            20,
+            49
+          ],
+          "vs LHP": [
+            7,
+            19
+          ],
+          "vs RHP": [
+            21,
+            49
+          ],
+          "leadoff pct": [
+            5,
+            11
+          ],
+          "RBI3rd": [
+            3,
+            6
+          ],
+          "H-Pinchit": [
+            3,
+            5
+          ],
+          "Adv-Ops": [
+            27,
+            51
+          ],
+          "with 2 outs": [
+            11,
+            25
+          ],
+          "with runrs2": [
+            8,
+            22
+          ],
+          "with scorepos2": [
+            11,
+            31
+          ],
+          "bases empty": [
+            6,
+            18
+          ],
+          "bases loaded": [
+            3,
+            5
+          ]
+        }
+      },
+      {
+        "name": "Reese, Ace",
+        "pos": "3b",
+        "splits": {
+          "with runrs": [
+            20,
+            43
+          ],
+          "hits scorepos": [
+            16,
+            42
+          ],
+          "vs LHP": [
+            13,
+            29
+          ],
+          "vs RHP": [
+            17,
+            48
+          ],
+          "leadoff pct": [
+            4,
+            12
+          ],
+          "RBI3rd": [
+            7,
+            9
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            27,
+            47
+          ],
+          "with 2 outs": [
+            4,
+            18
+          ],
+          "with runrs2": [
+            5,
+            13
+          ],
+          "with scorepos2": [
+            6,
+            26
+          ],
+          "bases empty": [
+            10,
+            34
+          ],
+          "bases loaded": [
+            5,
+            7
+          ]
+        }
+      },
+      {
+        "name": "Chance, Bryce",
+        "pos": "lf",
+        "splits": {
+          "with runrs": [
+            12,
+            27
+          ],
+          "hits scorepos": [
+            10,
+            25
+          ],
+          "vs LHP": [
+            7,
+            18
+          ],
+          "vs RHP": [
+            15,
+            37
+          ],
+          "leadoff pct": [
+            8,
+            14
+          ],
+          "RBI3rd": [
+            5,
+            7
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            22,
+            34
+          ],
+          "with 2 outs": [
+            8,
+            19
+          ],
+          "with runrs2": [
+            5,
+            12
+          ],
+          "with scorepos2": [
+            7,
+            20
+          ],
+          "bases empty": [
+            10,
+            28
+          ],
+          "bases loaded": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "name": "Stallman, Reed",
+        "pos": "dh",
+        "splits": {
+          "with runrs": [
+            17,
+            34
+          ],
+          "hits scorepos": [
+            16,
+            32
+          ],
+          "vs LHP": [
+            2,
+            7
+          ],
+          "vs RHP": [
+            16,
+            39
+          ],
+          "leadoff pct": [
+            3,
+            8
+          ],
+          "RBI3rd": [
+            4,
+            8
+          ],
+          "H-Pinchit": [
+            2,
+            3
+          ],
+          "Adv-Ops": [
+            22,
+            40
+          ],
+          "with 2 outs": [
+            6,
+            16
+          ],
+          "with runrs2": [
+            10,
+            17
+          ],
+          "with scorepos2": [
+            10,
+            19
+          ],
+          "bases empty": [
+            1,
+            12
+          ],
+          "bases loaded": [
+            3,
+            6
+          ]
+        }
+      },
+      {
+        "name": "Sullivan, Noah",
+        "pos": "dh",
+        "splits": {
+          "with runrs": [
+            15,
+            29
+          ],
+          "hits scorepos": [
+            12,
+            28
+          ],
+          "vs LHP": [
+            6,
+            15
+          ],
+          "vs RHP": [
+            14,
+            36
+          ],
+          "leadoff pct": [
+            8,
+            11
+          ],
+          "RBI3rd": [
+            6,
+            7
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            19,
+            33
+          ],
+          "with 2 outs": [
+            6,
+            17
+          ],
+          "with runrs2": [
+            3,
+            7
+          ],
+          "with scorepos2": [
+            6,
+            18
+          ],
+          "bases empty": [
+            5,
+            22
+          ],
+          "bases loaded": [
+            1,
+            2
+          ]
+        }
+      },
+      {
+        "name": "Teel, Aidan",
+        "pos": "cf",
+        "splits": {
+          "with runrs": [
+            13,
+            22
+          ],
+          "hits scorepos": [
+            11,
+            23
+          ],
+          "vs LHP": [
+            4,
+            13
+          ],
+          "vs RHP": [
+            12,
+            29
+          ],
+          "leadoff pct": [
+            8,
+            16
+          ],
+          "RBI3rd": [
+            6,
+            6
+          ],
+          "H-Pinchit": [
+            0,
+            0
+          ],
+          "Adv-Ops": [
+            20,
+            27
+          ],
+          "with 2 outs": [
+            3,
+            11
+          ],
+          "with runrs2": [
+            4,
+            10
+          ],
+          "with scorepos2": [
+            6,
+            15
+          ],
+          "bases empty": [
+            3,
+            20
+          ],
+          "bases loaded": [
+            1,
+            4
+          ]
+        }
+      },
+      {
+        "name": "Nunnallee, James",
+        "pos": "rf",
+        "splits": {
+          "with runrs": [
+            7,
+            24
+          ],
+          "hits scorepos": [
+            4,
+            23
+          ],
+          "vs LHP": [
+            1,
+            14
+          ],
+          "vs RHP": [
+            10,
+            31
+          ],
+          "leadoff pct": [
+            8,
+            15
+          ],
+          "RBI3rd": [
+            1,
+            4
+          ],
+          "H-Pinchit": [
+            3,
+            5
+          ],
+          "Adv-Ops": [
+            14,
+            27
+          ],
+          "with 2 outs": [
+            2,
+            6
+          ],
+          "with runrs2": [
+            2,
+            8
+          ],
+          "with scorepos2": [
+            2,
+            15
+          ],
+          "bases empty": [
+            4,
+            21
+          ],
+          "bases loaded": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "name": "Parker, Jacob",
+        "pos": "dh",
+        "splits": {
+          "with runrs": [
+            9,
+            27
+          ],
+          "hits scorepos": [
+            7,
+            25
+          ],
+          "vs LHP": [
+            3,
+            14
+          ],
+          "vs RHP": [
+            9,
+            25
+          ],
+          "leadoff pct": [
+            3,
+            8
+          ],
+          "RBI3rd": [
+            4,
+            7
+          ],
+          "H-Pinchit": [
+            3,
+            4
+          ],
+          "Adv-Ops": [
+            15,
+            30
+          ],
+          "with 2 outs": [
+            4,
+            14
+          ],
+          "with runrs2": [
+            4,
+            10
+          ],
+          "with scorepos2": [
+            3,
+            14
+          ],
+          "bases empty": [
+            3,
+            12
+          ],
+          "bases loaded": [
+            2,
+            4
+          ]
+        }
+      },
+      {
+        "name": "Wyers, Drew",
+        "pos": "ss/3b",
+        "splits": {
+          "with runrs": [
+            9,
+            23
+          ],
+          "hits scorepos": [
+            7,
+            21
+          ],
+          "vs LHP": [
+            7,
+            17
+          ],
+          "vs RHP": [
+            6,
+            17
+          ],
+          "leadoff pct": [
+            5,
+            10
+          ],
+          "RBI3rd": [
+            4,
+            7
+          ],
+          "H-Pinchit": [
+            1,
+            3
+          ],
+          "Adv-Ops": [
+            19,
+            28
+          ],
+          "with 2 outs": [
+            3,
+            11
+          ],
+          "with runrs2": [
+            4,
+            10
+          ],
+          "with scorepos2": [
+            3,
+            9
+          ],
+          "bases empty": [
+            4,
+            11
+          ],
+          "bases loaded": [
+            3,
+            4
+          ]
+        }
+      },
+      {
+        "name": "Raymond, Andrew",
+        "pos": "ph",
+        "splits": {
+          "with runrs": [
+            7,
+            20
+          ],
+          "hits scorepos": [
+            5,
+            18
+          ],
+          "vs LHP": [
+            2,
+            8
+          ],
+          "vs RHP": [
+            10,
+            25
+          ],
+          "leadoff pct": [
+            6,
+            11
+          ],
+          "RBI3rd": [
+            1,
+            3
+          ],
+          "H-Pinchit": [
+            1,
+            4
+          ],
+          "Adv-Ops": [
+            8,
+            19
+          ],
+          "with 2 outs": [
+            6,
+            14
+          ],
+          "with runrs2": [
+            3,
+            10
+          ],
+          "with scorepos2": [
+            4,
+            13
+          ],
+          "bases empty": [
+            5,
+            13
+          ],
+          "bases loaded": [
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "name": "James, Chone",
+        "pos": "c",
+        "splits": {
+          "with runrs": [
+            9,
+            20
+          ],
+          "hits scorepos": [
+            7,
+            19
+          ],
+          "vs LHP": [
+            6,
+            13
+          ],
+          "vs RHP": [
+            5,
+            15
+          ],
+          "leadoff pct": [
+            1,
+            5
+          ],
+          "RBI3rd": [
+            5,
+            6
+          ],
+          "H-Pinchit": [
+            0,
+            2
+          ],
+          "Adv-Ops": [
+            13,
+            22
+          ],
+          "with 2 outs": [
+            3,
+            7
+          ],
+          "with runrs2": [
+            3,
+            6
+          ],
+          "with scorepos2": [
+            3,
+            8
+          ],
+          "bases empty": [
+            2,
+            8
+          ],
+          "bases loaded": [
+            2,
+            2
+          ]
+        }
+      },
+      {
+        "name": "Valincius, Vytas",
+        "pos": "lf",
+        "splits": {
+          "with runrs": [
+            7,
+            16
+          ],
+          "hits scorepos": [
+            5,
+            13
+          ],
+          "vs LHP": [
+            6,
+            12
+          ],
+          "vs RHP": [
+            8,
+            19
+          ],
+          "leadoff pct": [
+            3,
+            6
+          ],
+          "RBI3rd": [
+            5,
+            6
+          ],
+          "H-Pinchit": [
+            0,
+            2
+          ],
+          "Adv-Ops": [
+            13,
+            22
+          ],
+          "with 2 outs": [
+            1,
+            7
+          ],
+          "with runrs2": [
+            0,
+            3
+          ],
+          "with scorepos2": [
+            0,
+            5
+          ],
+          "bases empty": [
+            7,
+            15
+          ],
+          "bases loaded": [
+            0,
+            2
+          ]
+        }
+      },
+      {
+        "name": "Bevis, Blake",
+        "pos": "1b",
+        "splits": {
+          "with runrs": [
+            6,
+            14
+          ],
+          "hits scorepos": [
+            4,
+            11
+          ],
+          "vs LHP": [
+            6,
+            11
+          ],
+          "vs RHP": [
+            4,
+            15
+          ],
+          "leadoff pct": [
+            5,
+            9
+          ],
+          "RBI3rd": [
+            2,
+            4
+          ],
+          "H-Pinchit": [
+            2,
+            4
+          ],
+          "Adv-Ops": [
+            11,
+            17
+          ],
+          "with 2 outs": [
+            2,
+            5
+          ],
+          "with runrs2": [
+            1,
+            2
+          ],
+          "with scorepos2": [
+            2,
+            4
+          ],
+          "bases empty": [
+            4,
+            12
+          ],
+          "bases loaded": [
+            1,
+            3
+          ]
+        }
+      },
+      {
+        "name": "Milewski, Kevin",
+        "pos": "c",
+        "splits": {
+          "with runrs": [
+            1,
+            14
+          ],
+          "hits scorepos": [
+            1,
+            10
+          ],
+          "vs LHP": [
+            1,
+            4
+          ],
+          "vs RHP": [
+            2,
+            15
+          ],
+          "leadoff pct": [
+            2,
+            2
+          ],
+          "RBI3rd": [
+            0,
+            1
+          ],
+          "H-Pinchit": [
+            1,
+            1
+          ],
+          "Adv-Ops": [
+            7,
+            16
+          ],
+          "with 2 outs": [
+            1,
+            7
+          ],
+          "with runrs2": [
+            0,
+            6
+          ],
+          "with scorepos2": [
+            0,
+            5
+          ],
+          "bases empty": [
+            2,
+            5
+          ],
+          "bases loaded": [
+            0,
+            0
+          ]
+        }
+      },
+      {
+        "name": "Mershon, Peter",
+        "pos": "dh",
+        "splits": {
+          "with runrs": [
+            3,
+            5
+          ],
+          "hits scorepos": [
+            3,
+            6
+          ],
+          "vs LHP": [
+            0,
+            3
+          ],
+          "vs RHP": [
+            3,
+            6
+          ],
+          "leadoff pct": [
+            1,
+            1
+          ],
+          "RBI3rd": [
+            3,
+            5
+          ],
+          "H-Pinchit": [
+            0,
+            4
+          ],
+          "Adv-Ops": [
+            7,
+            8
+          ],
+          "with 2 outs": [
+            2,
+            3
+          ],
+          "with runrs2": [
+            2,
+            2
+          ],
+          "with scorepos2": [
+            2,
+            3
+          ],
+          "bases empty": [
+            0,
+            4
+          ],
+          "bases loaded": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "name": "Sanders, Gatlin",
+        "pos": "2b",
+        "splits": {
+          "with runrs": [
+            0,
+            4
+          ],
+          "hits scorepos": [
+            0,
+            4
+          ],
+          "vs LHP": [
+            0,
+            1
+          ],
+          "vs RHP": [
+            0,
+            9
+          ],
+          "leadoff pct": [
+            0,
+            3
+          ],
+          "RBI3rd": [
+            0,
+            0
+          ],
+          "H-Pinchit": [
+            0,
+            2
+          ],
+          "Adv-Ops": [
+            2,
+            6
+          ],
+          "with 2 outs": [
+            0,
+            6
+          ],
+          "with runrs2": [
+            0,
+            4
+          ],
+          "with scorepos2": [
+            0,
+            4
+          ],
+          "bases empty": [
+            0,
+            6
+          ],
+          "bases loaded": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "name": "Owen, Jackson",
+        "pos": "ph/1b",
+        "splits": {
+          "with runrs": [
+            0,
+            3
+          ],
+          "hits scorepos": [
+            0,
+            2
+          ],
+          "vs LHP": [
+            0,
+            2
+          ],
+          "vs RHP": [
+            0,
+            2
+          ],
+          "leadoff pct": [
+            2,
+            2
+          ],
+          "RBI3rd": [
+            0,
+            0
+          ],
+          "H-Pinchit": [
+            0,
+            2
+          ],
+          "Adv-Ops": [
+            0,
+            3
+          ],
+          "with 2 outs": [
+            0,
+            4
+          ],
+          "with runrs2": [
+            0,
+            3
+          ],
+          "with scorepos2": [
+            0,
+            2
+          ],
+          "bases empty": [
+            0,
+            1
+          ],
+          "bases loaded": [
+            0,
+            1
+          ]
+        }
+      }
+    ],
+    "totals": {
+      "with runrs": [
+        153,
+        400
+      ],
+      "hits scorepos": [
+        117,
+        295
+      ],
+      "vs LHP": [
+        79,
+        222
+      ],
+      "vs RHP": [
+        168,
+        469
+      ],
+      "leadoff pct": [
+        80,
+        160
+      ],
+      "RBI3rd": [
+        60,
+        94
+      ],
+      "H-Pinchit": [
+        16,
+        41
+      ],
+      "Adv-Ops": [
+        268,
+        478
+      ],
+      "with 2 outs": [
+        70,
+        221
+      ],
+      "with runrs2": [
+        64,
+        169
+      ],
+      "with scorepos2": [
+        75,
+        243
+      ],
+      "bases empty": [
+        73,
+        270
+      ],
+      "bases loaded": [
+        27,
+        52
+      ]
+    }
+  }
+}

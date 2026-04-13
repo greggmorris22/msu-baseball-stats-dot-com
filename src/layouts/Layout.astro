@@ -1,0 +1,317 @@
+---
+/**
+ * Base layout for msubaseballstats.com.
+ *
+ * Props:
+ *   title       - page title shown in the browser tab
+ *   description - optional meta description for SEO
+ *   wide        - if true, content area expands to max-w-7xl (for wide stat tables)
+ *
+ * Theme:
+ *   MSState Maroon  #5D1725  — nav bar background, active link indicators
+ *   Light Grey      #C1C6C8  — borders, muted elements
+ *   Dark Grey       #777777  — secondary/inactive text
+ *   White           #FFFFFF  — page background (light mode), text on maroon
+ *   Black           #000000  — body text (light mode)
+ *
+ * Dark mode: toggled by adding/removing the `dark` class on <html>.
+ * Preference is persisted in localStorage. System preference is respected
+ * when no explicit preference has been saved.
+ */
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  wide?: boolean;
+}
+
+const {
+  title,
+  description = "Mississippi State Baseball Statistics — advanced stats, splits, and situational analysis for the 2026 season.",
+  wide = false,
+} = Astro.props;
+
+/* Used to highlight the active nav link */
+const path = Astro.url.pathname;
+
+/**
+ * Returns true if the given href matches the current page path.
+ * "/" only matches exactly to avoid highlighting Home on every page.
+ */
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+
+/** A simple single-page nav link */
+type SimpleLink = { kind: 'link'; href: string; label: string };
+
+/**
+ * A dropdown nav item — renders a hover menu with sub-pages.
+ * basePath is used to determine if any sub-page is currently active.
+ */
+type DropdownLink = {
+  kind: 'dropdown';
+  label: string;
+  basePath: string;
+  items: { href: string; label: string }[];
+};
+
+type NavItem = SimpleLink | DropdownLink;
+
+const navItems: NavItem[] = [
+  { kind: 'link', href: '/', label: 'Home' },
+  {
+    kind: 'dropdown',
+    label: '2026 Stats',
+    basePath: '/',
+    items: [
+      { href: '/batting-2026',              label: 'Hitting Stats' },
+      { href: '/pitching-2026',             label: 'Pitching Stats' },
+      { href: '/fielding-2026',             label: 'Fielding Stats' },
+      { href: '/situational-hitting-2026',  label: 'Situational Hitting' },
+      { href: '/situational-pitching-2026', label: 'Situational Pitching' },
+      { href: '/batter-splits-2026',        label: 'Batter Splits Selector' },
+      { href: '/pitcher-splits-2026',       label: 'Pitcher Splits Selector' },
+      { href: 'https://diamond-dawg-tracker.streamlit.app/', label: 'Diamond Dawg Tracker' },
+      { href: '/amegy-batters-2026',        label: 'Amegy Series — Batters' },
+      { href: '/amegy-pitchers-2026',       label: 'Amegy Series — Pitchers' },
+    ],
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title} · MSU Baseball Stats</title>
+
+    <!--
+      Theme init: runs synchronously before first paint to prevent
+      a flash of the wrong theme (FOUC).
+    -->
+    <script is:inline>
+      (function () {
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+
+    <!--
+      Dropdown hover styles — plain CSS so they work in every browser
+      regardless of Tailwind's build-time class detection.
+    -->
+    <style is:global>
+      /*
+       * Desktop: show dropdown when hovering the parent <li>.
+       * Touch devices use the JS click handler instead.
+       */
+      @media (hover: hover) {
+        .nav-dropdown:hover > .nav-dropdown-menu {
+          display: block;
+        }
+      }
+
+      /*
+       * Invisible hover bridge: extends above the dropdown panel so the
+       * mouse can travel from the trigger button into the menu without losing hover.
+       */
+      .nav-dropdown-menu::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -12px;
+        height: 16px;
+      }
+
+      /* Dropdown link hover: white bg tint over the maroon nav */
+      .nav-dropdown-link:hover {
+        background-color: rgba(255, 255, 255, 0.12);
+        color: #ffffff;
+      }
+
+      :where(.dark) .nav-dropdown-link:hover {
+        background-color: rgba(255, 255, 255, 0.10);
+        color: #ffffff;
+      }
+
+      /* Active dropdown link */
+      .nav-dropdown-link.active {
+        color: #ffffff;
+        font-weight: 600;
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+    </style>
+  </head>
+
+  <body class="min-h-screen flex flex-col" style="background-color: var(--color-bg); color: var(--color-text);">
+
+    <!-- Sticky top nav — MSState Maroon background -->
+    <header class="sticky top-0 z-50" style="background-color: #5D1725; border-bottom: 1px solid #3d0f18;">
+      <div class="max-w-7xl mx-auto px-5 py-3 flex flex-wrap items-center gap-x-6 gap-y-2">
+
+        <!-- Site name / home link -->
+        <a
+          href="/"
+          class="font-bold tracking-tight mr-auto text-base"
+          style="color: #ffffff; text-decoration: none; font-size: 1rem;"
+        >
+          MSU Baseball Stats
+        </a>
+
+        <!-- Navigation links -->
+        <nav aria-label="Main navigation">
+          <ul class="flex flex-wrap gap-x-4 gap-y-1 list-none m-0 p-0 items-center">
+            {navItems.map((item) => (
+              item.kind === 'link' ? (
+                /* Standard single-page link */
+                <li>
+                  <a
+                    href={item.href}
+                    style={`text-decoration: none; font-size: 0.875rem; color: ${isActive(item.href) ? '#ffffff' : '#C1C6C8'}; font-weight: ${isActive(item.href) ? '600' : '400'};`}
+                    aria-current={isActive(item.href) ? 'page' : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ) : (
+                /*
+                 * Dropdown nav item.
+                 * CSS handles hover-to-open on desktop.
+                 * JS at the bottom handles click-to-toggle on mobile.
+                 */
+                <li class="relative nav-dropdown">
+                  <button
+                    style={`background: none; border: none; cursor: pointer; font-size: 0.875rem; display: flex; align-items: center; gap: 0.25rem; color: ${isActive(item.basePath) && path !== '/' ? '#ffffff' : '#C1C6C8'}; font-weight: ${isActive(item.basePath) && path !== '/' ? '600' : '400'};`}
+                    aria-haspopup="true"
+                  >
+                    {item.label}
+                    <!-- Chevron arrow -->
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                  </button>
+
+                  <!-- Dropdown panel -->
+                  <ul
+                    class="nav-dropdown-menu absolute top-full left-0 mt-1 rounded-lg shadow-lg py-1 w-72 hidden z-50 list-none p-1"
+                    style="background-color: #5D1725; border: 1px solid #3d0f18;"
+                  >
+                    {item.items.map((sub) => (
+                      <li>
+                        <a
+                          href={sub.href}
+                          class={`nav-dropdown-link block px-3 py-2 text-sm rounded-md transition-colors ${isActive(sub.href) ? 'active' : ''}`}
+                          style={`text-decoration: none; color: ${isActive(sub.href) ? '#ffffff' : '#C1C6C8'};`}
+                          target={sub.href.startsWith('http') ? '_blank' : undefined}
+                          rel={sub.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        >
+                          {sub.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              )
+            ))}
+          </ul>
+        </nav>
+
+        <!-- Dark mode toggle button -->
+        <button
+          id="theme-toggle"
+          aria-label="Toggle dark mode"
+          style="padding: 0.375rem; border-radius: 0.5rem; color: #C1C6C8; background: none; border: none; cursor: pointer; transition: color 0.15s, background-color 0.15s;"
+          onmouseover="this.style.color='#ffffff'; this.style.backgroundColor='rgba(255,255,255,0.1)';"
+          onmouseout="this.style.color='#C1C6C8'; this.style.backgroundColor='transparent';"
+        >
+          <!-- Moon icon: visible in light mode -->
+          <svg id="moon-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+          </svg>
+          <!-- Sun icon: visible in dark mode -->
+          <svg id="sun-icon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+          </svg>
+        </button>
+
+      </div>
+    </header>
+
+    <!-- Page content -->
+    <main class={`flex-1 ${wide ? 'max-w-7xl' : 'max-w-5xl'} mx-auto w-full px-5 py-10`}>
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer style="border-top: 1px solid var(--color-light-grey, #C1C6C8); margin-top: auto;">
+      <div class="max-w-5xl mx-auto px-5 py-5 text-sm flex flex-wrap gap-x-4 justify-between" style="color: #777777;">
+        <span>msubaseballstats.com</span>
+        <span>Data source: <a href="https://stats.ncaa.org/teams/614666" target="_blank" rel="noopener noreferrer" style="color: #777777; text-decoration: underline;">NCAA Stats</a></span>
+        <span>Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer" style="color: #777777; text-decoration: underline;">Astro</a></span>
+      </div>
+    </footer>
+
+  </body>
+</html>
+
+<script>
+  /**
+   * Sync toggle button icon state with current theme, then wire up the click handler.
+   */
+  const root = document.documentElement;
+  const moonIcon = document.getElementById('moon-icon');
+  const sunIcon = document.getElementById('sun-icon');
+
+  /** Updates moon/sun icon visibility to match the current theme. */
+  function syncIcons() {
+    const isDark = root.classList.contains('dark');
+    moonIcon?.classList.toggle('hidden', isDark);
+    sunIcon?.classList.toggle('hidden', !isDark);
+  }
+
+  syncIcons();
+
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const nowDark = root.classList.toggle('dark');
+    localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+    syncIcons();
+  });
+
+  /**
+   * Dropdown menu: tap/click support for mobile/touch devices.
+   * CSS :hover handles desktop; this handles touch.
+   */
+  const dropdownBtns = document.querySelectorAll<HTMLButtonElement>('[aria-haspopup="true"]');
+
+  function closeAllDropdowns() {
+    dropdownBtns.forEach((btn) => {
+      btn.parentElement?.querySelector('ul')?.classList.add('hidden');
+    });
+  }
+
+  dropdownBtns.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const panel = btn.parentElement?.querySelector('ul');
+      if (!panel) return;
+      const isCurrentlyHidden = panel.classList.contains('hidden');
+      closeAllDropdowns();
+      if (isCurrentlyHidden) {
+        panel.classList.remove('hidden');
+      }
+    });
+  });
+
+  document.addEventListener('click', closeAllDropdowns);
+</script>

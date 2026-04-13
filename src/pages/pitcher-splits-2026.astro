@@ -1,0 +1,778 @@
+---
+/**
+ * MSU Baseball — Pitcher Splits Selector (2026)
+ *
+ * Loads PA-level play-by-play data from public/data/pbp-events-2026.json
+ * (produced by scripts/parse_pbp.py) and performs client-side filtering
+ * and aggregation across six dimensions:
+ *
+ *   1. Batter side    — All / vs RHB / vs LHB
+ *   2. Location       — All / Home / Away
+ *   3. Opponent       — All / SEC / Non-Conference
+ *   4. Count state    — All / Ahead / Even / Behind / 2-Strike
+ *   5. Baserunners    — All / Empty / On Base / RISP
+ *   6. Leverage       — All / Low / Medium / High
+ *
+ * Columns (21):
+ *   IP, PA, K/9, BB/9, K%, BB%, K-BB%, WHIP, BABIP, BB, SO, 2B, 3B, HR,
+ *   AB, Avg, WP, HBP, BK, SFA, SHA
+ *
+ * NOTES on data limitations:
+ *   - bat_side resolves to ~91% of pitcher PAs (NCAA's batter name format
+ *     varies across teams; some opponents show "FirstName LastName" without
+ *     a period, which we can't always match against the roster). PAs with
+ *     unknown bat_side are excluded from L/R-only views and counted under
+ *     "All".
+ *   - WP (wild pitches) and BK (balks) are NOT yet parsed from sub-events.
+ *     Both columns display "—" pending a follow-up parser pass.
+ *   - IP is computed from outs_recorded per PA and reconciles to NCAA's
+ *     pitching totals within ~0.2 IP across the season.
+ *   - Pitcher names from PBP are last-name only; we resolve them to full
+ *     names client-side via pitching-stats-2026.json for display.
+ */
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Pitcher Splits (2026)" description="Mississippi State baseball 2026 pitcher splits — filter by batter handedness, count, bases, leverage, and more." wide>
+
+  <h1 class="text-3xl font-bold mb-2">Pitcher Splits (2026)</h1>
+  <p id="splits-subtitle" class="text-stone-500 dark:text-stone-400 mb-4 text-lg">
+    Mississippi State Bulldog baseball &mdash; 2026 season.
+  </p>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-4">
+
+    <div>
+      <label for="f-bat" class="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Batter Handedness</label>
+      <select id="f-bat" class="w-full text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+        <option value="all">All</option>
+        <option value="R">vs RHB</option>
+        <option value="L">vs LHB</option>
+        <option value="S">vs Switch (Unknown)</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="f-loc" class="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Location</label>
+      <select id="f-loc" class="w-full text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+        <option value="all">All</option>
+        <option value="home">Home</option>
+        <option value="away">Away</option>
+        <option value="neutral">Neutral</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="f-opp" class="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Opponents</label>
+      <select id="f-opp" class="w-full text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+        <option value="all">All</option>
+        <option value="sec">SEC Only</option>
+        <option value="nonsec">Non-Conference</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="f-count" class="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Count</label>
+      <select id="f-count" class="w-full text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+        <option value="all">All</option>
+        <option value="ahead">Ahead</option>
+        <option value="even">Even</option>
+        <option value="behind">Behind</option>
+        <option value="two_strike">2-Strike</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="f-bases" class="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Bases</label>
+      <select id="f-bases" class="w-full text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+        <option value="all">All</option>
+        <option value="empty">Empty</option>
+        <option value="onbase">On Base</option>
+        <option value="risp">RISP</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="f-lev" class="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Leverage</label>
+      <select id="f-lev" class="w-full text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+        <option value="all">All</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+    </div>
+
+  </div>
+
+  <p id="pa-counter" class="text-xs text-stone-500 dark:text-stone-400 mb-2"></p>
+
+  <div class="rounded-xl border border-stone-200 dark:border-stone-700 overflow-hidden bg-white dark:bg-stone-800 shadow-sm">
+    <div id="stats-container" class="p-4 text-sm text-stone-500 dark:text-stone-400">
+      Loading play-by-play data&hellip;
+    </div>
+  </div>
+
+</Layout>
+
+<!--
+  Table styles — must be duplicated here (not just in batter-splits) because
+  Astro builds each page independently and global styles from one page are
+  NOT available in another page's build output.
+-->
+<style is:global>
+  /* ===== BASE TABLE ===== */
+  .stats-wrapper { overflow-x: auto; }
+
+  .stats-table {
+    width: 100%;
+    font-size: 0.8125rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    white-space: nowrap;
+  }
+
+  /* Group header row (PITCHING / RATE / COUNTING / OTHER) */
+  .stats-table thead tr:first-child th {
+    background-color: rgb(245 245 244);
+    color: rgb(120 113 108);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    font-weight: 600;
+    padding: 0.3rem 0.75rem;
+    border-bottom: 1px solid rgb(214 211 209);
+  }
+
+  /* Column header row */
+  .stats-table thead tr:last-child th {
+    background-color: rgb(231 229 228);
+    color: rgb(87 83 78);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid rgb(214 211 209);
+  }
+
+  .stats-table tbody td {
+    padding: 0.375rem 0.75rem;
+    border-bottom: 1px solid rgb(245 245 244);
+    color: rgb(41 37 36);
+  }
+
+  .stats-table tbody tr:nth-child(even) td {
+    background-color: rgb(250 250 249);
+  }
+
+  /* Summary row (tfoot — totals) */
+  .stats-table tfoot td {
+    padding: 0.375rem 0.75rem;
+    font-weight: 600;
+    background-color: rgb(245 245 244);
+    color: rgb(28 25 23);
+    border-bottom: 1px solid rgb(214 211 209);
+  }
+
+  .stats-table tfoot tr:first-child td {
+    border-top: 3px solid rgb(20 184 166);
+  }
+
+  /* Sticky first column */
+  .stats-table th:first-child,
+  .stats-table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+  }
+
+  .stats-table thead th:first-child { z-index: 4; }
+
+  .stats-table thead tr:first-child th:first-child { background-color: rgb(245 245 244); }
+  .stats-table thead tr:last-child th:first-child  { background-color: rgb(231 229 228); }
+  .stats-table tbody td:first-child                 { background-color: rgb(255 255 255); font-weight: 500; }
+  .stats-table tbody tr:nth-child(even) td:first-child { background-color: rgb(250 250 249); }
+  .stats-table tfoot td:first-child                 { background-color: rgb(245 245 244); }
+
+  .stats-table th:first-child,
+  .stats-table td:first-child {
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.06);
+  }
+
+  .stats-table .group-start {
+    border-left: 2px solid rgb(168 162 158);
+  }
+
+  .stats-table th.sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s;
+  }
+
+  .stats-table th.sortable:hover {
+    background-color: rgb(214 211 209);
+  }
+
+  .stats-table .sort-arrow {
+    display: inline-block;
+    margin-left: 3px;
+    font-size: 0.6rem;
+    vertical-align: middle;
+    opacity: 0.8;
+  }
+
+  /* ===== DARK MODE ===== */
+  .dark .stats-table thead tr:first-child th {
+    background-color: rgb(23 20 18);
+    color: rgb(120 113 108);
+    border-bottom-color: rgb(68 64 60);
+  }
+
+  .dark .stats-table thead tr:last-child th {
+    background-color: rgb(28 25 23);
+    color: rgb(168 162 158);
+    border-bottom-color: rgb(68 64 60);
+  }
+
+  .dark .stats-table tbody td {
+    color: rgb(214 211 209);
+    border-bottom-color: rgb(41 37 36);
+  }
+
+  .dark .stats-table tbody tr:nth-child(even) td {
+    background-color: rgb(35 31 30);
+  }
+
+  .dark .stats-table tfoot td {
+    background-color: rgb(23 20 18);
+    color: rgb(231 229 228);
+    border-bottom-color: rgb(55 52 50);
+  }
+
+  .dark .stats-table tfoot tr:first-child td {
+    border-top-color: rgb(20 184 166);
+  }
+
+  .dark .stats-table thead tr:first-child th:first-child { background-color: rgb(23 20 18); }
+  .dark .stats-table thead tr:last-child th:first-child  { background-color: rgb(28 25 23); }
+  .dark .stats-table tbody td:first-child                 { background-color: rgb(41 37 36); }
+  .dark .stats-table tbody tr:nth-child(even) td:first-child { background-color: rgb(35 31 30); }
+  .dark .stats-table tfoot td:first-child                 { background-color: rgb(23 20 18); }
+
+  .dark .stats-table .group-start {
+    border-left-color: rgb(87 83 78);
+  }
+
+  .dark .stats-table th.sortable:hover {
+    background-color: rgb(41 37 36);
+  }
+</style>
+
+<script>
+  // ===========================================================================
+  // Pitcher Splits Selector
+  //
+  // Workflow:
+  //   1. fetch() pbp-events-2026.json once at page load
+  //   2. fetch() pitching-stats-2026.json to resolve last-name → full-name
+  //   3. read current filter state from the 6 dropdowns
+  //   4. walk pitcher_pas, keeping only rows that match every active filter
+  //   5. aggregate the kept rows per pitcher into counting + derived stats
+  //   6. render a sortable table with a team totals row pinned to tfoot
+  // ===========================================================================
+
+  // ---------------------------------------------------------------------------
+  // Formatters
+  // ---------------------------------------------------------------------------
+
+  /** Format batting average (".355", no leading zero). */
+  function fmtAvg(n) {
+    if (!isFinite(n)) return '.---';
+    return n.toFixed(3).replace(/^0/, '');
+  }
+
+  /** Format a percentage as "12.3%". */
+  function fmtPct(n) {
+    if (!isFinite(n)) return '---';
+    return (n * 100).toFixed(1) + '%';
+  }
+
+  /** Format a per-9-innings rate as "8.45". */
+  function fmtPer9(n) {
+    if (!isFinite(n)) return '---';
+    return n.toFixed(2);
+  }
+
+  /** Format a WHIP-style ratio as "1.23". */
+  function fmtRatio(n) {
+    if (!isFinite(n)) return '---';
+    return n.toFixed(2);
+  }
+
+  /** Format an integer. */
+  function fmtInt(n) {
+    return String(n ?? 0);
+  }
+
+  /**
+   * Format innings pitched in baseball notation: full innings, then a decimal
+   * representing thirds. e.g. 86 outs → 28 full innings + 2 outs → "28.2".
+   */
+  function fmtIP(outs) {
+    if (!outs) return '0.0';
+    const full = Math.floor(outs / 3);
+    const frac = outs % 3;
+    return `${full}.${frac}`;
+  }
+
+  /** Static "—" placeholder for stats we don't yet track (WP, BK). */
+  function fmtTODO() {
+    return '\u2014';
+  }
+
+  // ---------------------------------------------------------------------------
+  // Column definitions
+  // Each row in the aggregated player object gets the keys listed below.
+  // ---------------------------------------------------------------------------
+
+  const COLUMNS = [
+    { key: 'Player', label: 'Pitcher', fmt: (v) => v,    group: null      },
+    { key: 'IP',     label: 'IP',      fmt: (v, row) => fmtIP(row.outs), group: 'PITCHING' },
+    { key: 'PA',     label: 'PA',      fmt: fmtInt,   group: 'PITCHING' },
+    { key: 'K9',     label: 'K/9',     fmt: fmtPer9,  group: 'RATE'     },
+    { key: 'BB9',    label: 'BB/9',    fmt: fmtPer9,  group: 'RATE'     },
+    { key: 'Kpct',   label: 'K%',      fmt: fmtPct,   group: 'RATE'     },
+    { key: 'BBpct',  label: 'BB%',     fmt: fmtPct,   group: 'RATE'     },
+    { key: 'KBBpct', label: 'K-BB%',   fmt: fmtPct,   group: 'RATE'     },
+    { key: 'WHIP',   label: 'WHIP',    fmt: fmtRatio, group: 'RATE'     },
+    { key: 'BABIP',  label: 'BABIP',   fmt: fmtAvg,   group: 'RATE'     },
+    { key: 'BB',     label: 'BB',      fmt: fmtInt,   group: 'COUNTING' },
+    { key: 'SO',     label: 'SO',      fmt: fmtInt,   group: 'COUNTING' },
+    { key: 'DBL',    label: '2B',      fmt: fmtInt,   group: 'COUNTING' },
+    { key: 'TPL',    label: '3B',      fmt: fmtInt,   group: 'COUNTING' },
+    { key: 'HR',     label: 'HR',      fmt: fmtInt,   group: 'COUNTING' },
+    { key: 'AB',     label: 'AB',      fmt: fmtInt,   group: 'COUNTING' },
+    { key: 'AVG',    label: 'Avg',     fmt: fmtAvg,   group: 'COUNTING' },
+    { key: 'WP',     label: 'WP',      fmt: fmtTODO,  group: 'OTHER'    },
+    { key: 'HBP',    label: 'HBP',     fmt: fmtInt,   group: 'OTHER'    },
+    { key: 'BK',     label: 'BK',      fmt: fmtTODO,  group: 'OTHER'    },
+    { key: 'SFA',    label: 'SFA',     fmt: fmtInt,   group: 'OTHER'    },
+    { key: 'SHA',    label: 'SHA',     fmt: fmtInt,   group: 'OTHER'    },
+  ];
+
+  // ---------------------------------------------------------------------------
+  // State
+  // ---------------------------------------------------------------------------
+
+  /** Full PA array loaded from JSON (never mutated after fetch). */
+  let allPAs = [];
+
+  /** lastName → fullName map built from pitching-stats-2026.json. */
+  let pitcherNameMap = {};
+
+  let playerRows = [];
+  let teamRow    = null;
+
+  let sortKey  = 'outs';   // sort by IP descending by default (more workload first)
+  let sortDesc = true;
+
+  // ---------------------------------------------------------------------------
+  // Filter reading + matching
+  // ---------------------------------------------------------------------------
+
+  function getFilters() {
+    return {
+      bat:   (document.getElementById('f-bat')   as HTMLSelectElement)?.value || 'all',
+      loc:   (document.getElementById('f-loc')   as HTMLSelectElement)?.value || 'all',
+      opp:   (document.getElementById('f-opp')   as HTMLSelectElement)?.value || 'all',
+      count: (document.getElementById('f-count') as HTMLSelectElement)?.value || 'all',
+      bases: (document.getElementById('f-bases') as HTMLSelectElement)?.value || 'all',
+      lev:   (document.getElementById('f-lev')   as HTMLSelectElement)?.value || 'all',
+    };
+  }
+
+  function matchesFilters(pa, f) {
+    // --- Batter handedness ---
+    // bat_side is "R", "L", "S" (switch), or null. When user picks a
+    // specific side we drop unknown PAs rather than guess. Switch hitters
+    // are tricky — they bat opposite to the pitcher's hand by default,
+    // but we don't know which side they batted from in any given PA, so
+    // we EXCLUDE them from L/R-only views to avoid double-counting.
+    if (f.bat !== 'all') {
+      if (pa.bat_side !== f.bat) return false;
+    }
+
+    // --- Home / Away / Neutral ---
+    // The `location` field is "home", "away", or "neutral". Neutral-site
+    // games (opponent name contains "@") are excluded from Home and Away.
+    if (f.loc !== 'all') {
+      if (pa.location !== f.loc) return false;
+    }
+
+    // --- Opponent SEC / Non-conference ---
+    if (f.opp === 'sec'    && !pa.isSEC) return false;
+    if (f.opp === 'nonsec' &&  pa.isSEC) return false;
+
+    // --- Count state ---
+    // Same handling as the batter splits page: "two_strike" is its own
+    // overlapping bucket independent of the ahead/even/behind state.
+    if (f.count === 'two_strike') {
+      if (!pa.two_strike) return false;
+    } else if (f.count !== 'all') {
+      if (pa.count_state !== f.count) return false;
+    }
+
+    // --- Base state ---
+    const bases = pa.bases_before || '___';
+    if (f.bases === 'empty')  { if (bases !== '___') return false; }
+    if (f.bases === 'onbase') { if (bases === '___') return false; }
+    if (f.bases === 'risp')   {
+      if (bases[1] === '_' && bases[2] === '_') return false;
+    }
+
+    // --- Leverage bucket ---
+    if (f.lev !== 'all') {
+      if (pa.leverage_bucket !== f.lev) return false;
+    }
+
+    return true;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Aggregation
+  // ---------------------------------------------------------------------------
+
+  function emptyRow(name) {
+    return {
+      Player: name,
+      // Counting stats accumulated from PA records
+      PA: 0, AB: 0, H: 0, DBL: 0, TPL: 0, HR: 0, BB: 0, IBB: 0, HBP: 0,
+      SO: 0, SFA: 0, SHA: 0,
+      outs: 0,           // total outs recorded → drives IP
+      // Derived rate stats filled in by finalizeRow()
+      AVG: 0, BABIP: 0, K9: 0, BB9: 0, Kpct: 0, BBpct: 0, KBBpct: 0, WHIP: 0,
+      // WP and BK are not yet parsed; placeholders so the formatter can render
+      WP: null, BK: null,
+    };
+  }
+
+  function addPA(row, pa) {
+    row.PA   += pa.PA   || 0;
+    row.AB   += pa.AB   || 0;
+    row.H    += pa.H    || 0;
+    row.BB   += pa.BB   || 0;
+    row.IBB  += pa.IBB  || 0;
+    row.HBP  += pa.HBP  || 0;
+    row.SO   += pa.K    || 0;     // K on the record, displayed as SO
+    row.SFA  += pa.SF   || 0;     // sac flies allowed
+    row.SHA  += pa.SAC  || 0;     // sac bunts allowed
+    row.outs += pa.outs_recorded || 0;
+
+    switch (pa.outcome) {
+      case 'double':   row.DBL += 1; break;
+      case 'triple':   row.TPL += 1; break;
+      case 'home_run': row.HR  += 1; break;
+    }
+  }
+
+  /**
+   * Compute derived rate stats from the counting stats accumulated by addPA().
+   *
+   *   IP_real = outs / 3                       (true innings — for K/9, BB/9, WHIP)
+   *   K/9     = (SO * 9) / IP_real
+   *   BB/9    = (BB * 9) / IP_real
+   *   K%      = SO / PA
+   *   BB%     = BB / PA
+   *   K-BB%   = K% - BB%
+   *   WHIP    = (BB + H) / IP_real
+   *   AVG     = H / AB
+   *   BABIP   = (H - HR) / (AB - SO - HR + SFA)
+   *
+   * NaN propagates through finite checks so the formatters render "---".
+   */
+  function finalizeRow(row) {
+    const ip = row.outs / 3;
+    row.K9     = ip > 0 ? (row.SO * 9) / ip : NaN;
+    row.BB9    = ip > 0 ? (row.BB * 9) / ip : NaN;
+    row.Kpct   = row.PA > 0 ? row.SO / row.PA : NaN;
+    row.BBpct  = row.PA > 0 ? row.BB / row.PA : NaN;
+    row.KBBpct = (isFinite(row.Kpct) && isFinite(row.BBpct))
+      ? row.Kpct - row.BBpct : NaN;
+    row.WHIP   = ip > 0 ? (row.BB + row.H) / ip : NaN;
+    row.AVG    = row.AB > 0 ? row.H / row.AB : NaN;
+    const babipDen = row.AB - row.SO - row.HR + row.SFA;
+    row.BABIP  = babipDen > 0 ? (row.H - row.HR) / babipDen : NaN;
+    return row;
+  }
+
+  function aggregate(pas) {
+    const byPitcher = new Map();
+    const team = emptyRow('Mississippi St.');
+
+    for (const pa of pas) {
+      const key = pa.pitcher || '(unknown)';
+      // Resolve last name → full name for nicer display
+      const display = pitcherNameMap[key] || key;
+      if (!byPitcher.has(display)) byPitcher.set(display, emptyRow(display));
+      addPA(byPitcher.get(display), pa);
+      addPA(team, pa);
+    }
+
+    const players = Array.from(byPitcher.values()).map(finalizeRow);
+    finalizeRow(team);
+    return { players, team };
+  }
+
+  // ---------------------------------------------------------------------------
+  // Recompute pipeline
+  // ---------------------------------------------------------------------------
+
+  function recompute() {
+    const f = getFilters();
+    const filtered = allPAs.filter(pa => matchesFilters(pa, f));
+    const { players, team } = aggregate(filtered);
+
+    // Hide pitchers with zero PAs under this filter
+    playerRows = players.filter(p => p.PA > 0);
+    teamRow    = team;
+
+    const counter = document.getElementById('pa-counter');
+    if (counter) {
+      const pct = allPAs.length > 0
+        ? ((filtered.length / allPAs.length) * 100).toFixed(1)
+        : '0.0';
+      counter.textContent = `${filtered.length.toLocaleString()} plate appearances match filters (${pct}% of ${allPAs.length.toLocaleString()} total)`;
+    }
+
+    render();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Sort + render
+  // ---------------------------------------------------------------------------
+
+  function compareRows(a, b) {
+    const va = a[sortKey];
+    const vb = b[sortKey];
+
+    // Player column — string compare
+    if (sortKey === 'Player') {
+      const cmp = String(va).localeCompare(String(vb));
+      return sortDesc ? -cmp : cmp;
+    }
+
+    // Numbers — push NaN to the bottom regardless of direction
+    const aNaN = !isFinite(va) || va === null;
+    const bNaN = !isFinite(vb) || vb === null;
+    if (aNaN && bNaN) return 0;
+    if (aNaN) return 1;
+    if (bNaN) return -1;
+    const diff = va - vb;
+    return sortDesc ? -diff : diff;
+  }
+
+  function render() {
+    const container = document.getElementById('stats-container');
+    if (!container) return;
+
+    // Preserve horizontal scroll position across re-renders so sorting
+    // a column doesn't snap the table back to the left.
+    const oldWrapper = container.querySelector('.stats-wrapper');
+    const savedScrollLeft = oldWrapper ? oldWrapper.scrollLeft : 0;
+
+    if (playerRows.length === 0) {
+      container.replaceChildren(
+        (() => {
+          const d = document.createElement('div');
+          d.className = 'p-4 text-sm text-stone-500 dark:text-stone-400';
+          d.textContent = 'No plate appearances match the current filters.';
+          return d;
+        })()
+      );
+      return;
+    }
+
+    const sorted = [...playerRows].sort(compareRows);
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'stats-wrapper';
+
+    const table = document.createElement('table');
+    table.className = 'stats-table';
+
+    // --- THEAD row 1: group labels ---
+    const thead = document.createElement('thead');
+    const groupTr = document.createElement('tr');
+    let i = 0;
+    while (i < COLUMNS.length) {
+      const col = COLUMNS[i];
+      if (col.group === null) {
+        groupTr.appendChild(document.createElement('th'));
+        i++;
+        continue;
+      }
+      let j = i;
+      while (j < COLUMNS.length && COLUMNS[j].group === col.group) j++;
+      const th = document.createElement('th');
+      th.textContent = col.group;
+      th.colSpan = j - i;
+      th.classList.add('group-start');
+      groupTr.appendChild(th);
+      i = j;
+    }
+    thead.appendChild(groupTr);
+
+    // --- THEAD row 2: column headers (sortable) ---
+    const headerTr = document.createElement('tr');
+    COLUMNS.forEach((col, idx) => {
+      const th = document.createElement('th');
+      th.textContent = col.label;
+
+      // The IP column sorts by raw `outs`, not by an `IP` key (which doesn't
+      // exist on the row). All other non-Player columns sort by their key.
+      const effectiveSortKey = col.key === 'IP' ? 'outs' : col.key;
+
+      if (col.key !== 'Player' && col.key !== 'WP' && col.key !== 'BK') {
+        th.classList.add('sortable');
+        if (sortKey === effectiveSortKey) {
+          const arrow = document.createElement('span');
+          arrow.className = 'sort-arrow';
+          arrow.textContent = sortDesc ? '\u25BC' : '\u25B2';
+          th.appendChild(arrow);
+        }
+        th.addEventListener('click', () => {
+          if (sortKey === effectiveSortKey) {
+            sortDesc = !sortDesc;
+          } else {
+            sortKey  = effectiveSortKey;
+            sortDesc = true;
+          }
+          render();
+        });
+      }
+
+      if (idx > 0 && COLUMNS[idx - 1].group !== col.group && col.group !== null) {
+        th.classList.add('group-start');
+      }
+
+      headerTr.appendChild(th);
+    });
+    thead.appendChild(headerTr);
+    table.appendChild(thead);
+
+    // --- TBODY ---
+    const tbody = document.createElement('tbody');
+    sorted.forEach(row => {
+      const tr = document.createElement('tr');
+      COLUMNS.forEach((col, idx) => {
+        const td = document.createElement('td');
+        td.textContent = col.fmt(row[col.key], row);
+        if (idx > 0 && COLUMNS[idx - 1].group !== col.group && col.group !== null) {
+          td.classList.add('group-start');
+        }
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    // --- TFOOT (team totals) ---
+    if (teamRow && teamRow.PA > 0) {
+      const tfoot = document.createElement('tfoot');
+      const tr = document.createElement('tr');
+      COLUMNS.forEach((col, idx) => {
+        const td = document.createElement('td');
+        td.textContent = col.fmt(teamRow[col.key], teamRow);
+        if (idx > 0 && COLUMNS[idx - 1].group !== col.group && col.group !== null) {
+          td.classList.add('group-start');
+        }
+        tr.appendChild(td);
+      });
+      tfoot.appendChild(tr);
+      table.appendChild(tfoot);
+    }
+
+    wrapper.appendChild(table);
+    container.replaceChildren(wrapper);
+    wrapper.scrollLeft = savedScrollLeft;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Build pitcher name map (last name → full name) from pitching-stats JSON
+  // ---------------------------------------------------------------------------
+  //
+  // The PBP parser canonicalises pitcher names down to last-name only, so
+  // pitcher_pas records show "Stone" rather than "Duke Stone". We resolve
+  // the prettier full name client-side by reading pitching-stats-2026.json,
+  // which is the same source the Pitching Stats page uses, so the names
+  // match exactly between the two pages.
+  //
+  // Strategy: walk the players list, take the FIRST column (full name),
+  // extract the last token as the lookup key, and store the full name as
+  // the value. Collisions (two pitchers with the same surname) keep the
+  // first writer; the splits page will show whichever full name was
+  // resolved first. There are no surname collisions on the 2026 MSU
+  // pitching staff, so this is fine in practice.
+
+  function buildPitcherNameMap(pitchingData) {
+    const map = {};
+    const players = pitchingData?.all?.players || [];
+    for (const row of players) {
+      if (!row || row.length === 0) continue;
+      const fullName = String(row[0]).trim();
+      if (!fullName) continue;
+      // Extract last token as the lookup key (matching what parse_pbp.py
+      // does with last_name_from() — strips suffixes and lower-cases).
+      const tokens = fullName.split(/\s+/);
+      const lastTok = tokens[tokens.length - 1].replace(/[.,]/g, '');
+      // The PBP records use Title-case last names ("Stone", "Mcpherson"),
+      // so we key by Title case to match. McPherson is title-cased to
+      // "Mcpherson" by Python's .title(), so we match that here too.
+      const key = lastTok.charAt(0).toUpperCase() + lastTok.slice(1).toLowerCase();
+      if (!map[key]) map[key] = fullName;
+    }
+    return map;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Load JSON and initialise
+  // ---------------------------------------------------------------------------
+
+  async function loadData() {
+    const container = document.getElementById('stats-container');
+    if (!container) return;
+
+    try {
+      // Load PBP and pitching stats in parallel — both are static JSON files
+      const [pbpRes, pitchRes] = await Promise.all([
+        fetch('/data/pbp-events-2026.json'),
+        fetch('/data/pitching-stats-2026.json'),
+      ]);
+      if (!pbpRes.ok)   throw new Error(`PBP HTTP ${pbpRes.status}`);
+      if (!pitchRes.ok) throw new Error(`Pitching HTTP ${pitchRes.status}`);
+
+      const pbp     = await pbpRes.json();
+      const pitching = await pitchRes.json();
+
+      allPAs = pbp.pitcher_pas || [];
+      pitcherNameMap = buildPitcherNameMap(pitching);
+
+      const subtitle = document.getElementById('splits-subtitle');
+      if (subtitle && pbp.gamesIncluded) {
+        subtitle.textContent = `Mississippi State Bulldog baseball — 2026 season. Play-by-play from ${pbp.gamesIncluded} games.`;
+      }
+
+      // Wire up filter change listeners
+      ['f-bat', 'f-loc', 'f-opp', 'f-count', 'f-bases', 'f-lev'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('change', recompute);
+      });
+
+      recompute();
+    } catch (err) {
+      container.textContent = 'Could not load play-by-play data. Run scripts/parse_pbp.py to regenerate it.';
+      console.error('Pitcher splits load error:', err);
+    }
+  }
+
+  loadData();
+</script>

@@ -1,0 +1,418 @@
+---
+/**
+ * MSU Baseball — Pitching Stats (2026)
+ *
+ * Loads pre-scraped season pitching stats from a JSON file produced by
+ * scripts/scrape-stats.py. Data includes both "all teams" and "SEC only"
+ * subsets, with derived metrics (ERA, WHIP, K/9, etc.) pre-calculated.
+ *
+ * Features:
+ *   - Sortable columns (click headers IP through SBA%)
+ *   - Totals row pinned at the bottom with a teal separator
+ *   - Frozen first column (Player names) for horizontal scrolling
+ *   - Visual column grouping: VOLUME, ADVANCED, STANDARD, STEALS
+ *   - Filter dropdown: All Teams / SEC Only / Non-Conference
+ *
+ * To refresh data: run-stats.bat (or .venv\Scripts\python.exe scripts\scrape-stats.py)
+ */
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Pitching Stats (2026)" description="Mississippi State baseball 2026 season pitching statistics." wide>
+
+  <h1 class="text-3xl font-bold mb-2">Pitching Stats (2026)</h1>
+  <p id="stats-subtitle" class="text-stone-500 dark:text-stone-400 mb-4 text-lg">
+    Mississippi State Bulldog baseball — 2026 season.
+  </p>
+
+  <div class="mb-4">
+    <label for="filter-select" class="text-sm font-medium text-stone-600 dark:text-stone-400 mr-2">Opponents:</label>
+    <select id="filter-select" class="text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+      <option value="all">All Teams</option>
+      <option value="sec">SEC Only</option>
+      <option value="nonsec">Non-Conference</option>
+    </select>
+  </div>
+
+  <div class="rounded-xl border border-stone-200 dark:border-stone-700 overflow-hidden bg-white dark:bg-stone-800 shadow-sm">
+    <div id="stats-container" class="p-4 text-sm text-stone-500 dark:text-stone-400">
+      Loading stats&hellip;
+    </div>
+  </div>
+
+</Layout>
+
+<style is:global>
+  /* ===== BASE TABLE ===== */
+  .stats-wrapper { overflow-x: auto; }
+
+  .stats-table {
+    width: 100%;
+    font-size: 0.8125rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    white-space: nowrap;
+  }
+
+  /* ===== GROUP HEADER ROW ===== */
+  .stats-table thead tr:first-child th {
+    background-color: rgb(245 245 244);
+    color: rgb(120 113 108);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    font-weight: 600;
+    padding: 0.3rem 0.75rem;
+    border-bottom: 1px solid rgb(214 211 209);
+  }
+
+  /* ===== COLUMN HEADER ROW ===== */
+  .stats-table thead tr:last-child th {
+    background-color: rgb(231 229 228);
+    color: rgb(87 83 78);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid rgb(214 211 209);
+  }
+
+  /* ===== DATA CELLS ===== */
+  .stats-table tbody td {
+    padding: 0.375rem 0.75rem;
+    border-bottom: 1px solid rgb(245 245 244);
+    color: rgb(41 37 36);
+  }
+
+  .stats-table tbody tr:nth-child(even) td {
+    background-color: rgb(250 250 249);
+  }
+
+  /* ===== SUMMARY ROWS (tfoot) ===== */
+  .stats-table tfoot td {
+    padding: 0.375rem 0.75rem;
+    font-weight: 600;
+    background-color: rgb(245 245 244);
+    color: rgb(28 25 23);
+    border-bottom: 1px solid rgb(214 211 209);
+  }
+
+  .stats-table tfoot tr:first-child td {
+    border-top: 3px solid rgb(20 184 166);
+  }
+
+  /* ===== STICKY FIRST COLUMN ===== */
+  .stats-table th:first-child,
+  .stats-table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+  }
+
+  .stats-table thead th:first-child { z-index: 4; }
+
+  .stats-table thead tr:first-child th:first-child { background-color: rgb(245 245 244); }
+  .stats-table thead tr:last-child th:first-child  { background-color: rgb(231 229 228); }
+  .stats-table tbody td:first-child                 { background-color: rgb(255 255 255); font-weight: 500; }
+  .stats-table tbody tr:nth-child(even) td:first-child { background-color: rgb(250 250 249); }
+  .stats-table tfoot td:first-child                 { background-color: rgb(245 245 244); }
+
+  .stats-table th:first-child,
+  .stats-table td:first-child {
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.06);
+  }
+
+  /* ===== COLUMN GROUP BORDERS ===== */
+  .stats-table .group-start {
+    border-left: 2px solid rgb(168 162 158);
+  }
+
+  /* ===== SORTABLE HEADERS ===== */
+  .stats-table th.sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s;
+  }
+
+  .stats-table th.sortable:hover {
+    background-color: rgb(214 211 209);
+  }
+
+  .stats-table .sort-arrow {
+    display: inline-block;
+    margin-left: 3px;
+    font-size: 0.6rem;
+    vertical-align: middle;
+    opacity: 0.8;
+  }
+
+  /* ===== DARK MODE ===== */
+
+  .dark .stats-table thead tr:first-child th {
+    background-color: rgb(23 20 18);
+    color: rgb(120 113 108);
+    border-bottom-color: rgb(68 64 60);
+  }
+
+  .dark .stats-table thead tr:last-child th {
+    background-color: rgb(28 25 23);
+    color: rgb(168 162 158);
+    border-bottom-color: rgb(68 64 60);
+  }
+
+  .dark .stats-table tbody td {
+    color: rgb(214 211 209);
+    border-bottom-color: rgb(41 37 36);
+  }
+
+  .dark .stats-table tbody tr:nth-child(even) td {
+    background-color: rgb(35 31 30);
+  }
+
+  .dark .stats-table tfoot td {
+    background-color: rgb(23 20 18);
+    color: rgb(231 229 228);
+    border-bottom-color: rgb(55 52 50);
+  }
+
+  .dark .stats-table tfoot tr:first-child td {
+    border-top-color: rgb(20 184 166);
+  }
+
+  .dark .stats-table thead tr:first-child th:first-child { background-color: rgb(23 20 18); }
+  .dark .stats-table thead tr:last-child th:first-child  { background-color: rgb(28 25 23); }
+  .dark .stats-table tbody td:first-child                 { background-color: rgb(41 37 36); }
+  .dark .stats-table tbody tr:nth-child(even) td:first-child { background-color: rgb(35 31 30); }
+  .dark .stats-table tfoot td:first-child                 { background-color: rgb(23 20 18); }
+
+  .dark .stats-table .group-start { border-left-color: rgb(87 83 78); }
+  .dark .stats-table th.sortable:hover { background-color: rgb(41 37 36); }
+</style>
+
+<script>
+  // ===========================================================================
+  // Configuration
+  // ===========================================================================
+
+  const GROUP_DEFS = [
+    { name: 'VOLUME',   start: 'IP',     end: 'PA' },
+    { name: 'ADVANCED', start: 'K/9',    end: 'BABIP' },
+    { name: 'STANDARD', start: 'APP-GS', end: 'SHA' },
+    { name: 'STEALS',   start: 'SBA',    end: 'SBA%' },
+  ];
+
+  // ===========================================================================
+  // State
+  // ===========================================================================
+
+  let fullData    = null;
+  let colHeaders  = [];
+  let groupRanges = [];
+  let playerRows  = [];
+  let summaryRows = [];
+  let sortCol     = -1;
+  let sortDesc    = true;
+  let currentFilter = 'all';
+
+  function applyFilter(filter) {
+    currentFilter = filter;
+    if (!fullData) return;
+
+    const subset = fullData[filter] || fullData['all'];
+    colHeaders  = subset.columns || [];
+    playerRows  = subset.players || [];
+    summaryRows = subset.summary || [];
+    // Default sort: PA descending (most innings/usage first)
+    const defaultCol = colHeaders.indexOf('PA');
+    sortCol  = defaultCol >= 0 ? defaultCol : -1;
+    sortDesc = true;
+    computeGroupRanges();
+    render();
+  }
+
+  // ===========================================================================
+  // Helpers
+  // ===========================================================================
+
+  function parseNum(str) {
+    if (!str || str.trim() === '' || str.trim() === '-') return null;
+    const cleaned = str.replace(/%/g, '').trim();
+    const num = parseFloat(cleaned);
+    return isNaN(num) ? null : num;
+  }
+
+  function compareRows(a, b) {
+    const va = parseNum(a[sortCol]);
+    const vb = parseNum(b[sortCol]);
+    if (va === null && vb === null) return 0;
+    if (va === null) return 1;
+    if (vb === null) return -1;
+    const diff = va - vb;
+    return sortDesc ? -diff : diff;
+  }
+
+  function computeGroupRanges() {
+    groupRanges = [];
+    for (const g of GROUP_DEFS) {
+      const s = colHeaders.indexOf(g.start);
+      const e = colHeaders.indexOf(g.end);
+      if (s >= 0 && e >= 0 && e >= s) {
+        groupRanges.push({ name: g.name, startIdx: s, endIdx: e });
+      }
+    }
+  }
+
+  function isGroupStart(colIdx) {
+    return groupRanges.some(g => g.startIdx === colIdx);
+  }
+
+  function isSortable(colIdx) {
+    return colIdx >= 1;
+  }
+
+  // ===========================================================================
+  // Render
+  // ===========================================================================
+
+  function render() {
+    const container = document.getElementById('stats-container');
+    if (!container) return;
+
+    const sorted = sortCol >= 0
+      ? [...playerRows].sort(compareRows)
+      : [...playerRows];
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'stats-wrapper';
+
+    const table = document.createElement('table');
+    table.className = 'stats-table';
+
+    // --- THEAD ---
+    const thead = document.createElement('thead');
+
+    // Group header row
+    const groupTr = document.createElement('tr');
+    let col = 0;
+    while (col < colHeaders.length) {
+      const group = groupRanges.find(g => g.startIdx === col);
+      if (group) {
+        const th = document.createElement('th');
+        th.textContent = group.name;
+        const span = group.endIdx - group.startIdx + 1;
+        th.colSpan = span;
+        th.classList.add('group-start');
+        groupTr.appendChild(th);
+        col += span;
+      } else {
+        const th = document.createElement('th');
+        groupTr.appendChild(th);
+        col++;
+      }
+    }
+    thead.appendChild(groupTr);
+
+    // Column header row
+    const headerTr = document.createElement('tr');
+    colHeaders.forEach((label, i) => {
+      const th = document.createElement('th');
+      th.textContent = label;
+
+      if (isSortable(i)) {
+        th.classList.add('sortable');
+        if (sortCol === i) {
+          const arrow = document.createElement('span');
+          arrow.className = 'sort-arrow';
+          arrow.textContent = sortDesc ? '\u25BC' : '\u25B2';
+          th.appendChild(arrow);
+        }
+        th.addEventListener('click', () => handleSort(i));
+      }
+
+      if (isGroupStart(i)) th.classList.add('group-start');
+      headerTr.appendChild(th);
+    });
+    thead.appendChild(headerTr);
+    table.appendChild(thead);
+
+    // --- TBODY ---
+    const tbody = document.createElement('tbody');
+    sorted.forEach(cells => {
+      const tr = document.createElement('tr');
+      colHeaders.forEach((_, i) => {
+        const td = document.createElement('td');
+        td.textContent = cells[i] ?? '';
+        if (isGroupStart(i)) td.classList.add('group-start');
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    // --- TFOOT ---
+    if (summaryRows.length > 0) {
+      const tfoot = document.createElement('tfoot');
+      summaryRows.forEach(cells => {
+        const tr = document.createElement('tr');
+        colHeaders.forEach((_, i) => {
+          const td = document.createElement('td');
+          td.textContent = cells[i] ?? '';
+          if (isGroupStart(i)) td.classList.add('group-start');
+          tr.appendChild(td);
+        });
+        tfoot.appendChild(tr);
+      });
+      table.appendChild(tfoot);
+    }
+
+    wrapper.appendChild(table);
+    container.replaceChildren(wrapper);
+  }
+
+  function handleSort(colIdx) {
+    if (sortCol === colIdx) {
+      sortDesc = !sortDesc;
+    } else {
+      sortCol  = colIdx;
+      sortDesc = true;
+    }
+    render();
+  }
+
+  // ===========================================================================
+  // Main — fetch JSON and initialise
+  // ===========================================================================
+
+  async function loadStats() {
+    const container = document.getElementById('stats-container');
+    if (!container) return;
+
+    try {
+      const response = await fetch('/data/pitching-stats-2026.json');
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+
+      fullData = data;
+
+      const subtitle = document.getElementById('stats-subtitle');
+      if (subtitle && data.lastGame) {
+        subtitle.textContent = `Data from ${data.gamesScraped} games, current up to ${data.lastGame.date} game vs ${data.lastGame.opponent}`;
+      }
+
+      applyFilter(currentFilter);
+
+    } catch (err) {
+      container.textContent = 'Could not load stats. Run scrape-stats.py to generate data.';
+      console.error('Pitching stats fetch error:', err);
+    }
+  }
+
+  const filterSelect = document.getElementById('filter-select');
+  if (filterSelect) {
+    filterSelect.addEventListener('change', (e) => {
+      applyFilter(e.target.value);
+    });
+  }
+
+  loadStats();
+</script>

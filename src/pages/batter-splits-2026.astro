@@ -1,0 +1,731 @@
+---
+/**
+ * MSU Baseball — Batter Splits Selector (2026)
+ *
+ * Loads PA-level play-by-play data from public/data/pbp-events-2026.json
+ * (produced by scripts/parse_pbp.py) and performs client-side filtering
+ * and aggregation based on six user-selected dimensions:
+ *
+ *   1. Pitcher hand   — All / vs RHP / vs LHP
+ *   2. Location       — All / Home / Away
+ *   3. Opponent       — All / SEC / Non-Conference
+ *   4. Count state    — All / Ahead / Even / Behind / 2-Strike
+ *   5. Baserunners    — All / Empty / On Base / RISP
+ *   6. Leverage       — All / Low / Medium / High
+ *
+ * Each filter is independent and combines with the others (AND).
+ * With all filters set to "All", results should match the numbers on
+ * the Hitting Stats page (which scrapes season totals directly from NCAA).
+ *
+ * Columns:
+ *   Player, PA, BB%, K%, AVG, OBP, SLG, ISO, BABIP,
+ *   AB, H, 2B, 3B, HR, RBI, TB, BB, HBP, SO, GDP, SF, Sh
+ *
+ * NOTE: R (runs scored by the batter) is NOT currently tracked per-PA.
+ * Adding it would require parse_pbp.py to track runner identities
+ * (who is on each base) and credit a run when that runner crosses home.
+ * Left as a follow-up.
+ */
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Batter Splits (2026)" description="Mississippi State baseball 2026 batter splits — filter by handedness, count, bases, leverage, and more." wide>
+
+  <h1 class="text-3xl font-bold mb-2">Batter Splits (2026)</h1>
+  <p id="splits-subtitle" class="text-stone-500 dark:text-stone-400 mb-4 text-lg">
+    Mississippi State Bulldog baseball &mdash; 2026 season.
+  </p>
+
+  <!-- ================================================================
+       Filter controls
+       Six dropdowns arranged in a responsive grid. Each change triggers
+       a re-filter + re-aggregate + re-render.
+       ================================================================ -->
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-4">
+
+    <div>
+      <label for="f-hand" class="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Pitcher Hand</label>
+      <select id="f-hand" class="w-full text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+        <option value="all">All</option>
+        <option value="R">vs RHP</option>
+        <option value="L">vs LHP</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="f-loc" class="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Location</label>
+      <select id="f-loc" class="w-full text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+        <option value="all">All</option>
+        <option value="home">Home</option>
+        <option value="away">Away</option>
+        <option value="neutral">Neutral</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="f-opp" class="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Opponents</label>
+      <select id="f-opp" class="w-full text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+        <option value="all">All</option>
+        <option value="sec">SEC Only</option>
+        <option value="nonsec">Non-Conference</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="f-count" class="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Count</label>
+      <select id="f-count" class="w-full text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+        <option value="all">All</option>
+        <option value="behind">Ahead</option>
+        <option value="even">Even</option>
+        <option value="ahead">Behind</option>
+        <option value="two_strike">2-Strike</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="f-bases" class="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Bases</label>
+      <select id="f-bases" class="w-full text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+        <option value="all">All</option>
+        <option value="empty">Empty</option>
+        <option value="onbase">On Base</option>
+        <option value="risp">RISP</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="f-lev" class="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Leverage</label>
+      <select id="f-lev" class="w-full text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+        <option value="all">All</option>
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+    </div>
+
+  </div>
+
+  <!-- PA counter line, updated after every re-aggregate -->
+  <p id="pa-counter" class="text-xs text-stone-500 dark:text-stone-400 mb-2"></p>
+
+  <div class="rounded-xl border border-stone-200 dark:border-stone-700 overflow-hidden bg-white dark:bg-stone-800 shadow-sm">
+    <div id="stats-container" class="p-4 text-sm text-stone-500 dark:text-stone-400">
+      Loading play-by-play data&hellip;
+    </div>
+  </div>
+
+</Layout>
+
+<!--
+  Table styles — mirror the Hitting Stats page so the splits page matches
+  the rest of the site visually. Global so dynamically-built DOM picks them up.
+-->
+<style is:global>
+  /* ===== BASE TABLE ===== */
+  .stats-wrapper { overflow-x: auto; }
+
+  .stats-table {
+    width: 100%;
+    font-size: 0.8125rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    white-space: nowrap;
+  }
+
+  /* Group header row (ADVANCED / STANDARD) */
+  .stats-table thead tr:first-child th {
+    background-color: rgb(245 245 244);
+    color: rgb(120 113 108);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    font-weight: 600;
+    padding: 0.3rem 0.75rem;
+    border-bottom: 1px solid rgb(214 211 209);
+  }
+
+  /* Column header row */
+  .stats-table thead tr:last-child th {
+    background-color: rgb(231 229 228);
+    color: rgb(87 83 78);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid rgb(214 211 209);
+  }
+
+  .stats-table tbody td {
+    padding: 0.375rem 0.75rem;
+    border-bottom: 1px solid rgb(245 245 244);
+    color: rgb(41 37 36);
+  }
+
+  .stats-table tbody tr:nth-child(even) td {
+    background-color: rgb(250 250 249);
+  }
+
+  /* Summary row (tfoot — totals) */
+  .stats-table tfoot td {
+    padding: 0.375rem 0.75rem;
+    font-weight: 600;
+    background-color: rgb(245 245 244);
+    color: rgb(28 25 23);
+    border-bottom: 1px solid rgb(214 211 209);
+  }
+
+  .stats-table tfoot tr:first-child td {
+    border-top: 3px solid rgb(20 184 166);
+  }
+
+  /* Sticky first column */
+  .stats-table th:first-child,
+  .stats-table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+  }
+
+  .stats-table thead th:first-child { z-index: 4; }
+
+  .stats-table thead tr:first-child th:first-child { background-color: rgb(245 245 244); }
+  .stats-table thead tr:last-child th:first-child  { background-color: rgb(231 229 228); }
+  .stats-table tbody td:first-child                 { background-color: rgb(255 255 255); font-weight: 500; }
+  .stats-table tbody tr:nth-child(even) td:first-child { background-color: rgb(250 250 249); }
+  .stats-table tfoot td:first-child                 { background-color: rgb(245 245 244); }
+
+  .stats-table th:first-child,
+  .stats-table td:first-child {
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.06);
+  }
+
+  .stats-table .group-start {
+    border-left: 2px solid rgb(168 162 158);
+  }
+
+  .stats-table th.sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s;
+  }
+
+  .stats-table th.sortable:hover {
+    background-color: rgb(214 211 209);
+  }
+
+  .stats-table .sort-arrow {
+    display: inline-block;
+    margin-left: 3px;
+    font-size: 0.6rem;
+    vertical-align: middle;
+    opacity: 0.8;
+  }
+
+  /* ===== DARK MODE ===== */
+  .dark .stats-table thead tr:first-child th {
+    background-color: rgb(23 20 18);
+    color: rgb(120 113 108);
+    border-bottom-color: rgb(68 64 60);
+  }
+
+  .dark .stats-table thead tr:last-child th {
+    background-color: rgb(28 25 23);
+    color: rgb(168 162 158);
+    border-bottom-color: rgb(68 64 60);
+  }
+
+  .dark .stats-table tbody td {
+    color: rgb(214 211 209);
+    border-bottom-color: rgb(41 37 36);
+  }
+
+  .dark .stats-table tbody tr:nth-child(even) td {
+    background-color: rgb(35 31 30);
+  }
+
+  .dark .stats-table tfoot td {
+    background-color: rgb(23 20 18);
+    color: rgb(231 229 228);
+    border-bottom-color: rgb(55 52 50);
+  }
+
+  .dark .stats-table tfoot tr:first-child td {
+    border-top-color: rgb(20 184 166);
+  }
+
+  .dark .stats-table thead tr:first-child th:first-child { background-color: rgb(23 20 18); }
+  .dark .stats-table thead tr:last-child th:first-child  { background-color: rgb(28 25 23); }
+  .dark .stats-table tbody td:first-child                 { background-color: rgb(41 37 36); }
+  .dark .stats-table tbody tr:nth-child(even) td:first-child { background-color: rgb(35 31 30); }
+  .dark .stats-table tfoot td:first-child                 { background-color: rgb(23 20 18); }
+
+  .dark .stats-table .group-start {
+    border-left-color: rgb(87 83 78);
+  }
+
+  .dark .stats-table th.sortable:hover {
+    background-color: rgb(41 37 36);
+  }
+</style>
+
+<script>
+  // ===========================================================================
+  // Batter Splits Selector
+  //
+  // Workflow:
+  //   1. fetch() pbp-events-2026.json once at page load
+  //   2. read current filter state from the 6 dropdowns
+  //   3. walk batter_pas, keeping only rows that match every active filter
+  //   4. aggregate the kept rows per batter into counting stats
+  //   5. compute rate stats (AVG, OBP, SLG, ISO, BABIP, BB%, K%)
+  //   6. render a sortable table with a team totals row pinned to tfoot
+  // ===========================================================================
+
+  // ---------------------------------------------------------------------------
+  // Column definitions
+  //
+  // Each entry has:
+  //   key:   property name on the aggregated player object (used for sorting)
+  //   label: header text
+  //   fmt:   a formatter for the raw number
+  //   group: which top-level group this column belongs to
+  // ---------------------------------------------------------------------------
+
+  /** Format a batting-average-style number: ".333" (no leading zero). */
+  function fmtAvg(n) {
+    if (!isFinite(n)) return '.---';
+    return n.toFixed(3).replace(/^0/, '');
+  }
+
+  /** Format a percentage: "12.3%". */
+  function fmtPct(n) {
+    if (!isFinite(n)) return '---';
+    return (n * 100).toFixed(1) + '%';
+  }
+
+  /** Format an integer (counting stat). */
+  function fmtInt(n) {
+    return String(n ?? 0);
+  }
+
+  const COLUMNS = [
+    { key: 'Player', label: 'Player', fmt: (v) => v,    group: null       },
+    { key: 'PA',     label: 'PA',     fmt: fmtInt,      group: 'ADVANCED' },
+    { key: 'BBpct',  label: 'BB%',    fmt: fmtPct,      group: 'ADVANCED' },
+    { key: 'Kpct',   label: 'K%',     fmt: fmtPct,      group: 'ADVANCED' },
+    { key: 'AVG',    label: 'AVG',    fmt: fmtAvg,      group: 'ADVANCED' },
+    { key: 'OBP',    label: 'OBP',    fmt: fmtAvg,      group: 'ADVANCED' },
+    { key: 'SLG',    label: 'SLG',    fmt: fmtAvg,      group: 'ADVANCED' },
+    { key: 'ISO',    label: 'ISO',    fmt: fmtAvg,      group: 'ADVANCED' },
+    { key: 'BABIP',  label: 'BABIP',  fmt: fmtAvg,      group: 'ADVANCED' },
+    { key: 'AB',     label: 'AB',     fmt: fmtInt,      group: 'STANDARD' },
+    { key: 'H',      label: 'H',      fmt: fmtInt,      group: 'STANDARD' },
+    { key: 'DBL',    label: '2B',     fmt: fmtInt,      group: 'STANDARD' },
+    { key: 'TPL',    label: '3B',     fmt: fmtInt,      group: 'STANDARD' },
+    { key: 'HR',     label: 'HR',     fmt: fmtInt,      group: 'STANDARD' },
+    { key: 'RBI',    label: 'RBI',    fmt: fmtInt,      group: 'STANDARD' },
+    { key: 'TB',     label: 'TB',     fmt: fmtInt,      group: 'STANDARD' },
+    { key: 'BB',     label: 'BB',     fmt: fmtInt,      group: 'STANDARD' },
+    { key: 'HBP',    label: 'HBP',    fmt: fmtInt,      group: 'STANDARD' },
+    { key: 'SO',     label: 'SO',     fmt: fmtInt,      group: 'STANDARD' },
+    { key: 'GDP',    label: 'GDP',    fmt: fmtInt,      group: 'STANDARD' },
+    { key: 'SF',     label: 'SF',     fmt: fmtInt,      group: 'STANDARD' },
+    { key: 'SH',     label: 'Sh',     fmt: fmtInt,      group: 'STANDARD' },
+  ];
+
+  // ---------------------------------------------------------------------------
+  // State
+  // ---------------------------------------------------------------------------
+
+  /** Full PA array loaded from JSON (never mutated after fetch). */
+  let allPAs = [];
+
+  /** Aggregated player rows for the current filter selection. */
+  let playerRows = [];
+
+  /** Aggregated MSU team row (shown in tfoot). */
+  let teamRow = null;
+
+  /** Current sort state — defaults to PA descending (most PA first). */
+  let sortKey  = 'PA';
+  let sortDesc = true;
+
+  // ---------------------------------------------------------------------------
+  // Filter reading
+  //
+  // Each helper pulls the value of one dropdown; getFilters() bundles them
+  // into a plain object used by matchesFilters().
+  // ---------------------------------------------------------------------------
+
+  function getFilters() {
+    return {
+      hand:  (document.getElementById('f-hand')  as HTMLSelectElement)?.value  || 'all',
+      loc:   (document.getElementById('f-loc')   as HTMLSelectElement)?.value  || 'all',
+      opp:   (document.getElementById('f-opp')   as HTMLSelectElement)?.value  || 'all',
+      count: (document.getElementById('f-count') as HTMLSelectElement)?.value  || 'all',
+      bases: (document.getElementById('f-bases') as HTMLSelectElement)?.value  || 'all',
+      lev:   (document.getElementById('f-lev')   as HTMLSelectElement)?.value  || 'all',
+    };
+  }
+
+  /**
+   * Return true iff the given PA passes every active filter.
+   * Each filter defaults to "all" which accepts everything.
+   */
+  function matchesFilters(pa, f) {
+    // --- Pitcher handedness ---
+    // pa.pitcher_hand is "R", "L", or null (unresolved). When user selects
+    // a specific hand we drop PAs with unknown handedness rather than guess.
+    if (f.hand !== 'all') {
+      if (pa.pitcher_hand !== f.hand) return false;
+    }
+
+    // --- Home / Away / Neutral ---
+    // The `location` field is "home", "away", or "neutral". Neutral-site
+    // games (opponent name contains "@") are excluded from Home and Away.
+    if (f.loc !== 'all') {
+      if (pa.location !== f.loc) return false;
+    }
+
+    // --- Opponent SEC / Non-conference ---
+    if (f.opp === 'sec'    && !pa.isSEC) return false;
+    if (f.opp === 'nonsec' &&  pa.isSEC) return false;
+
+    // --- Count state ---
+    // Count state is precomputed per PA: "ahead", "even", "behind", plus a
+    // separate "two_strike" boolean (so 0-2 and 1-2 count as behind AND two
+    // strike). Two-strike acts as its own filter rather than a count state.
+    if (f.count === 'two_strike') {
+      if (!pa.two_strike) return false;
+    } else if (f.count !== 'all') {
+      if (pa.count_state !== f.count) return false;
+    }
+
+    // --- Base state ---
+    // bases_before is a 3-char string: position 0 = 1B, 1 = 2B, 2 = 3B.
+    // "_" = empty, digit = occupied. RISP = runner on 2B or 3B.
+    const bases = pa.bases_before || '___';
+    if (f.bases === 'empty')  { if (bases !== '___') return false; }
+    if (f.bases === 'onbase') { if (bases === '___') return false; }
+    if (f.bases === 'risp')   {
+      if (bases[1] === '_' && bases[2] === '_') return false;
+    }
+
+    // --- Leverage bucket ---
+    // Tango LI: low < 0.85, medium 0.85-2.0, high > 2.0. Bucket is precomputed.
+    if (f.lev !== 'all') {
+      if (pa.leverage_bucket !== f.lev) return false;
+    }
+
+    return true;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Aggregation
+  //
+  // Walk the filtered PA list once, adding each row's counting stats into a
+  // per-batter accumulator. Derived rate stats are computed at the end.
+  // ---------------------------------------------------------------------------
+
+  /** Create an empty accumulator with every counting stat set to 0. */
+  function emptyRow(name) {
+    return {
+      Player: name,
+      PA: 0, AB: 0, H: 0, DBL: 0, TPL: 0, HR: 0, RBI: 0, TB: 0,
+      BB: 0, IBB: 0, HBP: 0, SO: 0, SF: 0, SH: 0, GDP: 0,
+      // Rate stats filled in by finalizeRow()
+      AVG: 0, OBP: 0, SLG: 0, ISO: 0, BABIP: 0, BBpct: 0, Kpct: 0,
+    };
+  }
+
+  /**
+   * Merge a single PA into an accumulator row.
+   * We derive 2B / 3B / HR / GDP from the PA's "outcome" field since
+   * parse_pbp.py only emits per-outcome counting buckets (PA/AB/H/TB/OB/etc),
+   * not one counter per hit type.
+   */
+  function addPA(row, pa) {
+    row.PA  += pa.PA  || 0;
+    row.AB  += pa.AB  || 0;
+    row.H   += pa.H   || 0;
+    row.TB  += pa.TB  || 0;
+    row.BB  += pa.BB  || 0;
+    row.IBB += pa.IBB || 0;
+    row.HBP += pa.HBP || 0;
+    row.SO  += pa.K   || 0;     // field is "K" on the record, but we display "SO"
+    row.SF  += pa.SF  || 0;
+    row.SH  += pa.SAC || 0;     // SAC field holds sacrifice bunts
+    row.RBI += pa.rbi || 0;
+
+    switch (pa.outcome) {
+      case 'double':   row.DBL += 1; break;
+      case 'triple':   row.TPL += 1; break;
+      case 'home_run': row.HR  += 1; break;
+      case 'gidp':     row.GDP += 1; break;
+    }
+  }
+
+  /**
+   * Compute the derived rate stats for a row after all PAs have been added.
+   *
+   * AVG   = H / AB
+   * OBP   = (H + BB + HBP) / (AB + BB + HBP + SF)
+   * SLG   = TB / AB
+   * ISO   = SLG - AVG
+   * BABIP = (H - HR) / (AB - SO - HR + SF)
+   * BB%   = BB / PA
+   * K%    = SO / PA
+   *
+   * Division-by-zero cases return NaN so the formatter can render "---".
+   */
+  function finalizeRow(row) {
+    row.AVG   = row.AB > 0 ? row.H / row.AB : NaN;
+    const obpDen = row.AB + row.BB + row.HBP + row.SF;
+    row.OBP   = obpDen > 0 ? (row.H + row.BB + row.HBP) / obpDen : NaN;
+    row.SLG   = row.AB > 0 ? row.TB / row.AB : NaN;
+    row.ISO   = (isFinite(row.SLG) && isFinite(row.AVG)) ? row.SLG - row.AVG : NaN;
+    const babipDen = row.AB - row.SO - row.HR + row.SF;
+    row.BABIP = babipDen > 0 ? (row.H - row.HR) / babipDen : NaN;
+    row.BBpct = row.PA > 0 ? row.BB / row.PA : NaN;
+    row.Kpct  = row.PA > 0 ? row.SO / row.PA : NaN;
+    return row;
+  }
+
+  /**
+   * Aggregate filtered PAs into:
+   *   - an array of per-batter rows
+   *   - a single MSU team row
+   */
+  function aggregate(pas) {
+    const byPlayer = new Map();
+    const team = emptyRow('Mississippi St.');
+
+    for (const pa of pas) {
+      const name = pa.batter || '(unknown)';
+      if (!byPlayer.has(name)) byPlayer.set(name, emptyRow(name));
+      addPA(byPlayer.get(name), pa);
+      addPA(team, pa);
+    }
+
+    const players = Array.from(byPlayer.values()).map(finalizeRow);
+    finalizeRow(team);
+    return { players, team };
+  }
+
+  // ---------------------------------------------------------------------------
+  // Recompute pipeline — called any time a filter changes
+  // ---------------------------------------------------------------------------
+
+  function recompute() {
+    const f = getFilters();
+    const filtered = allPAs.filter(pa => matchesFilters(pa, f));
+    const { players, team } = aggregate(filtered);
+
+    // Hide players with zero PAs under this filter
+    playerRows = players.filter(p => p.PA > 0);
+    teamRow    = team;
+
+    // Update PA counter line
+    const counter = document.getElementById('pa-counter');
+    if (counter) {
+      const pct = allPAs.length > 0
+        ? ((filtered.length / allPAs.length) * 100).toFixed(1)
+        : '0.0';
+      counter.textContent = `${filtered.length.toLocaleString()} plate appearances match filters (${pct}% of ${allPAs.length.toLocaleString()} total)`;
+    }
+
+    render();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Render
+  // ---------------------------------------------------------------------------
+
+  /** Compare two aggregated rows by the currently-selected sort column. */
+  function compareRows(a, b) {
+    const col = COLUMNS.find(c => c.key === sortKey);
+    if (!col) return 0;
+    const va = a[sortKey];
+    const vb = b[sortKey];
+
+    // Strings (Player column) — natural string compare
+    if (col.key === 'Player') {
+      const cmp = String(va).localeCompare(String(vb));
+      return sortDesc ? -cmp : cmp;
+    }
+
+    // Numbers — push NaN to the bottom regardless of direction
+    const aNaN = !isFinite(va);
+    const bNaN = !isFinite(vb);
+    if (aNaN && bNaN) return 0;
+    if (aNaN) return 1;
+    if (bNaN) return -1;
+    const diff = va - vb;
+    return sortDesc ? -diff : diff;
+  }
+
+  function render() {
+    const container = document.getElementById('stats-container');
+    if (!container) return;
+
+    // Preserve horizontal scroll position across re-renders so sorting
+    // a column doesn't snap the table back to the left.
+    const oldWrapper = container.querySelector('.stats-wrapper');
+    const savedScrollLeft = oldWrapper ? oldWrapper.scrollLeft : 0;
+
+    // Empty-state message if no data survives the filters
+    if (playerRows.length === 0) {
+      container.replaceChildren(
+        (() => {
+          const d = document.createElement('div');
+          d.className = 'p-4 text-sm text-stone-500 dark:text-stone-400';
+          d.textContent = 'No plate appearances match the current filters.';
+          return d;
+        })()
+      );
+      return;
+    }
+
+    const sorted = [...playerRows].sort(compareRows);
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'stats-wrapper';
+
+    const table = document.createElement('table');
+    table.className = 'stats-table';
+
+    // --- THEAD row 1: group labels ---
+    const thead = document.createElement('thead');
+    const groupTr = document.createElement('tr');
+
+    // Walk COLUMNS building one <th> per contiguous run of columns that
+    // share a group label. Columns with group === null (just "Player")
+    // emit an empty cell.
+    let i = 0;
+    while (i < COLUMNS.length) {
+      const col = COLUMNS[i];
+      if (col.group === null) {
+        groupTr.appendChild(document.createElement('th'));
+        i++;
+        continue;
+      }
+      // Find the length of the contiguous run with this group label
+      let j = i;
+      while (j < COLUMNS.length && COLUMNS[j].group === col.group) j++;
+      const th = document.createElement('th');
+      th.textContent = col.group;
+      th.colSpan = j - i;
+      th.classList.add('group-start');
+      groupTr.appendChild(th);
+      i = j;
+    }
+    thead.appendChild(groupTr);
+
+    // --- THEAD row 2: individual column headers (sortable) ---
+    const headerTr = document.createElement('tr');
+    COLUMNS.forEach((col, idx) => {
+      const th = document.createElement('th');
+      th.textContent = col.label;
+
+      // Player column is not sortable; everything else is
+      if (col.key !== 'Player') {
+        th.classList.add('sortable');
+        if (sortKey === col.key) {
+          const arrow = document.createElement('span');
+          arrow.className = 'sort-arrow';
+          arrow.textContent = sortDesc ? '\u25BC' : '\u25B2';
+          th.appendChild(arrow);
+        }
+        th.addEventListener('click', () => {
+          if (sortKey === col.key) {
+            sortDesc = !sortDesc;
+          } else {
+            sortKey  = col.key;
+            sortDesc = true;
+          }
+          render();
+        });
+      }
+
+      // Add a left border at the start of each group
+      if (idx > 0 && COLUMNS[idx - 1].group !== col.group && col.group !== null) {
+        th.classList.add('group-start');
+      }
+
+      headerTr.appendChild(th);
+    });
+    thead.appendChild(headerTr);
+    table.appendChild(thead);
+
+    // --- TBODY ---
+    const tbody = document.createElement('tbody');
+    sorted.forEach(row => {
+      const tr = document.createElement('tr');
+      COLUMNS.forEach((col, idx) => {
+        const td = document.createElement('td');
+        td.textContent = col.fmt(row[col.key]);
+        if (idx > 0 && COLUMNS[idx - 1].group !== col.group && col.group !== null) {
+          td.classList.add('group-start');
+        }
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    // --- TFOOT (team totals) ---
+    if (teamRow && teamRow.PA > 0) {
+      const tfoot = document.createElement('tfoot');
+      const tr = document.createElement('tr');
+      COLUMNS.forEach((col, idx) => {
+        const td = document.createElement('td');
+        td.textContent = col.fmt(teamRow[col.key]);
+        if (idx > 0 && COLUMNS[idx - 1].group !== col.group && col.group !== null) {
+          td.classList.add('group-start');
+        }
+        tr.appendChild(td);
+      });
+      tfoot.appendChild(tr);
+      table.appendChild(tfoot);
+    }
+
+    wrapper.appendChild(table);
+    container.replaceChildren(wrapper);
+    wrapper.scrollLeft = savedScrollLeft;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Load JSON and initialize
+  // ---------------------------------------------------------------------------
+
+  async function loadData() {
+    const container = document.getElementById('stats-container');
+    if (!container) return;
+
+    try {
+      const response = await fetch('/data/pbp-events-2026.json');
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+
+      allPAs = data.batter_pas || [];
+
+      // Update subtitle with games-included count
+      const subtitle = document.getElementById('splits-subtitle');
+      if (subtitle && data.gamesIncluded) {
+        subtitle.textContent = `Mississippi State Bulldog baseball — 2026 season. Play-by-play from ${data.gamesIncluded} games.`;
+      }
+
+      // Wire up filter change listeners
+      ['f-hand', 'f-loc', 'f-opp', 'f-count', 'f-bases', 'f-lev'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.addEventListener('change', recompute);
+      });
+
+      recompute();
+    } catch (err) {
+      container.textContent = 'Could not load play-by-play data. Run scripts/parse_pbp.py to regenerate it.';
+      console.error('Batter splits load error:', err);
+    }
+  }
+
+  loadData();
+</script>

@@ -1,0 +1,2620 @@
+{
+  "lastUpdated": "2026-04-12T03:06:31",
+  "gamesScraped": 35,
+  "lastGame": {
+    "date": "04/11/2026",
+    "opponent": "Tennessee"
+  },
+  "all": {
+    "columns": [
+      "leadoff pct",
+      "runners",
+      "vs LHB",
+      "with 2Outs",
+      "emtpy",
+      "with scorepos",
+      "with scorepos2",
+      "with runners2",
+      "bases loaded",
+      "vs RHB"
+    ],
+    "players": [
+      {
+        "name": "Valincius, Tomas",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            13,
+            56
+          ],
+          "runners": [
+            11,
+            59
+          ],
+          "vs LHB": [
+            7,
+            59
+          ],
+          "with 2Outs": [
+            7,
+            57
+          ],
+          "emtpy": [
+            25,
+            130
+          ],
+          "with scorepos": [
+            11,
+            55
+          ],
+          "with scorepos2": [
+            5,
+            35
+          ],
+          "with runners2": [
+            1,
+            23
+          ],
+          "bases loaded": [
+            0,
+            3
+          ],
+          "vs RHB": [
+            29,
+            130
+          ]
+        }
+      },
+      {
+        "name": "Stone, Duke",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            12,
+            43
+          ],
+          "runners": [
+            19,
+            62
+          ],
+          "vs LHB": [
+            17,
+            75
+          ],
+          "with 2Outs": [
+            17,
+            54
+          ],
+          "emtpy": [
+            22,
+            100
+          ],
+          "with scorepos": [
+            18,
+            52
+          ],
+          "with scorepos2": [
+            11,
+            32
+          ],
+          "with runners2": [
+            10,
+            29
+          ],
+          "bases loaded": [
+            0,
+            6
+          ],
+          "vs RHB": [
+            24,
+            87
+          ]
+        }
+      },
+      {
+        "name": "McPherson, Ryan",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            11,
+            33
+          ],
+          "runners": [
+            9,
+            46
+          ],
+          "vs LHB": [
+            7,
+            45
+          ],
+          "with 2Outs": [
+            8,
+            39
+          ],
+          "emtpy": [
+            17,
+            76
+          ],
+          "with scorepos": [
+            8,
+            42
+          ],
+          "with scorepos2": [
+            7,
+            33
+          ],
+          "with runners2": [
+            3,
+            18
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            19,
+            77
+          ]
+        }
+      },
+      {
+        "name": "Davis, Ben",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            6,
+            20
+          ],
+          "runners": [
+            9,
+            32
+          ],
+          "vs LHB": [
+            5,
+            34
+          ],
+          "with 2Outs": [
+            6,
+            28
+          ],
+          "emtpy": [
+            9,
+            48
+          ],
+          "with scorepos": [
+            4,
+            30
+          ],
+          "with scorepos2": [
+            3,
+            23
+          ],
+          "with runners2": [
+            4,
+            14
+          ],
+          "bases loaded": [
+            0,
+            2
+          ],
+          "vs RHB": [
+            13,
+            46
+          ]
+        }
+      },
+      {
+        "name": "Foster, Charlie",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            11,
+            22
+          ],
+          "runners": [
+            9,
+            32
+          ],
+          "vs LHB": [
+            6,
+            28
+          ],
+          "with 2Outs": [
+            4,
+            22
+          ],
+          "emtpy": [
+            10,
+            43
+          ],
+          "with scorepos": [
+            5,
+            26
+          ],
+          "with scorepos2": [
+            3,
+            11
+          ],
+          "with runners2": [
+            3,
+            10
+          ],
+          "bases loaded": [
+            1,
+            3
+          ],
+          "vs RHB": [
+            13,
+            47
+          ]
+        }
+      },
+      {
+        "name": "Gleason, Jack",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            3,
+            15
+          ],
+          "runners": [
+            4,
+            25
+          ],
+          "vs LHB": [
+            8,
+            28
+          ],
+          "with 2Outs": [
+            3,
+            23
+          ],
+          "emtpy": [
+            8,
+            38
+          ],
+          "with scorepos": [
+            2,
+            26
+          ],
+          "with scorepos2": [
+            2,
+            20
+          ],
+          "with runners2": [
+            1,
+            14
+          ],
+          "bases loaded": [
+            0,
+            4
+          ],
+          "vs RHB": [
+            4,
+            35
+          ]
+        }
+      },
+      {
+        "name": "Webb, Maddox",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            3,
+            11
+          ],
+          "runners": [
+            8,
+            32
+          ],
+          "vs LHB": [
+            4,
+            19
+          ],
+          "with 2Outs": [
+            4,
+            20
+          ],
+          "emtpy": [
+            5,
+            25
+          ],
+          "with scorepos": [
+            6,
+            30
+          ],
+          "with scorepos2": [
+            1,
+            15
+          ],
+          "with runners2": [
+            2,
+            13
+          ],
+          "bases loaded": [
+            1,
+            7
+          ],
+          "vs RHB": [
+            9,
+            38
+          ]
+        }
+      },
+      {
+        "name": "Sweeney, Brendan",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            2,
+            14
+          ],
+          "runners": [
+            5,
+            18
+          ],
+          "vs LHB": [
+            8,
+            23
+          ],
+          "with 2Outs": [
+            6,
+            19
+          ],
+          "emtpy": [
+            10,
+            40
+          ],
+          "with scorepos": [
+            7,
+            21
+          ],
+          "with scorepos2": [
+            6,
+            18
+          ],
+          "with runners2": [
+            3,
+            8
+          ],
+          "bases loaded": [
+            0,
+            1
+          ],
+          "vs RHB": [
+            7,
+            35
+          ]
+        }
+      },
+      {
+        "name": "Miller, Maddox",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            5,
+            14
+          ],
+          "runners": [
+            2,
+            18
+          ],
+          "vs LHB": [
+            6,
+            19
+          ],
+          "with 2Outs": [
+            4,
+            16
+          ],
+          "emtpy": [
+            12,
+            34
+          ],
+          "with scorepos": [
+            6,
+            20
+          ],
+          "with scorepos2": [
+            6,
+            19
+          ],
+          "with runners2": [
+            1,
+            9
+          ],
+          "bases loaded": [
+            0,
+            1
+          ],
+          "vs RHB": [
+            8,
+            33
+          ]
+        }
+      },
+      {
+        "name": "Billingsley Jr., Chris",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            3,
+            14
+          ],
+          "runners": [
+            5,
+            16
+          ],
+          "vs LHB": [
+            6,
+            23
+          ],
+          "with 2Outs": [
+            5,
+            21
+          ],
+          "emtpy": [
+            7,
+            39
+          ],
+          "with scorepos": [
+            5,
+            14
+          ],
+          "with scorepos2": [
+            2,
+            9
+          ],
+          "with runners2": [
+            2,
+            7
+          ],
+          "bases loaded": [
+            1,
+            3
+          ],
+          "vs RHB": [
+            6,
+            32
+          ]
+        }
+      },
+      {
+        "name": "Pitzer, Tyler",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            5,
+            12
+          ],
+          "runners": [
+            2,
+            22
+          ],
+          "vs LHB": [
+            2,
+            13
+          ],
+          "with 2Outs": [
+            2,
+            19
+          ],
+          "emtpy": [
+            6,
+            26
+          ],
+          "with scorepos": [
+            1,
+            10
+          ],
+          "with scorepos2": [
+            0,
+            6
+          ],
+          "with runners2": [
+            1,
+            11
+          ],
+          "bases loaded": [
+            0,
+            3
+          ],
+          "vs RHB": [
+            6,
+            35
+          ]
+        }
+      },
+      {
+        "name": "Burns, Dane",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            2,
+            12
+          ],
+          "runners": [
+            4,
+            13
+          ],
+          "vs LHB": [
+            7,
+            23
+          ],
+          "with 2Outs": [
+            6,
+            16
+          ],
+          "emtpy": [
+            5,
+            28
+          ],
+          "with scorepos": [
+            3,
+            13
+          ],
+          "with scorepos2": [
+            3,
+            10
+          ],
+          "with runners2": [
+            4,
+            9
+          ],
+          "bases loaded": [
+            1,
+            2
+          ],
+          "vs RHB": [
+            2,
+            18
+          ]
+        }
+      },
+      {
+        "name": "Bauer, Jack",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            2,
+            10
+          ],
+          "runners": [
+            6,
+            15
+          ],
+          "vs LHB": [
+            2,
+            13
+          ],
+          "with 2Outs": [
+            3,
+            9
+          ],
+          "emtpy": [
+            4,
+            19
+          ],
+          "with scorepos": [
+            6,
+            13
+          ],
+          "with scorepos2": [
+            5,
+            8
+          ],
+          "with runners2": [
+            3,
+            6
+          ],
+          "bases loaded": [
+            0,
+            3
+          ],
+          "vs RHB": [
+            8,
+            21
+          ]
+        }
+      },
+      {
+        "name": "Rhodes, Parker",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            4,
+            9
+          ],
+          "runners": [
+            1,
+            11
+          ],
+          "vs LHB": [
+            0,
+            5
+          ],
+          "with 2Outs": [
+            0,
+            8
+          ],
+          "emtpy": [
+            2,
+            16
+          ],
+          "with scorepos": [
+            1,
+            13
+          ],
+          "with scorepos2": [
+            0,
+            8
+          ],
+          "with runners2": [
+            0,
+            4
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            3,
+            22
+          ]
+        }
+      },
+      {
+        "name": "Kirk, William",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            5,
+            7
+          ],
+          "runners": [
+            3,
+            7
+          ],
+          "vs LHB": [
+            4,
+            11
+          ],
+          "with 2Outs": [
+            0,
+            5
+          ],
+          "emtpy": [
+            3,
+            13
+          ],
+          "with scorepos": [
+            1,
+            4
+          ],
+          "with scorepos2": [
+            0,
+            1
+          ],
+          "with runners2": [
+            0,
+            1
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            2,
+            9
+          ]
+        }
+      },
+      {
+        "name": "Fowler, Peyton",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            1,
+            4
+          ],
+          "runners": [
+            1,
+            5
+          ],
+          "vs LHB": [
+            1,
+            7
+          ],
+          "with 2Outs": [
+            1,
+            4
+          ],
+          "emtpy": [
+            0,
+            7
+          ],
+          "with scorepos": [
+            0,
+            4
+          ],
+          "with scorepos2": [
+            0,
+            2
+          ],
+          "with runners2": [
+            1,
+            3
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            0,
+            5
+          ]
+        }
+      },
+      {
+        "name": "Booth, Braden",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            1,
+            1
+          ],
+          "runners": [
+            0,
+            2
+          ],
+          "vs LHB": [
+            1,
+            4
+          ],
+          "with 2Outs": [
+            0,
+            3
+          ],
+          "emtpy": [
+            3,
+            6
+          ],
+          "with scorepos": [
+            3,
+            8
+          ],
+          "with scorepos2": [
+            3,
+            8
+          ],
+          "with runners2": [
+            0,
+            2
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            2,
+            4
+          ]
+        }
+      },
+      {
+        "name": "Beliveau, Tanner",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            0,
+            2
+          ],
+          "runners": [
+            2,
+            2
+          ],
+          "vs LHB": [
+            1,
+            2
+          ],
+          "with 2Outs": [
+            2,
+            3
+          ],
+          "emtpy": [
+            0,
+            5
+          ],
+          "with scorepos": [
+            2,
+            2
+          ],
+          "with scorepos2": [
+            2,
+            2
+          ],
+          "with runners2": [
+            2,
+            2
+          ],
+          "bases loaded": [
+            1,
+            1
+          ],
+          "vs RHB": [
+            1,
+            5
+          ]
+        }
+      },
+      {
+        "name": "Logar, Jackson",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            0,
+            1
+          ],
+          "runners": [
+            0,
+            2
+          ],
+          "vs LHB": [
+            0,
+            2
+          ],
+          "with 2Outs": [
+            0,
+            1
+          ],
+          "emtpy": [
+            0,
+            1
+          ],
+          "with scorepos": [
+            0,
+            1
+          ],
+          "with scorepos2": [
+            0,
+            1
+          ],
+          "with runners2": [
+            0,
+            1
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            0,
+            1
+          ]
+        }
+      }
+    ],
+    "totals": {
+      "leadoff pct": [
+        89,
+        300
+      ],
+      "runners": [
+        110,
+        469
+      ],
+      "vs LHB": [
+        92,
+        433
+      ],
+      "with 2Outs": [
+        78,
+        367
+      ],
+      "emtpy": [
+        148,
+        694
+      ],
+      "with scorepos": [
+        89,
+        384
+      ],
+      "with scorepos2": [
+        59,
+        261
+      ],
+      "with runners2": [
+        41,
+        184
+      ],
+      "bases loaded": [
+        5,
+        39
+      ],
+      "vs RHB": [
+        156,
+        680
+      ]
+    }
+  },
+  "sec": {
+    "columns": [
+      "leadoff pct",
+      "runners",
+      "vs LHB",
+      "with 2Outs",
+      "emtpy",
+      "with scorepos",
+      "with scorepos2",
+      "with runners2",
+      "bases loaded",
+      "vs RHB"
+    ],
+    "players": [
+      {
+        "name": "Valincius, Tomas",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            7,
+            34
+          ],
+          "runners": [
+            6,
+            33
+          ],
+          "vs LHB": [
+            4,
+            40
+          ],
+          "with 2Outs": [
+            5,
+            36
+          ],
+          "emtpy": [
+            13,
+            81
+          ],
+          "with scorepos": [
+            3,
+            20
+          ],
+          "with scorepos2": [
+            1,
+            11
+          ],
+          "with runners2": [
+            1,
+            15
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            15,
+            74
+          ]
+        }
+      },
+      {
+        "name": "Stone, Duke",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            8,
+            26
+          ],
+          "runners": [
+            15,
+            48
+          ],
+          "vs LHB": [
+            14,
+            49
+          ],
+          "with 2Outs": [
+            14,
+            36
+          ],
+          "emtpy": [
+            16,
+            55
+          ],
+          "with scorepos": [
+            11,
+            31
+          ],
+          "with scorepos2": [
+            6,
+            15
+          ],
+          "with runners2": [
+            8,
+            23
+          ],
+          "bases loaded": [
+            0,
+            5
+          ],
+          "vs RHB": [
+            17,
+            54
+          ]
+        }
+      },
+      {
+        "name": "Davis, Ben",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            2,
+            9
+          ],
+          "runners": [
+            6,
+            20
+          ],
+          "vs LHB": [
+            2,
+            17
+          ],
+          "with 2Outs": [
+            5,
+            17
+          ],
+          "emtpy": [
+            6,
+            23
+          ],
+          "with scorepos": [
+            2,
+            12
+          ],
+          "with scorepos2": [
+            1,
+            8
+          ],
+          "with runners2": [
+            4,
+            11
+          ],
+          "bases loaded": [
+            0,
+            2
+          ],
+          "vs RHB": [
+            10,
+            26
+          ]
+        }
+      },
+      {
+        "name": "McPherson, Ryan",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            4,
+            10
+          ],
+          "runners": [
+            3,
+            13
+          ],
+          "vs LHB": [
+            4,
+            18
+          ],
+          "with 2Outs": [
+            0,
+            10
+          ],
+          "emtpy": [
+            4,
+            23
+          ],
+          "with scorepos": [
+            0,
+            8
+          ],
+          "with scorepos2": [
+            0,
+            2
+          ],
+          "with runners2": [
+            0,
+            3
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            3,
+            18
+          ]
+        }
+      },
+      {
+        "name": "Foster, Charlie",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            5,
+            11
+          ],
+          "runners": [
+            2,
+            11
+          ],
+          "vs LHB": [
+            2,
+            12
+          ],
+          "with 2Outs": [
+            1,
+            8
+          ],
+          "emtpy": [
+            6,
+            23
+          ],
+          "with scorepos": [
+            2,
+            10
+          ],
+          "with scorepos2": [
+            1,
+            2
+          ],
+          "with runners2": [
+            1,
+            2
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            6,
+            22
+          ]
+        }
+      },
+      {
+        "name": "Webb, Maddox",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            1,
+            6
+          ],
+          "runners": [
+            2,
+            13
+          ],
+          "vs LHB": [
+            2,
+            10
+          ],
+          "with 2Outs": [
+            1,
+            8
+          ],
+          "emtpy": [
+            2,
+            12
+          ],
+          "with scorepos": [
+            1,
+            9
+          ],
+          "with scorepos2": [
+            0,
+            4
+          ],
+          "with runners2": [
+            0,
+            5
+          ],
+          "bases loaded": [
+            0,
+            2
+          ],
+          "vs RHB": [
+            2,
+            15
+          ]
+        }
+      },
+      {
+        "name": "Pitzer, Tyler",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            3,
+            6
+          ],
+          "runners": [
+            1,
+            12
+          ],
+          "vs LHB": [
+            2,
+            8
+          ],
+          "with 2Outs": [
+            0,
+            9
+          ],
+          "emtpy": [
+            3,
+            11
+          ],
+          "with scorepos": [
+            1,
+            6
+          ],
+          "with scorepos2": [
+            0,
+            3
+          ],
+          "with runners2": [
+            0,
+            6
+          ],
+          "bases loaded": [
+            0,
+            1
+          ],
+          "vs RHB": [
+            2,
+            15
+          ]
+        }
+      },
+      {
+        "name": "Burns, Dane",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            0,
+            4
+          ],
+          "runners": [
+            4,
+            10
+          ],
+          "vs LHB": [
+            5,
+            12
+          ],
+          "with 2Outs": [
+            5,
+            9
+          ],
+          "emtpy": [
+            3,
+            11
+          ],
+          "with scorepos": [
+            3,
+            7
+          ],
+          "with scorepos2": [
+            3,
+            5
+          ],
+          "with runners2": [
+            4,
+            7
+          ],
+          "bases loaded": [
+            1,
+            1
+          ],
+          "vs RHB": [
+            2,
+            9
+          ]
+        }
+      },
+      {
+        "name": "Gleason, Jack",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            1,
+            6
+          ],
+          "runners": [
+            1,
+            6
+          ],
+          "vs LHB": [
+            3,
+            9
+          ],
+          "with 2Outs": [
+            1,
+            5
+          ],
+          "emtpy": [
+            3,
+            11
+          ],
+          "with scorepos": [
+            0,
+            5
+          ],
+          "with scorepos2": [
+            0,
+            3
+          ],
+          "with runners2": [
+            0,
+            3
+          ],
+          "bases loaded": [
+            0,
+            2
+          ],
+          "vs RHB": [
+            1,
+            8
+          ]
+        }
+      },
+      {
+        "name": "Bauer, Jack",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            0,
+            2
+          ],
+          "runners": [
+            3,
+            10
+          ],
+          "vs LHB": [
+            1,
+            4
+          ],
+          "with 2Outs": [
+            3,
+            6
+          ],
+          "emtpy": [
+            1,
+            4
+          ],
+          "with scorepos": [
+            2,
+            8
+          ],
+          "with scorepos2": [
+            2,
+            5
+          ],
+          "with runners2": [
+            3,
+            6
+          ],
+          "bases loaded": [
+            0,
+            2
+          ],
+          "vs RHB": [
+            3,
+            10
+          ]
+        }
+      },
+      {
+        "name": "Sweeney, Brendan",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            1,
+            3
+          ],
+          "runners": [
+            3,
+            9
+          ],
+          "vs LHB": [
+            3,
+            8
+          ],
+          "with 2Outs": [
+            1,
+            5
+          ],
+          "emtpy": [
+            2,
+            6
+          ],
+          "with scorepos": [
+            2,
+            6
+          ],
+          "with scorepos2": [
+            1,
+            3
+          ],
+          "with runners2": [
+            1,
+            4
+          ],
+          "bases loaded": [
+            0,
+            1
+          ],
+          "vs RHB": [
+            2,
+            7
+          ]
+        }
+      },
+      {
+        "name": "Miller, Maddox",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            3,
+            4
+          ],
+          "runners": [
+            0,
+            7
+          ],
+          "vs LHB": [
+            2,
+            5
+          ],
+          "with 2Outs": [
+            1,
+            4
+          ],
+          "emtpy": [
+            4,
+            6
+          ],
+          "with scorepos": [
+            0,
+            2
+          ],
+          "with scorepos2": [
+            0,
+            2
+          ],
+          "with runners2": [
+            0,
+            3
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            2,
+            8
+          ]
+        }
+      },
+      {
+        "name": "Fowler, Peyton",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            1,
+            3
+          ],
+          "runners": [
+            0,
+            3
+          ],
+          "vs LHB": [
+            0,
+            4
+          ],
+          "with 2Outs": [
+            0,
+            2
+          ],
+          "emtpy": [
+            0,
+            5
+          ],
+          "with scorepos": [
+            0,
+            3
+          ],
+          "with scorepos2": [
+            0,
+            1
+          ],
+          "with runners2": [
+            0,
+            1
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            0,
+            4
+          ]
+        }
+      },
+      {
+        "name": "Billingsley Jr., Chris",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            0,
+            0
+          ],
+          "runners": [
+            1,
+            4
+          ],
+          "vs LHB": [
+            0,
+            3
+          ],
+          "with 2Outs": [
+            0,
+            2
+          ],
+          "emtpy": [
+            0,
+            0
+          ],
+          "with scorepos": [
+            1,
+            4
+          ],
+          "with scorepos2": [
+            0,
+            2
+          ],
+          "with runners2": [
+            0,
+            2
+          ],
+          "bases loaded": [
+            0,
+            2
+          ],
+          "vs RHB": [
+            1,
+            1
+          ]
+        }
+      },
+      {
+        "name": "Booth, Braden",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            0,
+            0
+          ],
+          "runners": [
+            0,
+            1
+          ],
+          "vs LHB": [
+            0,
+            0
+          ],
+          "with 2Outs": [
+            0,
+            1
+          ],
+          "emtpy": [
+            0,
+            0
+          ],
+          "with scorepos": [
+            0,
+            1
+          ],
+          "with scorepos2": [
+            0,
+            1
+          ],
+          "with runners2": [
+            0,
+            1
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            0,
+            1
+          ]
+        }
+      }
+    ],
+    "totals": {
+      "leadoff pct": [
+        36,
+        124
+      ],
+      "runners": [
+        47,
+        200
+      ],
+      "vs LHB": [
+        44,
+        199
+      ],
+      "with 2Outs": [
+        37,
+        158
+      ],
+      "emtpy": [
+        63,
+        271
+      ],
+      "with scorepos": [
+        28,
+        132
+      ],
+      "with scorepos2": [
+        15,
+        67
+      ],
+      "with runners2": [
+        22,
+        92
+      ],
+      "bases loaded": [
+        1,
+        18
+      ],
+      "vs RHB": [
+        66,
+        272
+      ]
+    }
+  },
+  "nonsec": {
+    "columns": [
+      "leadoff pct",
+      "runners",
+      "vs LHB",
+      "with 2Outs",
+      "emtpy",
+      "with scorepos",
+      "with scorepos2",
+      "with runners2",
+      "bases loaded",
+      "vs RHB"
+    ],
+    "players": [
+      {
+        "name": "McPherson, Ryan",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            7,
+            23
+          ],
+          "runners": [
+            6,
+            33
+          ],
+          "vs LHB": [
+            3,
+            27
+          ],
+          "with 2Outs": [
+            8,
+            29
+          ],
+          "emtpy": [
+            13,
+            53
+          ],
+          "with scorepos": [
+            8,
+            34
+          ],
+          "with scorepos2": [
+            7,
+            31
+          ],
+          "with runners2": [
+            3,
+            15
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            16,
+            59
+          ]
+        }
+      },
+      {
+        "name": "Valincius, Tomas",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            6,
+            22
+          ],
+          "runners": [
+            5,
+            26
+          ],
+          "vs LHB": [
+            3,
+            19
+          ],
+          "with 2Outs": [
+            2,
+            21
+          ],
+          "emtpy": [
+            12,
+            49
+          ],
+          "with scorepos": [
+            8,
+            35
+          ],
+          "with scorepos2": [
+            4,
+            24
+          ],
+          "with runners2": [
+            0,
+            8
+          ],
+          "bases loaded": [
+            0,
+            3
+          ],
+          "vs RHB": [
+            14,
+            56
+          ]
+        }
+      },
+      {
+        "name": "Stone, Duke",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            4,
+            17
+          ],
+          "runners": [
+            4,
+            14
+          ],
+          "vs LHB": [
+            3,
+            26
+          ],
+          "with 2Outs": [
+            3,
+            18
+          ],
+          "emtpy": [
+            6,
+            45
+          ],
+          "with scorepos": [
+            7,
+            21
+          ],
+          "with scorepos2": [
+            5,
+            17
+          ],
+          "with runners2": [
+            2,
+            6
+          ],
+          "bases loaded": [
+            0,
+            1
+          ],
+          "vs RHB": [
+            7,
+            33
+          ]
+        }
+      },
+      {
+        "name": "Gleason, Jack",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            2,
+            9
+          ],
+          "runners": [
+            3,
+            19
+          ],
+          "vs LHB": [
+            5,
+            19
+          ],
+          "with 2Outs": [
+            2,
+            18
+          ],
+          "emtpy": [
+            5,
+            27
+          ],
+          "with scorepos": [
+            2,
+            21
+          ],
+          "with scorepos2": [
+            2,
+            17
+          ],
+          "with runners2": [
+            1,
+            11
+          ],
+          "bases loaded": [
+            0,
+            2
+          ],
+          "vs RHB": [
+            3,
+            27
+          ]
+        }
+      },
+      {
+        "name": "Billingsley Jr., Chris",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            3,
+            14
+          ],
+          "runners": [
+            4,
+            12
+          ],
+          "vs LHB": [
+            6,
+            20
+          ],
+          "with 2Outs": [
+            5,
+            19
+          ],
+          "emtpy": [
+            7,
+            39
+          ],
+          "with scorepos": [
+            4,
+            10
+          ],
+          "with scorepos2": [
+            2,
+            7
+          ],
+          "with runners2": [
+            2,
+            5
+          ],
+          "bases loaded": [
+            1,
+            1
+          ],
+          "vs RHB": [
+            5,
+            31
+          ]
+        }
+      },
+      {
+        "name": "Sweeney, Brendan",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            1,
+            11
+          ],
+          "runners": [
+            2,
+            9
+          ],
+          "vs LHB": [
+            5,
+            15
+          ],
+          "with 2Outs": [
+            5,
+            14
+          ],
+          "emtpy": [
+            8,
+            34
+          ],
+          "with scorepos": [
+            5,
+            15
+          ],
+          "with scorepos2": [
+            5,
+            15
+          ],
+          "with runners2": [
+            2,
+            4
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            5,
+            28
+          ]
+        }
+      },
+      {
+        "name": "Foster, Charlie",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            6,
+            11
+          ],
+          "runners": [
+            7,
+            21
+          ],
+          "vs LHB": [
+            4,
+            16
+          ],
+          "with 2Outs": [
+            3,
+            14
+          ],
+          "emtpy": [
+            4,
+            20
+          ],
+          "with scorepos": [
+            3,
+            16
+          ],
+          "with scorepos2": [
+            2,
+            9
+          ],
+          "with runners2": [
+            2,
+            8
+          ],
+          "bases loaded": [
+            1,
+            3
+          ],
+          "vs RHB": [
+            7,
+            25
+          ]
+        }
+      },
+      {
+        "name": "Miller, Maddox",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            2,
+            10
+          ],
+          "runners": [
+            2,
+            11
+          ],
+          "vs LHB": [
+            4,
+            14
+          ],
+          "with 2Outs": [
+            3,
+            12
+          ],
+          "emtpy": [
+            8,
+            28
+          ],
+          "with scorepos": [
+            6,
+            18
+          ],
+          "with scorepos2": [
+            6,
+            17
+          ],
+          "with runners2": [
+            1,
+            6
+          ],
+          "bases loaded": [
+            0,
+            1
+          ],
+          "vs RHB": [
+            6,
+            25
+          ]
+        }
+      },
+      {
+        "name": "Davis, Ben",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            4,
+            11
+          ],
+          "runners": [
+            3,
+            12
+          ],
+          "vs LHB": [
+            3,
+            17
+          ],
+          "with 2Outs": [
+            1,
+            11
+          ],
+          "emtpy": [
+            3,
+            25
+          ],
+          "with scorepos": [
+            2,
+            18
+          ],
+          "with scorepos2": [
+            2,
+            15
+          ],
+          "with runners2": [
+            0,
+            3
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            3,
+            20
+          ]
+        }
+      },
+      {
+        "name": "Webb, Maddox",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            2,
+            5
+          ],
+          "runners": [
+            6,
+            19
+          ],
+          "vs LHB": [
+            2,
+            9
+          ],
+          "with 2Outs": [
+            3,
+            12
+          ],
+          "emtpy": [
+            3,
+            13
+          ],
+          "with scorepos": [
+            5,
+            21
+          ],
+          "with scorepos2": [
+            1,
+            11
+          ],
+          "with runners2": [
+            2,
+            8
+          ],
+          "bases loaded": [
+            1,
+            5
+          ],
+          "vs RHB": [
+            7,
+            23
+          ]
+        }
+      },
+      {
+        "name": "Rhodes, Parker",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            4,
+            9
+          ],
+          "runners": [
+            1,
+            11
+          ],
+          "vs LHB": [
+            0,
+            5
+          ],
+          "with 2Outs": [
+            0,
+            8
+          ],
+          "emtpy": [
+            2,
+            16
+          ],
+          "with scorepos": [
+            1,
+            13
+          ],
+          "with scorepos2": [
+            0,
+            8
+          ],
+          "with runners2": [
+            0,
+            4
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            3,
+            22
+          ]
+        }
+      },
+      {
+        "name": "Pitzer, Tyler",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            2,
+            6
+          ],
+          "runners": [
+            1,
+            10
+          ],
+          "vs LHB": [
+            0,
+            5
+          ],
+          "with 2Outs": [
+            2,
+            10
+          ],
+          "emtpy": [
+            3,
+            15
+          ],
+          "with scorepos": [
+            0,
+            4
+          ],
+          "with scorepos2": [
+            0,
+            3
+          ],
+          "with runners2": [
+            1,
+            5
+          ],
+          "bases loaded": [
+            0,
+            2
+          ],
+          "vs RHB": [
+            4,
+            20
+          ]
+        }
+      },
+      {
+        "name": "Burns, Dane",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            2,
+            8
+          ],
+          "runners": [
+            0,
+            3
+          ],
+          "vs LHB": [
+            2,
+            11
+          ],
+          "with 2Outs": [
+            1,
+            7
+          ],
+          "emtpy": [
+            2,
+            17
+          ],
+          "with scorepos": [
+            0,
+            6
+          ],
+          "with scorepos2": [
+            0,
+            5
+          ],
+          "with runners2": [
+            0,
+            2
+          ],
+          "bases loaded": [
+            0,
+            1
+          ],
+          "vs RHB": [
+            0,
+            9
+          ]
+        }
+      },
+      {
+        "name": "Bauer, Jack",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            2,
+            8
+          ],
+          "runners": [
+            3,
+            5
+          ],
+          "vs LHB": [
+            1,
+            9
+          ],
+          "with 2Outs": [
+            0,
+            3
+          ],
+          "emtpy": [
+            3,
+            15
+          ],
+          "with scorepos": [
+            4,
+            5
+          ],
+          "with scorepos2": [
+            3,
+            3
+          ],
+          "with runners2": [
+            0,
+            0
+          ],
+          "bases loaded": [
+            0,
+            1
+          ],
+          "vs RHB": [
+            5,
+            11
+          ]
+        }
+      },
+      {
+        "name": "Kirk, William",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            5,
+            7
+          ],
+          "runners": [
+            3,
+            7
+          ],
+          "vs LHB": [
+            4,
+            11
+          ],
+          "with 2Outs": [
+            0,
+            5
+          ],
+          "emtpy": [
+            3,
+            13
+          ],
+          "with scorepos": [
+            1,
+            4
+          ],
+          "with scorepos2": [
+            0,
+            1
+          ],
+          "with runners2": [
+            0,
+            1
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            2,
+            9
+          ]
+        }
+      },
+      {
+        "name": "Booth, Braden",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            1,
+            1
+          ],
+          "runners": [
+            0,
+            1
+          ],
+          "vs LHB": [
+            1,
+            4
+          ],
+          "with 2Outs": [
+            0,
+            2
+          ],
+          "emtpy": [
+            3,
+            6
+          ],
+          "with scorepos": [
+            3,
+            7
+          ],
+          "with scorepos2": [
+            3,
+            7
+          ],
+          "with runners2": [
+            0,
+            1
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            2,
+            3
+          ]
+        }
+      },
+      {
+        "name": "Beliveau, Tanner",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            0,
+            2
+          ],
+          "runners": [
+            2,
+            2
+          ],
+          "vs LHB": [
+            1,
+            2
+          ],
+          "with 2Outs": [
+            2,
+            3
+          ],
+          "emtpy": [
+            0,
+            5
+          ],
+          "with scorepos": [
+            2,
+            2
+          ],
+          "with scorepos2": [
+            2,
+            2
+          ],
+          "with runners2": [
+            2,
+            2
+          ],
+          "bases loaded": [
+            1,
+            1
+          ],
+          "vs RHB": [
+            1,
+            5
+          ]
+        }
+      },
+      {
+        "name": "Fowler, Peyton",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            0,
+            1
+          ],
+          "runners": [
+            1,
+            2
+          ],
+          "vs LHB": [
+            1,
+            3
+          ],
+          "with 2Outs": [
+            1,
+            2
+          ],
+          "emtpy": [
+            0,
+            2
+          ],
+          "with scorepos": [
+            0,
+            1
+          ],
+          "with scorepos2": [
+            0,
+            1
+          ],
+          "with runners2": [
+            1,
+            2
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            0,
+            1
+          ]
+        }
+      },
+      {
+        "name": "Logar, Jackson",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            0,
+            1
+          ],
+          "runners": [
+            0,
+            2
+          ],
+          "vs LHB": [
+            0,
+            2
+          ],
+          "with 2Outs": [
+            0,
+            1
+          ],
+          "emtpy": [
+            0,
+            1
+          ],
+          "with scorepos": [
+            0,
+            1
+          ],
+          "with scorepos2": [
+            0,
+            1
+          ],
+          "with runners2": [
+            0,
+            1
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            0,
+            1
+          ]
+        }
+      }
+    ],
+    "totals": {
+      "leadoff pct": [
+        53,
+        176
+      ],
+      "runners": [
+        63,
+        269
+      ],
+      "vs LHB": [
+        48,
+        234
+      ],
+      "with 2Outs": [
+        41,
+        209
+      ],
+      "emtpy": [
+        85,
+        423
+      ],
+      "with scorepos": [
+        61,
+        252
+      ],
+      "with scorepos2": [
+        44,
+        194
+      ],
+      "with runners2": [
+        19,
+        92
+      ],
+      "bases loaded": [
+        4,
+        21
+      ],
+      "vs RHB": [
+        90,
+        408
+      ]
+    }
+  }
+}

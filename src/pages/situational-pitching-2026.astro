@@ -1,0 +1,495 @@
+---
+/**
+ * MSU Baseball — Situational Pitching (2026)
+ *
+ * Loads pre-scraped season-aggregated situational pitching stats from a JSON
+ * file produced by scripts/scrape-splits.py. The JSON is stored in
+ * public/data/pitching-splits-2026.json and fetched client-side.
+ *
+ * Features:
+ *   - Sortable columns (click any split header)
+ *   - Frozen first column (Player names) for horizontal scrolling
+ *   - Team totals row pinned at the bottom with teal separator
+ *   - Values displayed as "H-AB (.AVG)" format
+ *
+ * To refresh data: .venv\Scripts\python.exe scripts\scrape-splits.py
+ */
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Situational Pitching (2026)" description="Mississippi State baseball 2026 season pitching splits and situational statistics." wide>
+
+  <h1 class="text-3xl font-bold mb-2">Situational Pitching (2026)</h1>
+  <p id="splits-subtitle" class="text-stone-500 dark:text-stone-400 mb-4 text-lg">
+    Mississippi State Bulldog baseball — 2026 season.
+  </p>
+
+  <div class="mb-4">
+    <label for="filter-select" class="text-sm font-medium text-stone-600 dark:text-stone-400 mr-2">Opponents:</label>
+    <select id="filter-select" class="text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+      <option value="all">All Teams</option>
+      <option value="sec">SEC Only</option>
+      <option value="nonsec">Non-Conference</option>
+    </select>
+  </div>
+
+  <div class="rounded-xl border border-stone-200 dark:border-stone-700 overflow-hidden bg-white dark:bg-stone-800 shadow-sm">
+    <div id="splits-container" class="p-4 text-sm text-stone-500 dark:text-stone-400">
+      Loading stats&hellip;
+    </div>
+  </div>
+
+
+</Layout>
+
+<!--
+  Table styles — global so they apply to dynamically-created DOM elements.
+  These are identical to the other stats pages for visual consistency.
+-->
+<style is:global>
+  .stats-wrapper { overflow-x: auto; }
+
+  .stats-table {
+    width: 100%;
+    font-size: 0.8125rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    white-space: nowrap;
+  }
+
+  .stats-table thead th {
+    background-color: rgb(231 229 228);
+    color: rgb(87 83 78);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 1px solid rgb(214 211 209);
+  }
+
+  .stats-table tbody td {
+    padding: 0.375rem 0.75rem;
+    border-bottom: 1px solid rgb(245 245 244);
+    color: rgb(41 37 36);
+  }
+
+  .stats-table tbody tr:nth-child(even) td {
+    background-color: rgb(250 250 249);
+  }
+
+  .stats-table tfoot td {
+    padding: 0.375rem 0.75rem;
+    font-weight: 600;
+    background-color: rgb(245 245 244);
+    color: rgb(28 25 23);
+    border-bottom: 1px solid rgb(214 211 209);
+  }
+
+  .stats-table tfoot tr:first-child td {
+    border-top: 3px solid rgb(20 184 166);
+  }
+
+  .stats-table th:first-child,
+  .stats-table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+  }
+
+  .stats-table thead th:first-child { z-index: 4; }
+
+  .stats-table thead th:first-child         { background-color: rgb(231 229 228); }
+  .stats-table tbody td:first-child          { background-color: rgb(255 255 255); font-weight: 500; }
+  .stats-table tbody tr:nth-child(even) td:first-child { background-color: rgb(250 250 249); }
+  .stats-table tfoot td:first-child          { background-color: rgb(245 245 244); }
+
+  .stats-table th:first-child,
+  .stats-table td:first-child {
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.06);
+  }
+
+  /* ===== CATEGORY GROUP HEADER ROW ===== */
+  .stats-table thead tr.group-row th {
+    background-color: rgb(231 229 228);
+    color: rgb(120 113 108);
+    text-align: center;
+    font-size: 0.675rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.5rem;
+    border-bottom: 1px solid rgb(214 211 209);
+  }
+
+  /* ===== COLUMN GROUP BORDERS ===== */
+  .stats-table .group-start {
+    border-left: 2px solid rgb(168 162 158);
+  }
+
+  /* ===== SORTABLE HEADERS ===== */
+  .stats-table th.sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s;
+  }
+
+  .stats-table th.sortable:hover {
+    background-color: rgb(214 211 209);
+  }
+
+  .stats-table .sort-arrow {
+    display: inline-block;
+    margin-left: 3px;
+    font-size: 0.6rem;
+    vertical-align: middle;
+    opacity: 0.8;
+  }
+
+  /* ===== DARK MODE ===== */
+
+  .dark .stats-table thead th {
+    background-color: rgb(28 25 23);
+    color: rgb(168 162 158);
+    border-bottom-color: rgb(68 64 60);
+  }
+
+  .dark .stats-table tbody td {
+    color: rgb(214 211 209);
+    border-bottom-color: rgb(41 37 36);
+  }
+
+  .dark .stats-table tbody tr:nth-child(even) td {
+    background-color: rgb(35 31 30);
+  }
+
+  .dark .stats-table tfoot td {
+    background-color: rgb(23 20 18);
+    color: rgb(231 229 228);
+    border-bottom-color: rgb(55 52 50);
+  }
+
+  .dark .stats-table tfoot tr:first-child td {
+    border-top-color: rgb(20 184 166);
+  }
+
+  .dark .stats-table thead th:first-child         { background-color: rgb(28 25 23); }
+  .dark .stats-table tbody td:first-child          { background-color: rgb(41 37 36); }
+  .dark .stats-table tbody tr:nth-child(even) td:first-child { background-color: rgb(35 31 30); }
+  .dark .stats-table tfoot td:first-child          { background-color: rgb(23 20 18); }
+
+  .dark .stats-table th.sortable:hover { background-color: rgb(41 37 36); }
+
+  .dark .stats-table thead tr.group-row th {
+    background-color: rgb(23 20 18);
+    color: rgb(120 113 108);
+    border-bottom-color: rgb(68 64 60);
+  }
+
+  .dark .stats-table .group-start {
+    border-left-color: rgb(87 83 78);
+  }
+</style>
+
+<script>
+  // ===========================================================================
+  // Pitching Splits Table — loads JSON and renders a sortable table
+  // ===========================================================================
+
+  // ---------------------------------------------------------------------------
+  // Column configuration
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Desired display order for split columns.
+   * Keys must match the JSON data exactly.
+   * Columns not listed here are omitted from the table.
+   */
+  const COLUMN_ORDER = [
+    'vs RHB',
+    'vs LHB',
+    'emtpy',
+    'runners',
+    'with scorepos',
+    'bases loaded',
+    'with 2Outs',
+    'with runners2',
+    'with scorepos2',
+    'leadoff pct',
+  ];
+
+  /**
+   * Display labels for each column (JSON key → header text).
+   * Keys not listed fall back to the raw JSON key name.
+   */
+  const COLUMN_DISPLAY_NAMES = {
+    'vs RHB':        'vs RHB',
+    'vs LHB':        'vs LHB',
+    'emtpy':         'Bases Empty',
+    'runners':       'Runners On',
+    'with scorepos': 'RISP',
+    'bases loaded':  'Bases Loaded',
+    'with 2Outs':    '2O',
+    'with runners2': 'Runners On 2O',
+    'with scorepos2':'RISP 2O',
+    'leadoff pct':   'Leadoff%',
+  };
+
+  /**
+   * Category groups for the top header row.
+   * Each entry defines a label and how many data columns it spans.
+   */
+  const COLUMN_GROUPS = [
+    { label: 'Batter Handedness', span: 2 },
+    { label: 'Baserunners',       span: 4 },
+    { label: '2 Outs',            span: 3 },
+    { label: 'Other',             span: 1 },
+  ];
+
+  /**
+   * Return the ordered list of columns that actually exist in the current data.
+   */
+  function getOrderedColumns(availableColumns) {
+    const available = new Set(availableColumns);
+    return COLUMN_ORDER.filter(col => available.has(col));
+  }
+
+  /** Format [hits, ab] as "H-AB (.AVG)" or "0-0" if no at-bats. */
+  function formatSplit(h, ab) {
+    if (ab === 0) return '0-0';
+    const avg = (h / ab).toFixed(3).replace(/^0/, '');
+    return `${h}-${ab} (${avg})`;
+  }
+
+  /** Parse a numeric sort key from [h, ab]. Sort by average, break ties by AB. */
+  function sortKey(splitArr) {
+    if (!splitArr) return -1;
+    const [h, ab] = splitArr;
+    if (ab === 0) return -1;
+    return h / ab;
+  }
+
+  // ---------------------------------------------------------------------------
+  // State
+  // ---------------------------------------------------------------------------
+  let fullData = null;
+  let columns = [];
+  let players = [];
+  let totals  = {};
+  let sortCol = -1;
+  let sortDesc = true;
+  let currentFilter = 'all';
+
+  /**
+   * Switch the active dataset based on the filter selection.
+   * Resets sort state and re-renders the table.
+   */
+  function applyFilter(filter) {
+    currentFilter = filter;
+    if (!fullData) return;
+
+    const subset = fullData[filter] || fullData['all'];
+    columns = subset.columns || [];
+    players = subset.players || [];
+    totals  = subset.totals  || {};
+    sortCol = -1;
+    sortDesc = true;
+    render();
+  }
+
+  // ---------------------------------------------------------------------------
+  // Render
+  // ---------------------------------------------------------------------------
+  function render() {
+    const container = document.getElementById('splits-container');
+    if (!container) return;
+
+    // Apply desired column order, filtering to only columns present in the data
+    const orderedCols = getOrderedColumns(columns);
+
+    // Pre-compute which column indices start a new group (for left border)
+    const groupStartIndices = new Set();
+    let colCursor = 0;
+    COLUMN_GROUPS.forEach(group => {
+      groupStartIndices.add(colCursor);
+      colCursor += group.span;
+    });
+
+    /**
+     * Default player order mimics the Pitching Stats page (PA descending).
+     * vs RHB BF + vs LHB BF covers every batter faced exactly once,
+     * making their sum a reliable proxy for total PA (batters faced).
+     */
+    function defaultBF(p) {
+      return (p.splits?.['vs RHB']?.[1] || 0) + (p.splits?.['vs LHB']?.[1] || 0);
+    }
+
+    const sorted = sortCol >= 0
+      ? [...players].sort((a, b) => {
+          const col = orderedCols[sortCol];
+          const va = sortKey(a.splits[col]);
+          const vb = sortKey(b.splits[col]);
+          const diff = va - vb;
+          return sortDesc ? -diff : diff;
+        })
+      : [...players].sort((a, b) => defaultBF(b) - defaultBF(a));
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'stats-wrapper';
+
+    const table = document.createElement('table');
+    table.className = 'stats-table';
+
+    // --- THEAD ---
+    const thead = document.createElement('thead');
+
+    // Row 1: Category group headers
+    const groupTr = document.createElement('tr');
+    groupTr.className = 'group-row';
+
+    const spacerTh = document.createElement('th');
+    spacerTh.textContent = '';
+    groupTr.appendChild(spacerTh);
+
+    COLUMN_GROUPS.forEach(group => {
+      const th = document.createElement('th');
+      th.textContent = group.label;
+      th.colSpan = group.span;
+      th.classList.add('group-start');
+      groupTr.appendChild(th);
+    });
+
+    thead.appendChild(groupTr);
+
+    // Row 2: Individual column headers (sortable)
+    const headerTr = document.createElement('tr');
+
+    const playerTh = document.createElement('th');
+    playerTh.textContent = 'Player';
+    headerTr.appendChild(playerTh);
+
+    orderedCols.forEach((col, i) => {
+      const th = document.createElement('th');
+      th.textContent = COLUMN_DISPLAY_NAMES[col] || col;
+      th.classList.add('sortable');
+      if (groupStartIndices.has(i)) th.classList.add('group-start');
+      th.style.textAlign = 'center';
+
+      if (sortCol === i) {
+        const arrow = document.createElement('span');
+        arrow.className = 'sort-arrow';
+        arrow.textContent = sortDesc ? '\u25BC' : '\u25B2';
+        th.appendChild(arrow);
+      }
+
+      th.addEventListener('click', () => {
+        if (sortCol === i) {
+          sortDesc = !sortDesc;
+        } else {
+          sortCol = i;
+          sortDesc = true;
+        }
+        render();
+      });
+
+      headerTr.appendChild(th);
+    });
+
+    thead.appendChild(headerTr);
+    table.appendChild(thead);
+
+    // --- TBODY ---
+    const tbody = document.createElement('tbody');
+    sorted.forEach(p => {
+      const tr = document.createElement('tr');
+
+      const nameTd = document.createElement('td');
+      nameTd.textContent = p.name;
+      tr.appendChild(nameTd);
+
+      orderedCols.forEach((col, i) => {
+        const td = document.createElement('td');
+        const split = p.splits[col];
+        td.textContent = split ? formatSplit(split[0], split[1]) : '';
+        td.style.textAlign = 'center';
+        if (groupStartIndices.has(i)) td.classList.add('group-start');
+        tr.appendChild(td);
+      });
+
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    // --- TFOOT ---
+    if (Object.keys(totals).length > 0) {
+      const tfoot = document.createElement('tfoot');
+      const tr = document.createElement('tr');
+
+      const nameTd = document.createElement('td');
+      nameTd.textContent = 'Mississippi St.';
+      tr.appendChild(nameTd);
+
+      orderedCols.forEach((col, i) => {
+        const td = document.createElement('td');
+        const split = totals[col];
+        td.textContent = split ? formatSplit(split[0], split[1]) : '';
+        td.style.textAlign = 'center';
+        if (groupStartIndices.has(i)) td.classList.add('group-start');
+        tr.appendChild(td);
+      });
+
+      tfoot.appendChild(tr);
+      table.appendChild(tfoot);
+    }
+
+    wrapper.appendChild(table);
+    container.replaceChildren(wrapper);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Load JSON and initialize
+  // ---------------------------------------------------------------------------
+  async function loadSplits() {
+    const container = document.getElementById('splits-container');
+    if (!container) return;
+
+    try {
+      const response = await fetch('/data/pitching-splits-2026.json');
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+
+      // Support both old flat format and new nested format.
+      // Old: { columns, players, totals }
+      // New: { all: { columns, players, totals }, sec: { ... }, lastGame: { ... } }
+      if (data.all) {
+        fullData = data;
+      } else {
+        fullData = {
+          all: { columns: data.columns, players: data.players, totals: data.totals },
+          sec: { columns: data.columns, players: data.players, totals: data.totals },
+        };
+      }
+
+      // Update subtitle with most recent game info
+      const subtitle = document.getElementById('splits-subtitle');
+      if (subtitle && data.lastGame) {
+        subtitle.textContent = `Data from ${data.gamesScraped} games, current up to ${data.lastGame.date} game vs ${data.lastGame.opponent}`;
+      }
+
+      // Apply the default filter ("all")
+      applyFilter(currentFilter);
+
+    } catch (err) {
+      container.textContent = 'Could not load splits data. Run scrape-splits.py to generate it.';
+      console.error('Splits load error:', err);
+    }
+  }
+
+  // Wire up the filter dropdown
+  const filterSelect = document.getElementById('filter-select');
+  if (filterSelect) {
+    filterSelect.addEventListener('change', (e) => {
+      applyFilter(e.target.value);
+    });
+  }
+
+  loadSplits();
+</script>

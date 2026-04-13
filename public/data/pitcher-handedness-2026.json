@@ -1,0 +1,2940 @@
+{
+  "version": 2,
+  "teams": {
+    "614619": {
+      "name": "Hofstra",
+      "players": {
+        "Jackson Bauer": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Giovanni Bausone": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Chris Bedford": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Nick Biddle": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Michael Brown": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Tyler Castrataro": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Danny Corona": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Tyler Cox": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Michael Craig": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Joseph Curreri": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Michael D'Ambrosio": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "JJ DeVito": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Daniel Escalante": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Colin Gallagher": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Nick Gallello": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brayden Gregg": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "CJ Griggs": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Sean Hamilton": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Michael Heyman": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "George Holt": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Russell Hunter": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Trent Jenks": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Grady Lacourciere": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Sam Leonard": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Nathan Lynn": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Carlos Martinez": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Maddon McArthur": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Gabriel Melara": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Deuce Musial": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Christian Rasmussen": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Nicholas Reese": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Tanner Sanderoff": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Aidan Scott": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Reno Spagnoli": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Joseph Zammitti": {
+          "throws": "R",
+          "bats": "R"
+        }
+      }
+    },
+    "614797": {
+      "name": "Troy",
+      "players": {
+        "Dylan Alonso": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Nico Azpilcueta": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Nolan Book": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jabe Boroff": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Judah Buckner": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Chase Cartron": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Blake Cavill": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Nate Criswell": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Zach Crotchfelt": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Sean Darnell": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Blake Dean": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Zaid Diaz": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Matt Dill": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tommy Egan": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cooper Ellingworth": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tate Farquhar": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Cole Garner": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jimmy Janicki": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Dylan King": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Dillon Kuehl": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Lucas Litteral": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Jackson Lucas": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Houston Markham": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Ty McGraw": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Steven Meier": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Drew Nelson": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Matteo Pare": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Aaron Piasecki": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Josh Pyne": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Caden Reeves": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brady Richardson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Gavin Schrader": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Hayden Smith": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Benjamin Stubbs": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Brock Tapper": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Noah Thigpen": {
+          "throws": "R",
+          "bats": "R"
+        }
+      }
+    },
+    "614851": {
+      "name": "Alcorn",
+      "players": {
+        "Reyfield Adams": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Henry Allred": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Hunter Bell": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jaylyn Bennett": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Michael Bonelli": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Gavin Caston": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Yoni Castro": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jose Cherena": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Kanious Davis": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tristan Delaplante": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Myles Dews": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Christian Dunn": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Asher Friedman": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Nico Garcia": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "REGINALD GRIFFIN, JR": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cooper Harris": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Keaten Hawk": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Jamir Holloway": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Chance Jackson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jullian Jarrett": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Nicholas Johnson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Hayden Konkler": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Devin Kriley": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Chase Moore": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Garrett Oswald": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Derek Patterson Jr": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Chase Ragas": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Keller Rivers": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Kayden Sutton": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Chance Thurston": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Adrian Vallescorbo": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Caden Wade": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Jacob Wingard": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Clayvonje Wright": {
+          "throws": "R",
+          "bats": "R"
+        }
+      }
+    },
+    "614595": {
+      "name": "Delaware",
+      "players": {
+        "Nicholas Bilotto": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brady Blum": {
+          "throws": "",
+          "bats": ""
+        },
+        "Evan Bouldin": {
+          "throws": "",
+          "bats": ""
+        },
+        "Dylan Bryan": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Noah Burroughs": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Andrew Callaway": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Cole Carbone": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Harry Carr": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Anthony Charles": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "LT Cockriill": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Elias Conway": {
+          "throws": "",
+          "bats": "L"
+        },
+        "Vincent Davis": {
+          "throws": "",
+          "bats": ""
+        },
+        "Anthony DeCesare": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Chase Deibler": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Connor Doherty": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Rory Finn": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Grant Fournier": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Luke Guire": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tim Hartman": {
+          "throws": "",
+          "bats": ""
+        },
+        "Jackson Hulcher": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Luke Lambert": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Evan Lewis": {
+          "throws": "R",
+          "bats": ""
+        },
+        "Jack Maiale": {
+          "throws": "",
+          "bats": ""
+        },
+        "Jake Marchesano": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Doug Marose": {
+          "throws": "",
+          "bats": ""
+        },
+        "Ryan McLaughlin": {
+          "throws": "R",
+          "bats": ""
+        },
+        "Matthew Minckler": {
+          "throws": "",
+          "bats": ""
+        },
+        "Sal Mineo": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Ben Moyzan": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jake Pollaro": {
+          "throws": "",
+          "bats": ""
+        },
+        "Ryan Pugh": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Matt Reyes": {
+          "throws": "",
+          "bats": ""
+        },
+        "Jonah Richardson": {
+          "throws": "",
+          "bats": ""
+        },
+        "Joaquin Rodriguez-Costa": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ethan Shaub": {
+          "throws": "L",
+          "bats": ""
+        },
+        "Sam Winsett": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jeremy Wolf": {
+          "throws": "R",
+          "bats": "R"
+        }
+      }
+    },
+    "614858": {
+      "name": "Austin Peay",
+      "players": {
+        "Dillon Adkins": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Cody Airington": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Gavin Alveti": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Kaleb Applebey": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Colin Carney": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Trevor Conley": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "TJ Costello": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Keaton Cottam": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Chance Cox": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Drew DeLucia": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Kade Foulke": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Houston Hebert": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jackson Hohensee": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jett Hope": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cole Johnson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Dylan Kazee": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Daniel Koppisch": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brody Lanham": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Aaron Lewis": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Andres Matias": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Bryce McCain": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "DJ Merriweather": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Derrick Mitchell": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Mason Pangborn": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Mason Pickering": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Paris Pridgen": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Kyler Proctor": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cannon Rice": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Kade Shatwell": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Zion Taylor": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Elijah Underhill": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ray Velazquez": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ryker Walton": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ty Wisdom": {
+          "throws": "R",
+          "bats": "L"
+        }
+      }
+    },
+    "614853": {
+      "name": "Arizona St.@Arlington, TX",
+      "players": {
+        "Jaden Alba": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Nick Anello": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Easton Barrett": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Brody Briggs": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Tommy Brown": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Josh Butler": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Eli Buxton": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cole Carlon": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Ryan Caruso": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cooper Clouser": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Nu'u Contrades": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ryan Darrah": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jaxsyn Durst": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Finn Edwards": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Sean Fitzpatrick": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Colby Guy": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Landon Hairston": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Wyatt Halvorson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ashton Higgins": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Kole Klecker": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Finn Leach": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Brenden Lewis": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Colin Linder": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Dominic Longo": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brady Louck": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Ky McGary": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Garrett Michel": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "PJ Moutzouridis": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Austin Musso": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Sam Myers": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Coen Niclai": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brandon Olivera": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Alex Overbay": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Taylor Penn": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Matthew Polk": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Marcelo Rodriguez": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Austen Roellig": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Derek Schaefer": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Dominic Smaldino": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Dean Toigo": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Beckett Zavorek": {
+          "throws": "R",
+          "bats": "R"
+        }
+      }
+    },
+    "614806": {
+      "name": "Virginia Tech",
+      "players": {
+        "Ethan Ball": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Josh Berzonski": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Aimon Chandler": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Madden Clement": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Henry Cooke": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Luke Craytor": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Preston Crowl": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Pete Daniel": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Austin Dean": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Logan Eisenreich": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jacob Exum": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Anderson French": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Sam Gates": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Ethan Gibson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Clay Grady": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ethan Grim": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Sam Grube": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Treyson Hughes": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Willie Hurt": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Mycah Jordan": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Danny Lazaro": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Nick Locurto": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Hudson Lutterman": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "CJ Oxendine": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Owen Petrich": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brett Renfrow": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Aiden Robertson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brody Roe": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Peyton Smith": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Griffin Stieg": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tyler Stone": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Chase Swift": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Ben Weber": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jake Wise": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brendan Yagesh": {
+          "throws": "L",
+          "bats": "L"
+        }
+      }
+    },
+    "614575": {
+      "name": "UCLA@Arlington, TX",
+      "players": {
+        "Aiden Aguayo": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Blake Balsz": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Michael Barnett": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "CJ Bott": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Payton Brennan": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Dominic Cadiz": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Phoenix Call": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Angel Cervantes": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Roch Cholowsky": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Will Crain": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Michael Cunningham": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cashel Dugger": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Tyler Dunning": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Mack Edwards": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Aidan Espinoza": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Ian Fisher": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Will Gasparino": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Hayden George": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Chris Grothues": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Trey Gudoy": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Easton Hawk": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jarrod Hocking": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Elai Iwanaga": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Kasen Khansarinia": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Justin Lee": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Mulivai Levu": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Roman Martin": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ian May": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Finn McIlroy": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Wylan Moss": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "David Mysza": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Jack O'Connor": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cal Randall": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Logan Reddemann": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Maverek Russell": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Zach Strickland": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Landon Stump": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jake Swenson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Dean West": {
+          "throws": "R",
+          "bats": "L"
+        }
+      }
+    },
+    "614780": {
+      "name": "Southern Miss.",
+      "players": {
+        "Cade Adams": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Chase Adams": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Colby Allen": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "JW Armistead": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Drey Barrett": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Teague Broadhead": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Dylan Causey": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Camden Clark": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Thomas Crabtree": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cade Durbin": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "McCarty English": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Gray Eubanks": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Kevin Farr": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Davis Gillespie": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Grayden Harris": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Ben Higdon": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Bruce Littleton": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Ty Long": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Braden Maranto": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Drake Meeks": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Sam Mitchell": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Kyle Morrison": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Jake Neely": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jace Norton": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Josh Och": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Lawson Odom": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jackson Parker": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Logan Pratt": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cole Richardson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Camden Rodgers": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Matthew Russo": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Kros Sivley": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Seth Smith": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Caleb Stelly": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tucker Stockman": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Camden Sunstrom": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "William Tonsmeire": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Joey Urban": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Andrew Visconti": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Cooper Waddle": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Micah Wascom": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brooks Willoughby": {
+          "throws": "L",
+          "bats": "L"
+        }
+      }
+    },
+    "614840": {
+      "name": "Lipscomb",
+      "players": {
+        "Brock Beddingfield": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Collin Bosley-Smith": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Blake Carter": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Will Dugan": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cameron Guise": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Eric Harper": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Kai Holm": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Adam Jamison": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Kaleb Kantola": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Damion Kenealy Jr": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Landon Kiefer": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ryan Kutz": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jackson Lee": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Dane LeMaster": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Alexander Llinas": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Alejandro Ludeiro": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tanner Lyne": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Mack Mabrey": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Keaton Mahan": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Jevarra Martin Jr.": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Hutson Miles": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brady Miller": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cole O'Brien": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Caleb Pica": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Cole Pippenger": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jake Poindexter": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cam Pruitt": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brock Puckett": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Danny Ramirez": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Simon Scharff": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Caden Shanks": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Coleman Siniard": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Aaron Stelogeannis": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Adam Switalski": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jordan Thomas": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Jacob Tobias": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Jace Trautner": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cody Underwood": {
+          "throws": "R",
+          "bats": "R"
+        }
+      }
+    },
+    "614762": {
+      "name": "Tulane@Biloxi, MS",
+      "players": {
+        "Jude Abbadessa": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "James Agabedis": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Bryson Ayala": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cole Berge": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jack Brafa": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Evan Burg": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Trey Cehajic": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tanner Chun": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Will Clements": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Michael Devenney": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Julius Ejike-Charles": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "John Elliott": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jack Frankel": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Owen Geiss": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "AJ Groeneveld": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Matthias Haas": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "KaiKea Harrison": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Jack Johnson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Nate Johnson": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Sam Larson": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Trent Liolios": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Matthew Major": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Max Mazinter": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jacob Moore": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "LuisPablo Navarro": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Nolan Nawrocki": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Hugh Pinkney": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Aidan Rath": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "J.D. Rodriguez": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brett Rowell": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Beau Sampson": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Caden Tarango": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jake Toporek": {
+          "throws": "L",
+          "bats": "S"
+        },
+        "Thomas Vincent": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Jason Wachs": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Blaise Wilcenski": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tye Wood": {
+          "throws": "L",
+          "bats": "S"
+        }
+      }
+    },
+    "614855": {
+      "name": "Arkansas",
+      "players": {
+        "Kuhio Aloy": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tye Briscoe": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Mark Brissey": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Carson Brumbaugh": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brenton Clark": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Parker Coil": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Luke Cornelison": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "James DeCremer": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Hunter Dietz": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Cooper Dossett": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Steele Eaves": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Colin Fisher": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Gabe Gaeckle": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cole Gibler": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Ryder Helfrick": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tyler Holland": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jacob Imoto": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Jackson Kircher": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brendan Kleiman": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Camden Kozeal": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Peyton Lee": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Joey Lorenzini": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Jordan Martin": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ethan McElvain": {
+          "throws": "L",
+          "bats": "S"
+        },
+        "Tate McGuire": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cayden Mitchell": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Maika Niu": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Alexander Peck": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "TJ Pompey": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Reese Robinett": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Damian Ruiz": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Carter Rutenbar": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Landon Schaefer": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Nolan Souza": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Zack Stewart": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Christian Turner": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Carson Wiggins": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Carson Willis": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Grant Wren": {
+          "throws": "R",
+          "bats": "R"
+        }
+      }
+    },
+    "614631": {
+      "name": "Jackson St.",
+      "players": {
+        "Ledy Alvarez": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Derek Arrocha": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Payton Boines": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Trae Burton": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Pierre Cabral": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Darius Dampier": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Coron Davis": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Talmagde Davis": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Kevin De Los Santos": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Christian Delgado": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Nkosi Didder": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jaedeyn Edwards": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Carson Foster": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Caleb Gallant": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Trey Gray": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "DJ Hardrick Jr.": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Shemar Harris": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Asafa Jones": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Edwin Lemus Hudson Jr.": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jayden Lopez": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Isaac McClenty": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Diego Melendez": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Alfred Osorio": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Tyshon Patty": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Wilbert Perez": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tyree Reed": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Corey Richardson": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Guianlucas Rivera": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Marcus Smith": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Robert Tate Jr.": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Manuel Toro": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Hederick Torres": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Kade Walker": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Joe Williams": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Troy Wilson Jr.": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Parker Winfield": {
+          "throws": "R",
+          "bats": "R"
+        }
+      }
+    },
+    "614802": {
+      "name": "Vanderbilt",
+      "players": {
+        "Tyler Baird": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Colin Barczi": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Hudson Barton": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Collin Brightwell": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Tristan Bristow": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "England Bryan": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Adria Casoliba": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Deegan Cordova": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jacob Faulkner": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Connor Fennell": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tommy Goodin": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Miller Green": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Luke Guth": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Connor Hamilton": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Will Hampton": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Braden Holcomb": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Max Jensen": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Brodie Johnston": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Carter Johnstone": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Logan Johnstone": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Aukai Kea": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Alex Kranzler": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Chris Maldonado": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Mike Mancini": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Wyatt Nadeau": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Austin Nye": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Carson Quillen": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Korbin Reynolds": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Rustan Rigdon": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Nate Schlote": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jakob Schulz": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Cade Sears": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Brennan Seiber": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Matthew Shorey": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Aiden Stillman": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Nate Taylor": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Nate Teague": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ryker Waite": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Mack Whitcomb": {
+          "throws": "R",
+          "bats": "R"
+        }
+      }
+    },
+    "614668": {
+      "name": "Ole Miss",
+      "players": {
+        "Noah Allen": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tristan Bissetta": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Bryden Bull": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Hudson Calhoun": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Patrick Collopy": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Dom Decker": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Hunter Elliott": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Evan Farrow": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Austin Fawley": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Hayden Federico": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Will Furniss": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Grayson Gibson": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Cannon Goldin": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Owen Hancock": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Terry Hayes Jr.": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Walker Hooks": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Blake Ilitch": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cooper Johnson": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Topher Jones": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Owen Kelly": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Landon Koenig": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Wil Libbert": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Brett Moseley": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Leo Odom": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Daniel Pacella": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Owen Paino": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Kelven Perera": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Taylor Rabe": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brayden Randle": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Jake Reigert": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Collin Reuter": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "JP Robertson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Luke Romine": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Marko Sipila": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tate Sirmans": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cade Townsend": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Judd Utermark": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Landon Waters": {
+          "throws": "R",
+          "bats": "R"
+        }
+      }
+    },
+    "614771": {
+      "name": "Grambling",
+      "players": {
+        "Payton Allen": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Charles Ashe III": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Shamarian Brantley": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Dillon Braxton": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Trey Bridges": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Kejuan Burnett": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Rafael Capistran": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Julian Carter": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ryan Davis": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "John Delgadillo": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ethan Delgado": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Taylor Dooley": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Trevor Esparza": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Keevyn Goss": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Keyon Guillory": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Mohamed Harati": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Shelton Harville": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cameron Hill": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Micholas Jackson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Hasani Johnson": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Aidan Lopez": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Shaun Mante Jr": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Chris Marcellus": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Shannon Martin": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Hampton Phillips": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Nick Robinson": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Xorian Robinson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Spencer Sensley": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Trenton Shaw": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Jacobie Smith": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Daniel Soukup II": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Martavius Thomas": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Julio Vasquez Sanzsole": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Titus Williams": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "James Woody": {
+          "throws": "R",
+          "bats": "R"
+        }
+      }
+    },
+    "614615": {
+      "name": "Georgia",
+      "players": {
+        "Henry Allen": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Caden Aoki": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jack Arcamone": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Andrew Behnke": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Ryan Black": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Kolby Branch": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Teddy Brennan": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Zach Brown": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Justin Byrd": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Bryce Calloway": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Grant Edwards": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Thomas Ellisen": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Paul Farley": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brennan Hudson": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Kenny Ishikawa": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Daniel Jackson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Caleb Jameson": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Cole Johnson": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Cole Koniarsky": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Mason Kosowick": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Rylan Lujo": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Lucas Morici": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Scott Newman": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Joe Nottingham": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Michael O'Shaughnessy": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Jordy Oriach": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Jackson Peavy": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Ty Peeples": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Tre Phelps": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brad Pruett": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "TL Saxon": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Matt Scott": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Alexander Sifford": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Logan Spivey": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jordan Stephens": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Bradley Stewart": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Dylan Vigue": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Joey Volchko": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Luke Wiltrakis": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Dylan Wood": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ryan Wynn": {
+          "throws": "R",
+          "bats": "R"
+        }
+      }
+    },
+    "614849": {
+      "name": "UAB",
+      "players": {
+        "Landon Beaver": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Alex Cheeseman": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brendan Conner": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Drake Douglas": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Alex Dupuy": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jacob Francis": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Jay Fuller": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Tyler Haines": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Kevin Hall Jr.": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "John Paul Head": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Christian Helmers": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Wesley Helms": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Justin Hicks": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Josh Holley": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brooks House": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Andrew Hunt": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Hunter Hyatt": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Chase Ingram": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Konner Keplinger": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Caden Kok": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Bradley Loftin": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Patrick McGlon": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jake Merrick": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Riley Miller": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ryan Olson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Austin Pierzynski": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Andrew Prejean": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Max Price": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Baylor Roberts": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Carter Samuelson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Braxton Shelton": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Mason Steele": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Drew Thompson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Isaac Warrick": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Brady Waugh": {
+          "throws": "R",
+          "bats": "L"
+        }
+      }
+    },
+    "614782": {
+      "name": "Tennessee",
+      "players": {
+        "Jay Abernathy": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Nic Abraham": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Ariel Antigua": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cam Appenzeller": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Brandon Arvidson": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Ethan Baiotto": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Finley Bates": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ari Bethea": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jax Bishop": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Evan Blanco": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Blaine Brown": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Hutson Chance": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Reese Chapman": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Levi Clark": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Chandler Day": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Sawyer Deering": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Nate Eisfelder": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jackson Estes": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Henry Ford": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brady Frederick": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Blake Grimmer": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Trent Grindlinger": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Will Haas": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Evan Hankins": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Hunter High": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Mark Hindy": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Brayden Krenzel": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tegan Kuhns": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Stone Lawless": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Landon Mack": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Manny Marin": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "DJ McDowell": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ethan Moore": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Tyler Myatt": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Chris Newstrom": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Bo Rhudy": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Taylor Tracey": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Cash Williams": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Garrett Wright": {
+          "throws": "R",
+          "bats": "R"
+        }
+      }
+    }
+  }
+}
