@@ -1,8 +1,8 @@
 {
-  "lastUpdated": "2026-04-12T03:06:31",
-  "gamesScraped": 35,
+  "lastUpdated": "2026-04-14T17:39:54",
+  "gamesScraped": 36,
   "lastGame": {
-    "date": "04/11/2026",
+    "date": "04/12/2026",
     "opponent": "Tennessee"
   },
   "all": {
@@ -163,43 +163,43 @@
         "splits": {
           "leadoff pct": [
             6,
-            20
-          ],
-          "runners": [
-            9,
-            32
-          ],
-          "vs LHB": [
-            5,
-            34
-          ],
-          "with 2Outs": [
-            6,
-            28
-          ],
-          "emtpy": [
-            9,
-            48
-          ],
-          "with scorepos": [
-            4,
-            30
-          ],
-          "with scorepos2": [
-            3,
             23
           ],
+          "runners": [
+            13,
+            39
+          ],
+          "vs LHB": [
+            7,
+            41
+          ],
+          "with 2Outs": [
+            11,
+            37
+          ],
+          "emtpy": [
+            10,
+            57
+          ],
+          "with scorepos": [
+            7,
+            35
+          ],
+          "with scorepos2": [
+            6,
+            27
+          ],
           "with runners2": [
-            4,
-            14
+            8,
+            20
           ],
           "bases loaded": [
             0,
             2
           ],
           "vs RHB": [
-            13,
-            46
+            16,
+            55
           ]
         }
       },
@@ -208,28 +208,28 @@
         "pos": "p",
         "splits": {
           "leadoff pct": [
-            11,
-            22
+            13,
+            28
           ],
           "runners": [
-            9,
-            32
+            12,
+            37
           ],
           "vs LHB": [
-            6,
-            28
+            9,
+            37
           ],
           "with 2Outs": [
             4,
-            22
+            27
           ],
           "emtpy": [
-            10,
-            43
+            11,
+            56
           ],
           "with scorepos": [
-            5,
-            26
+            6,
+            28
           ],
           "with scorepos2": [
             3,
@@ -244,8 +244,8 @@
             3
           ],
           "vs RHB": [
-            13,
-            47
+            14,
+            56
           ]
         }
       },
@@ -896,44 +896,44 @@
     ],
     "totals": {
       "leadoff pct": [
-        89,
-        300
+        91,
+        309
       ],
       "runners": [
-        110,
-        469
+        117,
+        481
       ],
       "vs LHB": [
-        92,
-        433
+        97,
+        449
       ],
       "with 2Outs": [
-        78,
-        367
+        83,
+        381
       ],
       "emtpy": [
-        148,
-        694
+        150,
+        716
       ],
       "with scorepos": [
-        89,
-        384
+        93,
+        391
       ],
       "with scorepos2": [
-        59,
-        261
+        62,
+        265
       ],
       "with runners2": [
-        41,
-        184
+        45,
+        190
       ],
       "bases loaded": [
         5,
         39
       ],
       "vs RHB": [
-        156,
-        680
+        160,
+        698
       ]
     }
   },
@@ -1049,43 +1049,89 @@
         "splits": {
           "leadoff pct": [
             2,
-            9
+            12
           ],
           "runners": [
-            6,
-            20
+            10,
+            27
           ],
           "vs LHB": [
-            2,
-            17
+            4,
+            24
           ],
           "with 2Outs": [
+            10,
+            26
+          ],
+          "emtpy": [
+            7,
+            32
+          ],
+          "with scorepos": [
             5,
             17
           ],
-          "emtpy": [
-            6,
-            23
-          ],
-          "with scorepos": [
-            2,
+          "with scorepos2": [
+            4,
             12
           ],
-          "with scorepos2": [
-            1,
-            8
-          ],
           "with runners2": [
-            4,
-            11
+            8,
+            17
           ],
           "bases loaded": [
             0,
             2
           ],
           "vs RHB": [
-            10,
-            26
+            13,
+            35
+          ]
+        }
+      },
+      {
+        "name": "Foster, Charlie",
+        "pos": "p",
+        "splits": {
+          "leadoff pct": [
+            7,
+            17
+          ],
+          "runners": [
+            5,
+            16
+          ],
+          "vs LHB": [
+            5,
+            21
+          ],
+          "with 2Outs": [
+            1,
+            13
+          ],
+          "emtpy": [
+            7,
+            36
+          ],
+          "with scorepos": [
+            3,
+            12
+          ],
+          "with scorepos2": [
+            1,
+            2
+          ],
+          "with runners2": [
+            1,
+            2
+          ],
+          "bases loaded": [
+            0,
+            0
+          ],
+          "vs RHB": [
+            7,
+            31
           ]
         }
       },
@@ -1132,52 +1178,6 @@
           "vs RHB": [
             3,
             18
-          ]
-        }
-      },
-      {
-        "name": "Foster, Charlie",
-        "pos": "p",
-        "splits": {
-          "leadoff pct": [
-            5,
-            11
-          ],
-          "runners": [
-            2,
-            11
-          ],
-          "vs LHB": [
-            2,
-            12
-          ],
-          "with 2Outs": [
-            1,
-            8
-          ],
-          "emtpy": [
-            6,
-            23
-          ],
-          "with scorepos": [
-            2,
-            10
-          ],
-          "with scorepos2": [
-            1,
-            2
-          ],
-          "with runners2": [
-            1,
-            2
-          ],
-          "bases loaded": [
-            0,
-            0
-          ],
-          "vs RHB": [
-            6,
-            22
           ]
         }
       },
@@ -1644,44 +1644,44 @@
     ],
     "totals": {
       "leadoff pct": [
-        36,
-        124
+        38,
+        133
       ],
       "runners": [
-        47,
-        200
+        54,
+        212
       ],
       "vs LHB": [
-        44,
-        199
+        49,
+        215
       ],
       "with 2Outs": [
-        37,
-        158
+        42,
+        172
       ],
       "emtpy": [
-        63,
-        271
+        65,
+        293
       ],
       "with scorepos": [
-        28,
-        132
+        32,
+        139
       ],
       "with scorepos2": [
-        15,
-        67
+        18,
+        71
       ],
       "with runners2": [
-        22,
-        92
+        26,
+        98
       ],
       "bases loaded": [
         1,
         18
       ],
       "vs RHB": [
-        66,
-        272
+        70,
+        290
       ]
     }
   },
