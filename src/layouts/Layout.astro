@@ -104,50 +104,79 @@ const navItems: NavItem[] = [
       })();
     </script>
 
-    <!--
-      Dropdown hover styles — plain CSS so they work in every browser
-      regardless of Tailwind's build-time class detection.
-    -->
     <style is:global>
-      /*
-       * Desktop: show dropdown when hovering the parent <li>.
-       * Touch devices use the JS click handler instead.
-       */
-      @media (hover: hover) {
-        .nav-dropdown:hover > .nav-dropdown-menu {
-          display: block;
-        }
-      }
-
-      /*
-       * Invisible hover bridge: extends above the dropdown panel so the
-       * mouse can travel from the trigger button into the menu without losing hover.
-       */
-      .nav-dropdown-menu::before {
-        content: '';
+      /* Hamburger slide-down menu */
+      #nav-menu {
+        display: none;
         position: absolute;
+        top: 100%;
         left: 0;
         right: 0;
-        top: -12px;
-        height: 16px;
+        background-color: #5D1725;
+        border-top: 1px solid #3d0f18;
+        border-bottom: 1px solid #3d0f18;
+        z-index: 40;
+        padding: 0.5rem 0;
       }
 
-      /* Dropdown link hover: white bg tint over the maroon nav */
-      .nav-dropdown-link:hover {
-        background-color: rgba(255, 255, 255, 0.12);
+      #nav-menu.open {
+        display: block;
+      }
+
+      /* Section label inside menu */
+      .menu-section-label {
+        padding: 0.5rem 1.25rem 0.25rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #777777;
+      }
+
+      /* Individual menu link */
+      .menu-link {
+        display: block;
+        padding: 0.55rem 1.25rem;
+        font-size: 0.9rem;
+        color: #C1C6C8;
+        text-decoration: none;
+        transition: background-color 0.1s, color 0.1s;
+      }
+
+      .menu-link:hover {
+        background-color: rgba(255,255,255,0.1);
         color: #ffffff;
+        text-decoration: none;
       }
 
-      :where(.dark) .nav-dropdown-link:hover {
-        background-color: rgba(255, 255, 255, 0.10);
-        color: #ffffff;
-      }
-
-      /* Active dropdown link */
-      .nav-dropdown-link.active {
+      .menu-link.active {
         color: #ffffff;
         font-weight: 600;
-        background-color: rgba(255, 255, 255, 0.15);
+        background-color: rgba(255,255,255,0.12);
+      }
+
+      /* Hamburger bar animation */
+      #hamburger-btn .bar {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background-color: #C1C6C8;
+        transition: transform 0.2s, opacity 0.2s;
+        transform-origin: center;
+      }
+
+      #hamburger-btn.open .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+        background-color: #ffffff;
+      }
+
+      #hamburger-btn.open .bar:nth-child(2) {
+        opacity: 0;
+      }
+
+      #hamburger-btn.open .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+        background-color: #ffffff;
       }
     </style>
   </head>
@@ -155,77 +184,30 @@ const navItems: NavItem[] = [
   <body class="min-h-screen flex flex-col" style="background-color: var(--color-bg); color: var(--color-text);">
 
     <!-- Sticky top nav — MSState Maroon background -->
-    <header class="sticky top-0 z-50" style="background-color: #5D1725; border-bottom: 1px solid #3d0f18;">
-      <div class="max-w-7xl mx-auto px-5 py-3 flex flex-wrap items-center gap-x-6 gap-y-2">
+    <header class="sticky top-0 z-50" style="background-color: #5D1725; border-bottom: 1px solid #3d0f18; position: relative;">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
-        <!-- Site name / home link -->
+        <!-- Left: Hamburger button -->
+        <button
+          id="hamburger-btn"
+          aria-label="Toggle navigation menu"
+          aria-expanded="false"
+          style="background: none; border: none; cursor: pointer; display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: 4px; border-radius: 4px;"
+        >
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+
+        <!-- Center: Site name -->
         <a
           href="/"
-          class="font-bold tracking-tight mr-auto text-base"
-          style="color: #ffffff; text-decoration: none; font-size: 1rem;"
+          style="color: #ffffff; text-decoration: none; font-size: 1rem; font-weight: 700; letter-spacing: -0.01em; position: absolute; left: 50%; transform: translateX(-50%);"
         >
           MSU Baseball Stats
         </a>
 
-        <!-- Navigation links -->
-        <nav aria-label="Main navigation">
-          <ul class="flex flex-wrap gap-x-4 gap-y-1 list-none m-0 p-0 items-center">
-            {navItems.map((item) => (
-              item.kind === 'link' ? (
-                /* Standard single-page link */
-                <li>
-                  <a
-                    href={item.href}
-                    style={`text-decoration: none; font-size: 0.875rem; color: ${isActive(item.href) ? '#ffffff' : '#C1C6C8'}; font-weight: ${isActive(item.href) ? '600' : '400'};`}
-                    aria-current={isActive(item.href) ? 'page' : undefined}
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ) : (
-                /*
-                 * Dropdown nav item.
-                 * CSS handles hover-to-open on desktop.
-                 * JS at the bottom handles click-to-toggle on mobile.
-                 */
-                <li class="relative nav-dropdown">
-                  <button
-                    style={`background: none; border: none; cursor: pointer; font-size: 0.875rem; display: flex; align-items: center; gap: 0.25rem; color: ${isActive(item.basePath) && path !== '/' ? '#ffffff' : '#C1C6C8'}; font-weight: ${isActive(item.basePath) && path !== '/' ? '600' : '400'};`}
-                    aria-haspopup="true"
-                  >
-                    {item.label}
-                    <!-- Chevron arrow -->
-                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                  </button>
-
-                  <!-- Dropdown panel -->
-                  <ul
-                    class="nav-dropdown-menu absolute top-full left-0 mt-1 rounded-lg shadow-lg py-1 w-72 hidden z-50 list-none p-1"
-                    style="background-color: #5D1725; border: 1px solid #3d0f18;"
-                  >
-                    {item.items.map((sub) => (
-                      <li>
-                        <a
-                          href={sub.href}
-                          class={`nav-dropdown-link block px-3 py-2 text-sm rounded-md transition-colors ${isActive(sub.href) ? 'active' : ''}`}
-                          style={`text-decoration: none; color: ${isActive(sub.href) ? '#ffffff' : '#C1C6C8'};`}
-                          target={sub.href.startsWith('http') ? '_blank' : undefined}
-                          rel={sub.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                        >
-                          {sub.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              )
-            ))}
-          </ul>
-        </nav>
-
-        <!-- Dark mode toggle button -->
+        <!-- Right: Dark mode toggle -->
         <button
           id="theme-toggle"
           aria-label="Toggle dark mode"
@@ -233,12 +215,10 @@ const navItems: NavItem[] = [
           onmouseover="this.style.color='#ffffff'; this.style.backgroundColor='rgba(255,255,255,0.1)';"
           onmouseout="this.style.color='#C1C6C8'; this.style.backgroundColor='transparent';"
         >
-          <!-- Moon icon: visible in light mode -->
           <svg id="moon-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
           </svg>
-          <!-- Sun icon: visible in dark mode -->
           <svg id="sun-icon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/>
@@ -246,6 +226,37 @@ const navItems: NavItem[] = [
         </button>
 
       </div>
+
+      <!-- Slide-down nav menu -->
+      <nav id="nav-menu" aria-label="Main navigation">
+        {navItems.map((item) => (
+          item.kind === 'link' ? (
+            <a
+              href={item.href}
+              class={`menu-link ${isActive(item.href) ? 'active' : ''}`}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          ) : (
+            <>
+              <div class="menu-section-label">{item.label}</div>
+              {item.items.map((sub) => (
+                <a
+                  href={sub.href}
+                  class={`menu-link ${isActive(sub.href) ? 'active' : ''}`}
+                  style="padding-left: 1.75rem;"
+                  target={sub.href.startsWith('http') ? '_blank' : undefined}
+                  rel={sub.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                >
+                  {sub.label}{sub.href.startsWith('http') ? ' ↗' : ''}
+                </a>
+              ))}
+            </>
+          )
+        ))}
+      </nav>
+
     </header>
 
     <!-- Page content -->
@@ -267,13 +278,12 @@ const navItems: NavItem[] = [
 
 <script>
   /**
-   * Sync toggle button icon state with current theme, then wire up the click handler.
+   * Dark mode toggle — syncs moon/sun icon with current theme.
    */
   const root = document.documentElement;
   const moonIcon = document.getElementById('moon-icon');
-  const sunIcon = document.getElementById('sun-icon');
+  const sunIcon  = document.getElementById('sun-icon');
 
-  /** Updates moon/sun icon visibility to match the current theme. */
   function syncIcons() {
     const isDark = root.classList.contains('dark');
     moonIcon?.classList.toggle('hidden', isDark);
@@ -289,29 +299,36 @@ const navItems: NavItem[] = [
   });
 
   /**
-   * Dropdown menu: tap/click support for mobile/touch devices.
-   * CSS :hover handles desktop; this handles touch.
+   * Hamburger menu toggle.
+   * Clicking the button opens/closes the slide-down nav panel.
+   * Clicking anywhere outside the header closes it.
+   * Clicking a nav link closes it too.
    */
-  const dropdownBtns = document.querySelectorAll<HTMLButtonElement>('[aria-haspopup="true"]');
+  const hamburger = document.getElementById('hamburger-btn') as HTMLButtonElement;
+  const navMenu   = document.getElementById('nav-menu') as HTMLElement;
 
-  function closeAllDropdowns() {
-    dropdownBtns.forEach((btn) => {
-      btn.parentElement?.querySelector('ul')?.classList.add('hidden');
-    });
+  function closeMenu() {
+    navMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
   }
 
-  dropdownBtns.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const panel = btn.parentElement?.querySelector('ul');
-      if (!panel) return;
-      const isCurrentlyHidden = panel.classList.contains('hidden');
-      closeAllDropdowns();
-      if (isCurrentlyHidden) {
-        panel.classList.remove('hidden');
-      }
-    });
+  hamburger?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = navMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
   });
 
-  document.addEventListener('click', closeAllDropdowns);
+  // Close when clicking a menu link
+  navMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  // Close when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target as Node) && !navMenu.contains(e.target as Node)) {
+      closeMenu();
+    }
+  });
 </script>
