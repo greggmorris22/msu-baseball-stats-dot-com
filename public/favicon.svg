@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background: MSState Maroon -->
+  <rect width="100" height="100" rx="12" fill="#5D1725"/>
+
+  <!-- M — top half -->
+  <text
+    x="50"
+    y="52"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="52"
+    font-weight="bold"
+    fill="#FFFFFF"
+    text-anchor="middle"
+    dominant-baseline="auto"
+  >M</text>
+
+  <!-- S — bottom half -->
+  <text
+    x="50"
+    y="92"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="48"
+    font-weight="bold"
+    fill="#C1C6C8"
+    text-anchor="middle"
+    dominant-baseline="auto"
+  >S</text>
+</svg>
