@@ -7,11 +7,12 @@
  * subsets, with derived metrics (AVG, OBP, SLG, etc.) pre-calculated.
  *
  * Features:
- *   - Sortable columns (click headers PA through FLD%)
+ *   - Sortable columns (click headers PA through SB-ATT)
  *   - Totals row pinned at the bottom with a teal separator
  *   - Frozen first column (Player names) for horizontal scrolling
- *   - Visual column grouping: ADVANCED, STANDARD, DEFENSE
+ *   - Visual column grouping: ADVANCED, STANDARD
  *   - Filter dropdown: All Teams / SEC Only / Non-Conference
+ *   - Fielding stats (PO, A, E, FLD%) are excluded from display
  *
  * To refresh data: run-stats.bat (or .venv\Scripts\python.exe scripts\scrape-stats.py)
  */
@@ -220,8 +221,10 @@ import Layout from '../layouts/Layout.astro';
   const GROUP_DEFS = [
     { name: 'ADVANCED', start: 'BB%',  end: 'BABIP' },
     { name: 'STANDARD', start: 'GP-GS', end: 'SB-ATT' },
-    { name: 'DEFENSE',  start: 'PO',   end: 'FLD%' },
   ];
+
+  /** Columns to exclude from display. */
+  const COLUMNS_TO_EXCLUDE = ['PO', 'A', 'E', 'FLD%'];
 
   // ===========================================================================
   // State
@@ -239,15 +242,26 @@ import Layout from '../layouts/Layout.astro';
   /**
    * Switch the active dataset based on the filter selection.
    * Resets sort state and re-renders the table.
+   * Filters out excluded columns (fielding stats) from display.
    */
   function applyFilter(filter) {
     currentFilter = filter;
     if (!fullData) return;
 
     const subset = fullData[filter] || fullData['all'];
-    colHeaders  = subset.columns || [];
-    playerRows  = subset.players || [];
-    summaryRows = subset.summary || [];
+    const originalColumns = subset.columns || [];
+    const originalPlayers = subset.players || [];
+    const originalSummary = subset.summary || [];
+
+    // Filter out excluded columns and keep track of which indices to use
+    const keepIndices = originalColumns
+      .map((col, idx) => COLUMNS_TO_EXCLUDE.includes(col) ? -1 : idx)
+      .filter(idx => idx >= 0);
+
+    colHeaders = keepIndices.map(idx => originalColumns[idx]);
+    playerRows = originalPlayers.map(row => keepIndices.map(idx => row[idx]));
+    summaryRows = originalSummary.map(row => keepIndices.map(idx => row[idx]));
+
     // Default sort: PA descending (most playing time first)
     const defaultCol = colHeaders.indexOf('PA');
     sortCol  = defaultCol >= 0 ? defaultCol : -1;
