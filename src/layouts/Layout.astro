@@ -18,7 +18,7 @@
  * Preference is persisted in localStorage. System preference is respected
  * when no explicit preference has been saved.
  */
-import "../styles/global.css";
+import '../styles/global.css';
 
 interface Props {
   title: string;
@@ -40,17 +40,17 @@ const path = Astro.url.pathname;
  * "/" only matches exactly to avoid highlighting Home on every page.
  */
 const isActive = (href: string) =>
-  href === "/" ? path === "/" : path.startsWith(href);
+  href === '/' ? path === '/' : path.startsWith(href);
 
 /** A simple single-page nav link */
-type SimpleLink = { kind: "link"; href: string; label: string };
+type SimpleLink = { kind: 'link'; href: string; label: string };
 
 /**
  * A dropdown nav item — renders a hover menu with sub-pages.
  * basePath is used to determine if any sub-page is currently active.
  */
 type DropdownLink = {
-  kind: "dropdown";
+  kind: 'dropdown';
   label: string;
   basePath: string;
   items: { href: string; label: string }[];
@@ -59,25 +59,22 @@ type DropdownLink = {
 type NavItem = SimpleLink | DropdownLink;
 
 const navItems: NavItem[] = [
-  { kind: "link", href: "/", label: "Home" },
+  { kind: 'link', href: '/', label: 'Home' },
   {
-    kind: "dropdown",
-    label: "",
-    basePath: "/",
+    kind: 'dropdown',
+    label: '2026 Stats',
+    basePath: '/',
     items: [
-      { href: "/batting-2026", label: "Hitting Stats" },
-      { href: "/pitching-2026", label: "Pitching Stats" },
-      { href: "/fielding-2026", label: "Fielding Stats" },
-      { href: "/situational-hitting-2026", label: "Situational Hitting" },
-      { href: "/situational-pitching-2026", label: "Situational Pitching" },
-      { href: "/batter-splits-2026", label: "Batter Splits Selector" },
-      { href: "/pitcher-splits-2026", label: "Pitcher Splits Selector" },
-      {
-        href: "https://diamond-dawg-tracker.streamlit.app/",
-        label: "Diamond Dawg Tracker",
-      },
-      { href: "/amegy-batters-2026", label: "Amegy Series — Batters" },
-      { href: "/amegy-pitchers-2026", label: "Amegy Series — Pitchers" },
+      { href: '/batting-2026',              label: 'Hitting Stats' },
+      { href: '/pitching-2026',             label: 'Pitching Stats' },
+      { href: '/fielding-2026',             label: 'Fielding Stats' },
+      { href: '/situational-hitting-2026',  label: 'Situational Hitting' },
+      { href: '/situational-pitching-2026', label: 'Situational Pitching' },
+      { href: '/batter-splits-2026',        label: 'Batter Splits Selector' },
+      { href: '/pitcher-splits-2026',       label: 'Pitcher Splits Selector' },
+      { href: 'https://diamond-dawg-tracker.streamlit.app/', label: 'Diamond Dawg Tracker' },
+      { href: '/amegy-batters-2026',        label: 'Amegy Series — Batters' },
+      { href: '/amegy-pitchers-2026',       label: 'Amegy Series — Pitchers' },
     ],
   },
 ];
@@ -99,12 +96,10 @@ const navItems: NavItem[] = [
     -->
     <script is:inline>
       (function () {
-        const saved = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)",
-        ).matches;
-        if (saved === "dark" || (!saved && prefersDark)) {
-          document.documentElement.classList.add("dark");
+        const saved = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (saved === 'dark' || (!saved && prefersDark)) {
+          document.documentElement.classList.add('dark');
         }
       })();
     </script>
@@ -117,7 +112,7 @@ const navItems: NavItem[] = [
         top: 100%;
         left: 0;
         right: 0;
-        background-color: #5d1725;
+        background-color: #5D1725;
         border-top: 1px solid #3d0f18;
         border-bottom: 1px solid #3d0f18;
         z-index: 40;
@@ -143,15 +138,13 @@ const navItems: NavItem[] = [
         display: block;
         padding: 0.55rem 1.25rem;
         font-size: 0.9rem;
-        color: #c1c6c8;
+        color: #C1C6C8;
         text-decoration: none;
-        transition:
-          background-color 0.1s,
-          color 0.1s;
+        transition: background-color 0.1s, color 0.1s;
       }
 
       .menu-link:hover {
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(255,255,255,0.1);
         color: #ffffff;
         text-decoration: none;
       }
@@ -159,7 +152,7 @@ const navItems: NavItem[] = [
       .menu-link.active {
         color: #ffffff;
         font-weight: 600;
-        background-color: rgba(255, 255, 255, 0.12);
+        background-color: rgba(255,255,255,0.12);
       }
 
       /* Hamburger bar animation */
@@ -167,10 +160,8 @@ const navItems: NavItem[] = [
         display: block;
         width: 22px;
         height: 2px;
-        background-color: #c1c6c8;
-        transition:
-          transform 0.2s,
-          opacity 0.2s;
+        background-color: #C1C6C8;
+        transition: transform 0.2s, opacity 0.2s;
         transform-origin: center;
       }
 
@@ -190,18 +181,12 @@ const navItems: NavItem[] = [
     </style>
   </head>
 
-  <body
-    class="min-h-screen flex flex-col"
-    style="background-color: var(--color-bg); color: var(--color-text);"
-  >
+  <body class="min-h-screen flex flex-col" style="background-color: var(--color-bg); color: var(--color-text);">
+
     <!-- Sticky top nav — MSState Maroon background -->
-    <header
-      class="sticky top-0 z-50"
-      style="background-color: #5D1725; border-bottom: 1px solid #3d0f18; position: relative;"
-    >
-      <div
-        class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between"
-      >
+    <header class="sticky top-0 z-50" style="background-color: #5D1725; border-bottom: 1px solid #3d0f18; position: relative;">
+      <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+
         <!-- Left: Hamburger button -->
         <button
           id="hamburger-btn"
@@ -230,111 +215,64 @@ const navItems: NavItem[] = [
           onmouseover="this.style.color='#ffffff'; this.style.backgroundColor='rgba(255,255,255,0.1)';"
           onmouseout="this.style.color='#C1C6C8'; this.style.backgroundColor='transparent';"
         >
-          <svg
-            id="moon-icon"
-            class="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-            ></path>
+          <svg id="moon-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
           </svg>
-          <svg
-            id="sun-icon"
-            class="w-4 h-4 hidden"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"
-            ></path>
+          <svg id="sun-icon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/>
           </svg>
         </button>
+
       </div>
 
       <!-- Slide-down nav menu -->
       <nav id="nav-menu" aria-label="Main navigation">
-        {
-          navItems.map((item) =>
-            item.kind === "link" ? (
-              <a
-                href={item.href}
-                class={`menu-link ${isActive(item.href) ? "active" : ""}`}
-                aria-current={isActive(item.href) ? "page" : undefined}
-              >
-                {item.label}
-              </a>
-            ) : (
-              <>
-                {item.label && <div class="menu-section-label">{item.label}</div>}
-                {item.items.map((sub) => (
-                  <a
-                    href={sub.href}
-                    class={`menu-link ${isActive(sub.href) ? "active" : ""}`}
-                    style="padding-left: 1.75rem;"
-                    target={sub.href.startsWith("http") ? "_blank" : undefined}
-                    rel={
-                      sub.href.startsWith("http")
-                        ? "noopener noreferrer"
-                        : undefined
-                    }
-                  >
-                    {sub.label}
-                    {sub.href.startsWith("http") ? " ↗" : ""}
-                  </a>
-                ))}
-              </>
-            ),
+        {navItems.map((item) => (
+          item.kind === 'link' ? (
+            <a
+              href={item.href}
+              class={`menu-link ${isActive(item.href) ? 'active' : ''}`}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          ) : (
+            <>
+              <div class="menu-section-label">{item.label}</div>
+              {item.items.map((sub) => (
+                <a
+                  href={sub.href}
+                  class={`menu-link ${isActive(sub.href) ? 'active' : ''}`}
+                  style="padding-left: 1.75rem;"
+                  target={sub.href.startsWith('http') ? '_blank' : undefined}
+                  rel={sub.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                >
+                  {sub.label}{sub.href.startsWith('http') ? ' ↗' : ''}
+                </a>
+              ))}
+            </>
           )
-        }
+        ))}
       </nav>
+
     </header>
 
     <!-- Page content -->
-    <main
-      class={`flex-1 ${wide ? "max-w-7xl" : "max-w-5xl"} mx-auto w-full px-5 py-10`}
-    >
+    <main class={`flex-1 ${wide ? 'max-w-7xl' : 'max-w-5xl'} mx-auto w-full px-5 py-10`}>
       <slot />
     </main>
 
     <!-- Footer -->
-    <footer
-      style="border-top: 1px solid var(--color-light-grey, #C1C6C8); margin-top: auto;"
-    >
-      <div
-        class="max-w-5xl mx-auto px-5 py-5 text-sm flex flex-wrap gap-x-4 justify-between"
-        style="color: #777777;"
-      >
+    <footer style="border-top: 1px solid var(--color-light-grey, #C1C6C8); margin-top: auto;">
+      <div class="max-w-5xl mx-auto px-5 py-5 text-sm flex flex-wrap gap-x-4 justify-between" style="color: #777777;">
         <span>msubaseballstats.com</span>
-        <span
-          >Data source: <a
-            href="https://stats.ncaa.org/teams/614666"
-            target="_blank"
-            rel="noopener noreferrer"
-            style="color: #777777; text-decoration: underline;">NCAA Stats</a
-          ></span
-        >
-        <span
-          >Built with <a
-            href="https://astro.build"
-            target="_blank"
-            rel="noopener noreferrer"
-            style="color: #777777; text-decoration: underline;">Astro</a
-          ></span
-        >
+        <span>Data source: <a href="https://stats.ncaa.org/teams/614666" target="_blank" rel="noopener noreferrer" style="color: #777777; text-decoration: underline;">NCAA Stats</a></span>
+        <span>Built with <a href="https://astro.build" target="_blank" rel="noopener noreferrer" style="color: #777777; text-decoration: underline;">Astro</a></span>
       </div>
     </footer>
+
   </body>
 </html>
 
@@ -343,20 +281,20 @@ const navItems: NavItem[] = [
    * Dark mode toggle — syncs moon/sun icon with current theme.
    */
   const root = document.documentElement;
-  const moonIcon = document.getElementById("moon-icon");
-  const sunIcon = document.getElementById("sun-icon");
+  const moonIcon = document.getElementById('moon-icon');
+  const sunIcon  = document.getElementById('sun-icon');
 
   function syncIcons() {
-    const isDark = root.classList.contains("dark");
-    moonIcon?.classList.toggle("hidden", isDark);
-    sunIcon?.classList.toggle("hidden", !isDark);
+    const isDark = root.classList.contains('dark');
+    moonIcon?.classList.toggle('hidden', isDark);
+    sunIcon?.classList.toggle('hidden', !isDark);
   }
 
   syncIcons();
 
-  document.getElementById("theme-toggle")?.addEventListener("click", () => {
-    const nowDark = root.classList.toggle("dark");
-    localStorage.setItem("theme", nowDark ? "dark" : "light");
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const nowDark = root.classList.toggle('dark');
+    localStorage.setItem('theme', nowDark ? 'dark' : 'light');
     syncIcons();
   });
 
@@ -366,35 +304,30 @@ const navItems: NavItem[] = [
    * Clicking anywhere outside the header closes it.
    * Clicking a nav link closes it too.
    */
-  const hamburger = document.getElementById(
-    "hamburger-btn",
-  ) as HTMLButtonElement;
-  const navMenu = document.getElementById("nav-menu") as HTMLElement;
+  const hamburger = document.getElementById('hamburger-btn') as HTMLButtonElement;
+  const navMenu   = document.getElementById('nav-menu') as HTMLElement;
 
   function closeMenu() {
-    navMenu.classList.remove("open");
-    hamburger.classList.remove("open");
-    hamburger.setAttribute("aria-expanded", "false");
+    navMenu.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
   }
 
-  hamburger?.addEventListener("click", (e) => {
+  hamburger?.addEventListener('click', (e) => {
     e.stopPropagation();
-    const isOpen = navMenu.classList.toggle("open");
-    hamburger.classList.toggle("open", isOpen);
-    hamburger.setAttribute("aria-expanded", String(isOpen));
+    const isOpen = navMenu.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', String(isOpen));
   });
 
   // Close when clicking a menu link
-  navMenu?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", closeMenu);
+  navMenu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', closeMenu);
   });
 
   // Close when clicking outside
-  document.addEventListener("click", (e) => {
-    if (
-      !hamburger.contains(e.target as Node) &&
-      !navMenu.contains(e.target as Node)
-    ) {
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target as Node) && !navMenu.contains(e.target as Node)) {
       closeMenu();
     }
   });
