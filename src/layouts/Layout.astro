@@ -263,8 +263,10 @@ const navItems: NavItem[] = [
               href={item.href}
               class={`menu-link ${isActive(item.href) ? 'active' : ''}`}
               aria-current={isActive(item.href) ? 'page' : undefined}
+              target={item.href.startsWith('http') ? '_blank' : undefined}
+              rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
             >
-              {item.label}
+              {item.label}{item.href.startsWith('http') ? ' ↗' : ''}
             </a>
           ) : (
             <>
