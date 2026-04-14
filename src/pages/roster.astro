@@ -1,10 +1,239 @@
 ---
+/**
+ * MSU Baseball — Roster
+ *
+ * Loads the pre-scraped roster data from public/data/roster-2026.json,
+ * which is produced by scripts/scrape-roster.py (a one-time scrape of
+ * stats.ncaa.org). Displays all players in a styled table sorted by
+ * jersey number.
+ *
+ * To refresh data: .venv/Scripts/python.exe scripts/scrape-roster.py
+ */
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Roster" description="Mississippi State baseball roster.">
-  <div class="max-w-2xl mx-auto py-8 text-center">
-    <h1 class="text-3xl font-bold mb-4" style="color: #5D1725;">Roster</h1>
-    <p style="color: #777777;">Coming soon.</p>
+<Layout title="Roster" description="Mississippi State baseball 2026 roster.">
+
+  <h1 class="text-3xl font-bold mb-2">Roster</h1>
+  <p id="roster-subtitle" class="text-stone-500 dark:text-stone-400 mb-4 text-lg">
+    Mississippi State Bulldog baseball.
+  </p>
+
+  <div class="rounded-xl border border-stone-200 dark:border-stone-700 overflow-hidden bg-white dark:bg-stone-800 shadow-sm">
+    <div id="roster-container" class="p-4 text-sm text-stone-500 dark:text-stone-400">
+      Loading roster&hellip;
+    </div>
   </div>
+
 </Layout>
+
+<style is:global>
+  /* ===== BASE TABLE ===== */
+  .roster-wrapper { overflow-x: auto; }
+
+  .roster-table {
+    width: 100%;
+    font-size: 0.8125rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    white-space: nowrap;
+  }
+
+  /* ===== COLUMN HEADER ROW ===== */
+  .roster-table thead th {
+    background-color: #5D1725;
+    color: #ffffff;
+    padding: 0.55rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    border-bottom: 2px solid #4a1020;
+  }
+
+  /* ===== DATA CELLS ===== */
+  .roster-table tbody td {
+    padding: 0.4rem 0.75rem;
+    border-bottom: 1px solid rgb(245 245 244);
+    color: rgb(41 37 36);
+  }
+
+  /* Alternating row stripe */
+  .roster-table tbody tr:nth-child(odd) td {
+    background-color: rgb(255 255 255);
+  }
+
+  .roster-table tbody tr:nth-child(even) td {
+    background-color: rgb(250 250 249);
+  }
+
+  /* Row hover highlight */
+  .roster-table tbody tr:hover td {
+    background-color: rgb(245 245 244);
+  }
+
+  /* ===== COLUMN WIDTHS ===== */
+  /* Jersey number — narrow */
+  .roster-table td.col-num,
+  .roster-table th.col-num {
+    text-align: center;
+    width: 2.5rem;
+  }
+
+  /* GP / GS — narrow, right-aligned */
+  .roster-table td.col-stat,
+  .roster-table th.col-stat {
+    text-align: center;
+    width: 3rem;
+  }
+
+  /* Name — wider */
+  .roster-table td.col-name {
+    font-weight: 500;
+  }
+
+  /* ===== DARK MODE ===== */
+  .dark .roster-table thead th {
+    background-color: #7a1f30;
+    border-bottom-color: #5D1725;
+  }
+
+  .dark .roster-table tbody td {
+    color: rgb(214 211 209);
+    border-bottom-color: rgb(41 37 36);
+  }
+
+  .dark .roster-table tbody tr:nth-child(odd) td {
+    background-color: rgb(41 37 36);
+  }
+
+  .dark .roster-table tbody tr:nth-child(even) td {
+    background-color: rgb(35 31 30);
+  }
+
+  .dark .roster-table tbody tr:hover td {
+    background-color: rgb(50 46 44);
+  }
+
+  /* ===== LAST-UPDATED NOTE ===== */
+  .roster-updated {
+    font-size: 0.75rem;
+    color: rgb(120 113 108);
+    text-align: right;
+    padding: 0.4rem 0.75rem 0.5rem;
+  }
+
+  .dark .roster-updated {
+    color: rgb(87 83 78);
+  }
+</style>
+
+<script>
+  // Indices of columns that are numeric stats (right-align, narrower width)
+  const STAT_COLS = new Set(['GP', 'GS']);
+
+  // Index of the jersey number column — used for default sort
+  const NUM_COL_HEADER = '#';
+
+  /**
+   * Parse a jersey number string to an integer for sorting.
+   * Non-numeric values (e.g. blank) sort to the end.
+   */
+  function parseNum(s) {
+    const n = parseInt(s, 10);
+    return isNaN(n) ? Infinity : n;
+  }
+
+  /**
+   * Render the roster table from the JSON data object.
+   * @param {Object} data - Parsed roster-2026.json
+   */
+  function renderRoster(data) {
+    const container = document.getElementById('roster-container');
+    const subtitle  = document.getElementById('roster-subtitle');
+    const columns   = data.columns || [];
+    let   players   = data.players || [];
+
+    // Sort by jersey number ascending by default
+    const numIdx = columns.indexOf(NUM_COL_HEADER);
+    if (numIdx >= 0) {
+      players = [...players].sort((a, b) => parseNum(a[numIdx]) - parseNum(b[numIdx]));
+    }
+
+    // Update subtitle with scrape date
+    if (data.scraped) {
+      const d = new Date(data.scraped);
+      const formatted = d.toLocaleDateString('en-US', {
+        year: 'numeric', month: 'long', day: 'numeric',
+      });
+      subtitle.textContent = `Mississippi State Bulldog baseball • ${players.length} players`;
+    } else {
+      subtitle.textContent = `Mississippi State Bulldog baseball • ${players.length} players`;
+    }
+
+    // --- Build header row ---
+    const thCells = columns.map(col => {
+      const cls = col === '#' ? 'col-num'
+                : STAT_COLS.has(col) ? 'col-stat'
+                : '';
+      return `<th class="${cls}">${col}</th>`;
+    }).join('');
+
+    // --- Build body rows ---
+    const bodyRows = players.map(row => {
+      const cells = columns.map((col, i) => {
+        const val = row[i] ?? '';
+        const cls = col === '#' ? 'col-num'
+                  : STAT_COLS.has(col) ? 'col-stat'
+                  : col === 'Name' ? 'col-name'
+                  : '';
+        return `<td class="${cls}">${val}</td>`;
+      }).join('');
+      return `<tr>${cells}</tr>`;
+    }).join('');
+
+    // --- Assemble table ---
+    const scraped = data.scraped
+      ? new Date(data.scraped).toLocaleDateString('en-US', {
+          year: 'numeric', month: 'long', day: 'numeric',
+        })
+      : 'unknown date';
+
+    container.innerHTML = `
+      <div class="roster-wrapper">
+        <table class="roster-table">
+          <thead><tr>${thCells}</tr></thead>
+          <tbody>${bodyRows}</tbody>
+        </table>
+      </div>
+      <p class="roster-updated">
+        Source: <a href="${data.source}" target="_blank" rel="noopener noreferrer"
+          class="underline hover:text-stone-700 dark:hover:text-stone-300">stats.ncaa.org</a>
+        &nbsp;&middot;&nbsp; Scraped ${scraped}
+      </p>
+    `;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Load data and render
+  // ---------------------------------------------------------------------------
+  async function init() {
+    const container = document.getElementById('roster-container');
+    try {
+      const res = await fetch('/data/roster-2026.json');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      renderRoster(data);
+    } catch (err) {
+      container.innerHTML = `
+        <p class="text-red-600 dark:text-red-400 font-medium">
+          Failed to load roster data: ${err.message}
+        </p>
+        <p class="mt-1 text-xs">
+          Run <code>scripts/scrape-roster.py</code> to generate the data file.
+        </p>
+      `;
+    }
+  }
+
+  init();
+</script>
