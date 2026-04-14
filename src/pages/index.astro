@@ -8,19 +8,24 @@
  */
 import Layout from '../layouts/Layout.astro';
 
-// Read last-updated info from the hitting stats JSON at build time.
-// This avoids hardcoding a date that goes stale.
+// Read last-updated info from the hitting stats JSON at build time using fs.
+// fetch() doesn't work for local files in Astro's build pipeline.
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+
 let lastUpdated = '';
 let gamesScraped = 0;
 let lastGame = { date: '', opponent: '' };
 try {
-  const raw = await fetch(new URL('../../public/data/hitting-stats-2026.json', import.meta.url));
-  const data = await raw.json();
+  const dir = path.dirname(fileURLToPath(import.meta.url));
+  const jsonPath = path.resolve(dir, '../../public/data/hitting-stats-2026.json');
+  const data = JSON.parse(readFileSync(jsonPath, 'utf-8'));
   lastUpdated = data.lastUpdated ?? '';
   gamesScraped = data.gamesScraped ?? 0;
   lastGame = data.lastGame ?? { date: '', opponent: '' };
 } catch {
-  // silently ignore if file is missing during dev
+  // silently ignore if file is missing
 }
 
 /**
