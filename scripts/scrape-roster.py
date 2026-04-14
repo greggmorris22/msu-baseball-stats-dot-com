@@ -179,11 +179,28 @@ def main():
     if not html:
         print("WARNING: Could not capture raw server HTML. Falling back to JS-modified DOM.")
 
-    # --- Debug: dump first 2000 chars of the received HTML ---
     print("Parsing roster table...")
     columns, players = parse_roster_table(html)
     print(f"  Columns ({len(columns)}): {columns}")
     print(f"  Player rows: {len(players)}")
+
+    # Drop GP and GS columns (games played / games started) — not needed
+    # on the roster page. Also normalize Bats/Throws capitalization.
+    drop = {'GP', 'GS'}
+    keep_idx = [i for i, c in enumerate(columns) if c not in drop]
+    columns = [columns[i] for i in keep_idx]
+    players = [[row[i] for i in keep_idx] for row in players]
+
+    cap_map = {'RIGHT': 'Right', 'LEFT': 'Left', 'BOTH': 'Both'}
+    bats_idx = columns.index('Bats') if 'Bats' in columns else None
+    throws_idx = columns.index('Throws') if 'Throws' in columns else None
+    for row in players:
+        if bats_idx is not None:
+            row[bats_idx] = cap_map.get(row[bats_idx], row[bats_idx])
+        if throws_idx is not None:
+            row[throws_idx] = cap_map.get(row[throws_idx], row[throws_idx])
+
+    print(f"  Final columns: {columns}")
 
     output = {
         "scraped": datetime.now().isoformat(timespec="seconds"),

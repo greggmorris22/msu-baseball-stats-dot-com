@@ -79,13 +79,6 @@ import Layout from '../layouts/Layout.astro';
     width: 2.5rem;
   }
 
-  /* GP / GS — narrow, right-aligned */
-  .roster-table td.col-stat,
-  .roster-table th.col-stat {
-    text-align: center;
-    width: 3rem;
-  }
-
   /* Name — wider */
   .roster-table td.col-name {
     font-weight: 500;
@@ -128,9 +121,6 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
-  // Indices of columns that are numeric stats (right-align, narrower width)
-  const STAT_COLS = new Set(['GP', 'GS']);
-
   // Index of the jersey number column — used for default sort
   const NUM_COL_HEADER = '#';
 
@@ -172,9 +162,7 @@ import Layout from '../layouts/Layout.astro';
 
     // --- Build header row ---
     const thCells = columns.map(col => {
-      const cls = col === '#' ? 'col-num'
-                : STAT_COLS.has(col) ? 'col-stat'
-                : '';
+      const cls = col === '#' ? 'col-num' : '';
       return `<th class="${cls}">${col}</th>`;
     }).join('');
 
@@ -183,7 +171,6 @@ import Layout from '../layouts/Layout.astro';
       const cells = columns.map((col, i) => {
         const val = row[i] ?? '';
         const cls = col === '#' ? 'col-num'
-                  : STAT_COLS.has(col) ? 'col-stat'
                   : col === 'Name' ? 'col-name'
                   : '';
         return `<td class="${cls}">${val}</td>`;
