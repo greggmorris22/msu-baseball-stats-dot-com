@@ -1,54 +1,54 @@
 ---
 /**
- * MSU Baseball — Batter Splits Selector (2026)
+ * MSU Baseball — Pitching Splits Tool
  *
  * Loads PA-level play-by-play data from public/data/pbp-events-2026.json
  * (produced by scripts/parse_pbp.py) and performs client-side filtering
- * and aggregation based on six user-selected dimensions:
+ * and aggregation across six dimensions:
  *
- *   1. Pitcher hand   — All / vs RHP / vs LHP
+ *   1. Batter side    — All / vs RHB / vs LHB
  *   2. Location       — All / Home / Away
  *   3. Opponent       — All / SEC / Non-Conference
  *   4. Count state    — All / Ahead / Even / Behind / 2-Strike
  *   5. Baserunners    — All / Empty / On Base / RISP
  *   6. Leverage       — All / Low / Medium / High
  *
- * Each filter is independent and combines with the others (AND).
- * With all filters set to "All", results should match the numbers on
- * the Hitting Stats page (which scrapes season totals directly from NCAA).
+ * Columns (21):
+ *   IP, PA, K/9, BB/9, K%, BB%, K-BB%, WHIP, BABIP, BB, SO, 2B, 3B, HR,
+ *   AB, Avg, WP, HBP, BK, SFA, SHA
  *
- * Columns:
- *   Player, PA, BB%, K%, AVG, OBP, SLG, ISO, BABIP,
- *   AB, H, 2B, 3B, HR, RBI, TB, BB, HBP, SO, GDP, SF, Sh
- *
- * NOTE: R (runs scored by the batter) is NOT currently tracked per-PA.
- * Adding it would require parse_pbp.py to track runner identities
- * (who is on each base) and credit a run when that runner crosses home.
- * Left as a follow-up.
+ * NOTES on data limitations:
+ *   - bat_side resolves to ~91% of pitcher PAs (NCAA's batter name format
+ *     varies across teams; some opponents show "FirstName LastName" without
+ *     a period, which we can't always match against the roster). PAs with
+ *     unknown bat_side are excluded from L/R-only views and counted under
+ *     "All".
+ *   - WP (wild pitches) and BK (balks) are NOT yet parsed from sub-events.
+ *     Both columns display "—" pending a follow-up parser pass.
+ *   - IP is computed from outs_recorded per PA and reconciles to NCAA's
+ *     pitching totals within ~0.2 IP across the season.
+ *   - Pitcher names from PBP are last-name only; we resolve them to full
+ *     names client-side via pitching-stats-2026.json for display.
  */
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Batter Splits (2026)" description="Mississippi State baseball 2026 batter splits — filter by handedness, count, bases, leverage, and more." wide>
+<Layout title="Pitching Splits Tool" description="Mississippi State baseball pitcher splits — filter by batter handedness, count, bases, leverage, and more." wide>
 
-  <h1 class="text-3xl font-bold mb-2">Batter Splits (2026)</h1>
+  <h1 class="text-3xl font-bold mb-2">Pitching Splits Tool</h1>
   <p id="splits-subtitle" class="text-stone-500 dark:text-stone-400 mb-4 text-lg">
-    Mississippi State Bulldog baseball &mdash; 2026 season.
+    Mississippi State Bulldog baseball.
   </p>
 
-  <!-- ================================================================
-       Filter controls
-       Six dropdowns arranged in a responsive grid. Each change triggers
-       a re-filter + re-aggregate + re-render.
-       ================================================================ -->
   <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-4">
 
     <div>
-      <label for="f-hand" class="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Pitcher Hand</label>
-      <select id="f-hand" class="w-full text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+      <label for="f-bat" class="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Batter Handedness</label>
+      <select id="f-bat" class="w-full text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
         <option value="all">All</option>
-        <option value="R">vs RHP</option>
-        <option value="L">vs LHP</option>
+        <option value="R">vs RHB</option>
+        <option value="L">vs LHB</option>
+        <option value="S">vs Switch (Unknown)</option>
       </select>
     </div>
 
@@ -75,9 +75,9 @@ import Layout from '../layouts/Layout.astro';
       <label for="f-count" class="block text-xs font-medium text-stone-600 dark:text-stone-400 mb-1">Count</label>
       <select id="f-count" class="w-full text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
         <option value="all">All</option>
-        <option value="behind">Ahead</option>
+        <option value="ahead">Ahead</option>
         <option value="even">Even</option>
-        <option value="ahead">Behind</option>
+        <option value="behind">Behind</option>
         <option value="two_strike">2-Strike</option>
       </select>
     </div>
@@ -104,7 +104,6 @@ import Layout from '../layouts/Layout.astro';
 
   </div>
 
-  <!-- PA counter line, updated after every re-aggregate -->
   <p id="pa-counter" class="text-xs text-stone-500 dark:text-stone-400 mb-2"></p>
 
   <div class="rounded-xl border border-stone-200 dark:border-stone-700 overflow-hidden bg-white dark:bg-stone-800 shadow-sm">
@@ -116,8 +115,9 @@ import Layout from '../layouts/Layout.astro';
 </Layout>
 
 <!--
-  Table styles — mirror the Hitting Stats page so the splits page matches
-  the rest of the site visually. Global so dynamically-built DOM picks them up.
+  Table styles — must be duplicated here (not just in batter-splits) because
+  Astro builds each page independently and global styles from one page are
+  NOT available in another page's build output.
 -->
 <style is:global>
   /* ===== BASE TABLE ===== */
@@ -131,7 +131,7 @@ import Layout from '../layouts/Layout.astro';
     white-space: nowrap;
   }
 
-  /* Group header row (ADVANCED / STANDARD) */
+  /* Group header row (PITCHING / RATE / COUNTING / OTHER) */
   .stats-table thead tr:first-child th {
     background-color: rgb(245 245 244);
     color: rgb(120 113 108);
@@ -269,67 +269,94 @@ import Layout from '../layouts/Layout.astro';
 
 <script>
   // ===========================================================================
-  // Batter Splits Selector
+  // Pitcher Splits Selector
   //
   // Workflow:
   //   1. fetch() pbp-events-2026.json once at page load
-  //   2. read current filter state from the 6 dropdowns
-  //   3. walk batter_pas, keeping only rows that match every active filter
-  //   4. aggregate the kept rows per batter into counting stats
-  //   5. compute rate stats (AVG, OBP, SLG, ISO, BABIP, BB%, K%)
+  //   2. fetch() pitching-stats-2026.json to resolve last-name → full-name
+  //   3. read current filter state from the 6 dropdowns
+  //   4. walk pitcher_pas, keeping only rows that match every active filter
+  //   5. aggregate the kept rows per pitcher into counting + derived stats
   //   6. render a sortable table with a team totals row pinned to tfoot
   // ===========================================================================
 
   // ---------------------------------------------------------------------------
-  // Column definitions
-  //
-  // Each entry has:
-  //   key:   property name on the aggregated player object (used for sorting)
-  //   label: header text
-  //   fmt:   a formatter for the raw number
-  //   group: which top-level group this column belongs to
+  // Formatters
   // ---------------------------------------------------------------------------
 
-  /** Format a batting-average-style number: ".333" (no leading zero). */
+  /** Format batting average (".355", no leading zero). */
   function fmtAvg(n) {
     if (!isFinite(n)) return '.---';
     return n.toFixed(3).replace(/^0/, '');
   }
 
-  /** Format a percentage: "12.3%". */
+  /** Format a percentage as "12.3%". */
   function fmtPct(n) {
     if (!isFinite(n)) return '---';
     return (n * 100).toFixed(1) + '%';
   }
 
-  /** Format an integer (counting stat). */
+  /** Format a per-9-innings rate as "8.45". */
+  function fmtPer9(n) {
+    if (!isFinite(n)) return '---';
+    return n.toFixed(2);
+  }
+
+  /** Format a WHIP-style ratio as "1.23". */
+  function fmtRatio(n) {
+    if (!isFinite(n)) return '---';
+    return n.toFixed(2);
+  }
+
+  /** Format an integer. */
   function fmtInt(n) {
     return String(n ?? 0);
   }
 
+  /**
+   * Format innings pitched in baseball notation: full innings, then a decimal
+   * representing thirds. e.g. 86 outs → 28 full innings + 2 outs → "28.2".
+   */
+  function fmtIP(outs) {
+    if (!outs) return '0.0';
+    const full = Math.floor(outs / 3);
+    const frac = outs % 3;
+    return `${full}.${frac}`;
+  }
+
+  /** Static "—" placeholder for stats we don't yet track (WP, BK). */
+  function fmtTODO() {
+    return '\u2014';
+  }
+
+  // ---------------------------------------------------------------------------
+  // Column definitions
+  // Each row in the aggregated player object gets the keys listed below.
+  // ---------------------------------------------------------------------------
+
   const COLUMNS = [
-    { key: 'Player', label: 'Player', fmt: (v) => v,    group: null       },
-    { key: 'PA',     label: 'PA',     fmt: fmtInt,      group: 'ADVANCED' },
-    { key: 'BBpct',  label: 'BB%',    fmt: fmtPct,      group: 'ADVANCED' },
-    { key: 'Kpct',   label: 'K%',     fmt: fmtPct,      group: 'ADVANCED' },
-    { key: 'AVG',    label: 'AVG',    fmt: fmtAvg,      group: 'ADVANCED' },
-    { key: 'OBP',    label: 'OBP',    fmt: fmtAvg,      group: 'ADVANCED' },
-    { key: 'SLG',    label: 'SLG',    fmt: fmtAvg,      group: 'ADVANCED' },
-    { key: 'ISO',    label: 'ISO',    fmt: fmtAvg,      group: 'ADVANCED' },
-    { key: 'BABIP',  label: 'BABIP',  fmt: fmtAvg,      group: 'ADVANCED' },
-    { key: 'AB',     label: 'AB',     fmt: fmtInt,      group: 'STANDARD' },
-    { key: 'H',      label: 'H',      fmt: fmtInt,      group: 'STANDARD' },
-    { key: 'DBL',    label: '2B',     fmt: fmtInt,      group: 'STANDARD' },
-    { key: 'TPL',    label: '3B',     fmt: fmtInt,      group: 'STANDARD' },
-    { key: 'HR',     label: 'HR',     fmt: fmtInt,      group: 'STANDARD' },
-    { key: 'RBI',    label: 'RBI',    fmt: fmtInt,      group: 'STANDARD' },
-    { key: 'TB',     label: 'TB',     fmt: fmtInt,      group: 'STANDARD' },
-    { key: 'BB',     label: 'BB',     fmt: fmtInt,      group: 'STANDARD' },
-    { key: 'HBP',    label: 'HBP',    fmt: fmtInt,      group: 'STANDARD' },
-    { key: 'SO',     label: 'SO',     fmt: fmtInt,      group: 'STANDARD' },
-    { key: 'GDP',    label: 'GDP',    fmt: fmtInt,      group: 'STANDARD' },
-    { key: 'SF',     label: 'SF',     fmt: fmtInt,      group: 'STANDARD' },
-    { key: 'SH',     label: 'Sh',     fmt: fmtInt,      group: 'STANDARD' },
+    { key: 'Player', label: 'Pitcher', fmt: (v) => v,    group: null      },
+    { key: 'IP',     label: 'IP',      fmt: (v, row) => fmtIP(row.outs), group: 'PITCHING' },
+    { key: 'PA',     label: 'PA',      fmt: fmtInt,   group: 'PITCHING' },
+    { key: 'K9',     label: 'K/9',     fmt: fmtPer9,  group: 'RATE'     },
+    { key: 'BB9',    label: 'BB/9',    fmt: fmtPer9,  group: 'RATE'     },
+    { key: 'Kpct',   label: 'K%',      fmt: fmtPct,   group: 'RATE'     },
+    { key: 'BBpct',  label: 'BB%',     fmt: fmtPct,   group: 'RATE'     },
+    { key: 'KBBpct', label: 'K-BB%',   fmt: fmtPct,   group: 'RATE'     },
+    { key: 'WHIP',   label: 'WHIP',    fmt: fmtRatio, group: 'RATE'     },
+    { key: 'BABIP',  label: 'BABIP',   fmt: fmtAvg,   group: 'RATE'     },
+    { key: 'BB',     label: 'BB',      fmt: fmtInt,   group: 'COUNTING' },
+    { key: 'SO',     label: 'SO',      fmt: fmtInt,   group: 'COUNTING' },
+    { key: 'DBL',    label: '2B',      fmt: fmtInt,   group: 'COUNTING' },
+    { key: 'TPL',    label: '3B',      fmt: fmtInt,   group: 'COUNTING' },
+    { key: 'HR',     label: 'HR',      fmt: fmtInt,   group: 'COUNTING' },
+    { key: 'AB',     label: 'AB',      fmt: fmtInt,   group: 'COUNTING' },
+    { key: 'AVG',    label: 'Avg',     fmt: fmtAvg,   group: 'COUNTING' },
+    { key: 'WP',     label: 'WP',      fmt: fmtTODO,  group: 'OTHER'    },
+    { key: 'HBP',    label: 'HBP',     fmt: fmtInt,   group: 'OTHER'    },
+    { key: 'BK',     label: 'BK',      fmt: fmtTODO,  group: 'OTHER'    },
+    { key: 'SFA',    label: 'SFA',     fmt: fmtInt,   group: 'OTHER'    },
+    { key: 'SHA',    label: 'SHA',     fmt: fmtInt,   group: 'OTHER'    },
   ];
 
   // ---------------------------------------------------------------------------
@@ -339,44 +366,39 @@ import Layout from '../layouts/Layout.astro';
   /** Full PA array loaded from JSON (never mutated after fetch). */
   let allPAs = [];
 
-  /** Aggregated player rows for the current filter selection. */
+  /** lastName → fullName map built from pitching-stats-2026.json. */
+  let pitcherNameMap = {};
+
   let playerRows = [];
+  let teamRow    = null;
 
-  /** Aggregated MSU team row (shown in tfoot). */
-  let teamRow = null;
-
-  /** Current sort state — defaults to PA descending (most PA first). */
-  let sortKey  = 'PA';
+  let sortKey  = 'outs';   // sort by IP descending by default (more workload first)
   let sortDesc = true;
 
   // ---------------------------------------------------------------------------
-  // Filter reading
-  //
-  // Each helper pulls the value of one dropdown; getFilters() bundles them
-  // into a plain object used by matchesFilters().
+  // Filter reading + matching
   // ---------------------------------------------------------------------------
 
   function getFilters() {
     return {
-      hand:  (document.getElementById('f-hand')  as HTMLSelectElement)?.value  || 'all',
-      loc:   (document.getElementById('f-loc')   as HTMLSelectElement)?.value  || 'all',
-      opp:   (document.getElementById('f-opp')   as HTMLSelectElement)?.value  || 'all',
-      count: (document.getElementById('f-count') as HTMLSelectElement)?.value  || 'all',
-      bases: (document.getElementById('f-bases') as HTMLSelectElement)?.value  || 'all',
-      lev:   (document.getElementById('f-lev')   as HTMLSelectElement)?.value  || 'all',
+      bat:   (document.getElementById('f-bat')   as HTMLSelectElement)?.value || 'all',
+      loc:   (document.getElementById('f-loc')   as HTMLSelectElement)?.value || 'all',
+      opp:   (document.getElementById('f-opp')   as HTMLSelectElement)?.value || 'all',
+      count: (document.getElementById('f-count') as HTMLSelectElement)?.value || 'all',
+      bases: (document.getElementById('f-bases') as HTMLSelectElement)?.value || 'all',
+      lev:   (document.getElementById('f-lev')   as HTMLSelectElement)?.value || 'all',
     };
   }
 
-  /**
-   * Return true iff the given PA passes every active filter.
-   * Each filter defaults to "all" which accepts everything.
-   */
   function matchesFilters(pa, f) {
-    // --- Pitcher handedness ---
-    // pa.pitcher_hand is "R", "L", or null (unresolved). When user selects
-    // a specific hand we drop PAs with unknown handedness rather than guess.
-    if (f.hand !== 'all') {
-      if (pa.pitcher_hand !== f.hand) return false;
+    // --- Batter handedness ---
+    // bat_side is "R", "L", "S" (switch), or null. When user picks a
+    // specific side we drop unknown PAs rather than guess. Switch hitters
+    // are tricky — they bat opposite to the pitcher's hand by default,
+    // but we don't know which side they batted from in any given PA, so
+    // we EXCLUDE them from L/R-only views to avoid double-counting.
+    if (f.bat !== 'all') {
+      if (pa.bat_side !== f.bat) return false;
     }
 
     // --- Home / Away / Neutral ---
@@ -391,9 +413,8 @@ import Layout from '../layouts/Layout.astro';
     if (f.opp === 'nonsec' &&  pa.isSEC) return false;
 
     // --- Count state ---
-    // Count state is precomputed per PA: "ahead", "even", "behind", plus a
-    // separate "two_strike" boolean (so 0-2 and 1-2 count as behind AND two
-    // strike). Two-strike acts as its own filter rather than a count state.
+    // Same handling as the batter splits page: "two_strike" is its own
+    // overlapping bucket independent of the ahead/even/behind state.
     if (f.count === 'two_strike') {
       if (!pa.two_strike) return false;
     } else if (f.count !== 'all') {
@@ -401,8 +422,6 @@ import Layout from '../layouts/Layout.astro';
     }
 
     // --- Base state ---
-    // bases_before is a 3-char string: position 0 = 1B, 1 = 2B, 2 = 3B.
-    // "_" = empty, digit = occupied. RISP = runner on 2B or 3B.
     const bases = pa.bases_before || '___';
     if (f.bases === 'empty')  { if (bases !== '___') return false; }
     if (f.bases === 'onbase') { if (bases === '___') return false; }
@@ -411,7 +430,6 @@ import Layout from '../layouts/Layout.astro';
     }
 
     // --- Leverage bucket ---
-    // Tango LI: low < 0.85, medium 0.85-2.0, high > 2.0. Bucket is precomputed.
     if (f.lev !== 'all') {
       if (pa.leverage_bucket !== f.lev) return false;
     }
@@ -421,98 +439,91 @@ import Layout from '../layouts/Layout.astro';
 
   // ---------------------------------------------------------------------------
   // Aggregation
-  //
-  // Walk the filtered PA list once, adding each row's counting stats into a
-  // per-batter accumulator. Derived rate stats are computed at the end.
   // ---------------------------------------------------------------------------
 
-  /** Create an empty accumulator with every counting stat set to 0. */
   function emptyRow(name) {
     return {
       Player: name,
-      PA: 0, AB: 0, H: 0, DBL: 0, TPL: 0, HR: 0, RBI: 0, TB: 0,
-      BB: 0, IBB: 0, HBP: 0, SO: 0, SF: 0, SH: 0, GDP: 0,
-      // Rate stats filled in by finalizeRow()
-      AVG: 0, OBP: 0, SLG: 0, ISO: 0, BABIP: 0, BBpct: 0, Kpct: 0,
+      // Counting stats accumulated from PA records
+      PA: 0, AB: 0, H: 0, DBL: 0, TPL: 0, HR: 0, BB: 0, IBB: 0, HBP: 0,
+      SO: 0, SFA: 0, SHA: 0,
+      outs: 0,           // total outs recorded → drives IP
+      // Derived rate stats filled in by finalizeRow()
+      AVG: 0, BABIP: 0, K9: 0, BB9: 0, Kpct: 0, BBpct: 0, KBBpct: 0, WHIP: 0,
+      // WP and BK are not yet parsed; placeholders so the formatter can render
+      WP: null, BK: null,
     };
   }
 
-  /**
-   * Merge a single PA into an accumulator row.
-   * We derive 2B / 3B / HR / GDP from the PA's "outcome" field since
-   * parse_pbp.py only emits per-outcome counting buckets (PA/AB/H/TB/OB/etc),
-   * not one counter per hit type.
-   */
   function addPA(row, pa) {
-    row.PA  += pa.PA  || 0;
-    row.AB  += pa.AB  || 0;
-    row.H   += pa.H   || 0;
-    row.TB  += pa.TB  || 0;
-    row.BB  += pa.BB  || 0;
-    row.IBB += pa.IBB || 0;
-    row.HBP += pa.HBP || 0;
-    row.SO  += pa.K   || 0;     // field is "K" on the record, but we display "SO"
-    row.SF  += pa.SF  || 0;
-    row.SH  += pa.SAC || 0;     // SAC field holds sacrifice bunts
-    row.RBI += pa.rbi || 0;
+    row.PA   += pa.PA   || 0;
+    row.AB   += pa.AB   || 0;
+    row.H    += pa.H    || 0;
+    row.BB   += pa.BB   || 0;
+    row.IBB  += pa.IBB  || 0;
+    row.HBP  += pa.HBP  || 0;
+    row.SO   += pa.K    || 0;     // K on the record, displayed as SO
+    row.SFA  += pa.SF   || 0;     // sac flies allowed
+    row.SHA  += pa.SAC  || 0;     // sac bunts allowed
+    row.outs += pa.outs_recorded || 0;
 
     switch (pa.outcome) {
       case 'double':   row.DBL += 1; break;
       case 'triple':   row.TPL += 1; break;
       case 'home_run': row.HR  += 1; break;
-      case 'gidp':     row.GDP += 1; break;
     }
   }
 
   /**
-   * Compute the derived rate stats for a row after all PAs have been added.
+   * Compute derived rate stats from the counting stats accumulated by addPA().
    *
-   * AVG   = H / AB
-   * OBP   = (H + BB + HBP) / (AB + BB + HBP + SF)
-   * SLG   = TB / AB
-   * ISO   = SLG - AVG
-   * BABIP = (H - HR) / (AB - SO - HR + SF)
-   * BB%   = BB / PA
-   * K%    = SO / PA
+   *   IP_real = outs / 3                       (true innings — for K/9, BB/9, WHIP)
+   *   K/9     = (SO * 9) / IP_real
+   *   BB/9    = (BB * 9) / IP_real
+   *   K%      = SO / PA
+   *   BB%     = BB / PA
+   *   K-BB%   = K% - BB%
+   *   WHIP    = (BB + H) / IP_real
+   *   AVG     = H / AB
+   *   BABIP   = (H - HR) / (AB - SO - HR + SFA)
    *
-   * Division-by-zero cases return NaN so the formatter can render "---".
+   * NaN propagates through finite checks so the formatters render "---".
    */
   function finalizeRow(row) {
-    row.AVG   = row.AB > 0 ? row.H / row.AB : NaN;
-    const obpDen = row.AB + row.BB + row.HBP + row.SF;
-    row.OBP   = obpDen > 0 ? (row.H + row.BB + row.HBP) / obpDen : NaN;
-    row.SLG   = row.AB > 0 ? row.TB / row.AB : NaN;
-    row.ISO   = (isFinite(row.SLG) && isFinite(row.AVG)) ? row.SLG - row.AVG : NaN;
-    const babipDen = row.AB - row.SO - row.HR + row.SF;
-    row.BABIP = babipDen > 0 ? (row.H - row.HR) / babipDen : NaN;
-    row.BBpct = row.PA > 0 ? row.BB / row.PA : NaN;
-    row.Kpct  = row.PA > 0 ? row.SO / row.PA : NaN;
+    const ip = row.outs / 3;
+    row.K9     = ip > 0 ? (row.SO * 9) / ip : NaN;
+    row.BB9    = ip > 0 ? (row.BB * 9) / ip : NaN;
+    row.Kpct   = row.PA > 0 ? row.SO / row.PA : NaN;
+    row.BBpct  = row.PA > 0 ? row.BB / row.PA : NaN;
+    row.KBBpct = (isFinite(row.Kpct) && isFinite(row.BBpct))
+      ? row.Kpct - row.BBpct : NaN;
+    row.WHIP   = ip > 0 ? (row.BB + row.H) / ip : NaN;
+    row.AVG    = row.AB > 0 ? row.H / row.AB : NaN;
+    const babipDen = row.AB - row.SO - row.HR + row.SFA;
+    row.BABIP  = babipDen > 0 ? (row.H - row.HR) / babipDen : NaN;
     return row;
   }
 
-  /**
-   * Aggregate filtered PAs into:
-   *   - an array of per-batter rows
-   *   - a single MSU team row
-   */
   function aggregate(pas) {
-    const byPlayer = new Map();
+    const byPitcher = new Map();
     const team = emptyRow('Mississippi St.');
 
     for (const pa of pas) {
-      const name = pa.batter || '(unknown)';
-      if (!byPlayer.has(name)) byPlayer.set(name, emptyRow(name));
-      addPA(byPlayer.get(name), pa);
+      const key = pa.pitcher || '(unknown)';
+      // Resolve last name → full name for nicer display
+      const display = pitcherNameMap[key] || key;
+      if (!byPitcher.has(display)) byPitcher.set(display, emptyRow(display));
+      addPA(byPitcher.get(display), pa);
       addPA(team, pa);
     }
 
-    const players = Array.from(byPlayer.values()).map(finalizeRow);
+    const players = Array.from(byPitcher.values()).map(finalizeRow);
     finalizeRow(team);
     return { players, team };
   }
 
   // ---------------------------------------------------------------------------
-  // Recompute pipeline — called any time a filter changes
+  // Recompute pipeline
   // ---------------------------------------------------------------------------
 
   function recompute() {
@@ -520,11 +531,10 @@ import Layout from '../layouts/Layout.astro';
     const filtered = allPAs.filter(pa => matchesFilters(pa, f));
     const { players, team } = aggregate(filtered);
 
-    // Hide players with zero PAs under this filter
+    // Hide pitchers with zero PAs under this filter
     playerRows = players.filter(p => p.PA > 0);
     teamRow    = team;
 
-    // Update PA counter line
     const counter = document.getElementById('pa-counter');
     if (counter) {
       const pct = allPAs.length > 0
@@ -537,25 +547,22 @@ import Layout from '../layouts/Layout.astro';
   }
 
   // ---------------------------------------------------------------------------
-  // Render
+  // Sort + render
   // ---------------------------------------------------------------------------
 
-  /** Compare two aggregated rows by the currently-selected sort column. */
   function compareRows(a, b) {
-    const col = COLUMNS.find(c => c.key === sortKey);
-    if (!col) return 0;
     const va = a[sortKey];
     const vb = b[sortKey];
 
-    // Strings (Player column) — natural string compare
-    if (col.key === 'Player') {
+    // Player column — string compare
+    if (sortKey === 'Player') {
       const cmp = String(va).localeCompare(String(vb));
       return sortDesc ? -cmp : cmp;
     }
 
     // Numbers — push NaN to the bottom regardless of direction
-    const aNaN = !isFinite(va);
-    const bNaN = !isFinite(vb);
+    const aNaN = !isFinite(va) || va === null;
+    const bNaN = !isFinite(vb) || vb === null;
     if (aNaN && bNaN) return 0;
     if (aNaN) return 1;
     if (bNaN) return -1;
@@ -572,7 +579,6 @@ import Layout from '../layouts/Layout.astro';
     const oldWrapper = container.querySelector('.stats-wrapper');
     const savedScrollLeft = oldWrapper ? oldWrapper.scrollLeft : 0;
 
-    // Empty-state message if no data survives the filters
     if (playerRows.length === 0) {
       container.replaceChildren(
         (() => {
@@ -596,10 +602,6 @@ import Layout from '../layouts/Layout.astro';
     // --- THEAD row 1: group labels ---
     const thead = document.createElement('thead');
     const groupTr = document.createElement('tr');
-
-    // Walk COLUMNS building one <th> per contiguous run of columns that
-    // share a group label. Columns with group === null (just "Player")
-    // emit an empty cell.
     let i = 0;
     while (i < COLUMNS.length) {
       const col = COLUMNS[i];
@@ -608,7 +610,6 @@ import Layout from '../layouts/Layout.astro';
         i++;
         continue;
       }
-      // Find the length of the contiguous run with this group label
       let j = i;
       while (j < COLUMNS.length && COLUMNS[j].group === col.group) j++;
       const th = document.createElement('th');
@@ -620,33 +621,35 @@ import Layout from '../layouts/Layout.astro';
     }
     thead.appendChild(groupTr);
 
-    // --- THEAD row 2: individual column headers (sortable) ---
+    // --- THEAD row 2: column headers (sortable) ---
     const headerTr = document.createElement('tr');
     COLUMNS.forEach((col, idx) => {
       const th = document.createElement('th');
       th.textContent = col.label;
 
-      // Player column is not sortable; everything else is
-      if (col.key !== 'Player') {
+      // The IP column sorts by raw `outs`, not by an `IP` key (which doesn't
+      // exist on the row). All other non-Player columns sort by their key.
+      const effectiveSortKey = col.key === 'IP' ? 'outs' : col.key;
+
+      if (col.key !== 'Player' && col.key !== 'WP' && col.key !== 'BK') {
         th.classList.add('sortable');
-        if (sortKey === col.key) {
+        if (sortKey === effectiveSortKey) {
           const arrow = document.createElement('span');
           arrow.className = 'sort-arrow';
           arrow.textContent = sortDesc ? '\u25BC' : '\u25B2';
           th.appendChild(arrow);
         }
         th.addEventListener('click', () => {
-          if (sortKey === col.key) {
+          if (sortKey === effectiveSortKey) {
             sortDesc = !sortDesc;
           } else {
-            sortKey  = col.key;
+            sortKey  = effectiveSortKey;
             sortDesc = true;
           }
           render();
         });
       }
 
-      // Add a left border at the start of each group
       if (idx > 0 && COLUMNS[idx - 1].group !== col.group && col.group !== null) {
         th.classList.add('group-start');
       }
@@ -662,7 +665,7 @@ import Layout from '../layouts/Layout.astro';
       const tr = document.createElement('tr');
       COLUMNS.forEach((col, idx) => {
         const td = document.createElement('td');
-        td.textContent = col.fmt(row[col.key]);
+        td.textContent = col.fmt(row[col.key], row);
         if (idx > 0 && COLUMNS[idx - 1].group !== col.group && col.group !== null) {
           td.classList.add('group-start');
         }
@@ -678,7 +681,7 @@ import Layout from '../layouts/Layout.astro';
       const tr = document.createElement('tr');
       COLUMNS.forEach((col, idx) => {
         const td = document.createElement('td');
-        td.textContent = col.fmt(teamRow[col.key]);
+        td.textContent = col.fmt(teamRow[col.key], teamRow);
         if (idx > 0 && COLUMNS[idx - 1].group !== col.group && col.group !== null) {
           td.classList.add('group-start');
         }
@@ -694,7 +697,44 @@ import Layout from '../layouts/Layout.astro';
   }
 
   // ---------------------------------------------------------------------------
-  // Load JSON and initialize
+  // Build pitcher name map (last name → full name) from pitching-stats JSON
+  // ---------------------------------------------------------------------------
+  //
+  // The PBP parser canonicalises pitcher names down to last-name only, so
+  // pitcher_pas records show "Stone" rather than "Duke Stone". We resolve
+  // the prettier full name client-side by reading pitching-stats-2026.json,
+  // which is the same source the Pitching Stats page uses, so the names
+  // match exactly between the two pages.
+  //
+  // Strategy: walk the players list, take the FIRST column (full name),
+  // extract the last token as the lookup key, and store the full name as
+  // the value. Collisions (two pitchers with the same surname) keep the
+  // first writer; the splits page will show whichever full name was
+  // resolved first. There are no surname collisions on the 2026 MSU
+  // pitching staff, so this is fine in practice.
+
+  function buildPitcherNameMap(pitchingData) {
+    const map = {};
+    const players = pitchingData?.all?.players || [];
+    for (const row of players) {
+      if (!row || row.length === 0) continue;
+      const fullName = String(row[0]).trim();
+      if (!fullName) continue;
+      // Extract last token as the lookup key (matching what parse_pbp.py
+      // does with last_name_from() — strips suffixes and lower-cases).
+      const tokens = fullName.split(/\s+/);
+      const lastTok = tokens[tokens.length - 1].replace(/[.,]/g, '');
+      // The PBP records use Title-case last names ("Stone", "Mcpherson"),
+      // so we key by Title case to match. McPherson is title-cased to
+      // "Mcpherson" by Python's .title(), so we match that here too.
+      const key = lastTok.charAt(0).toUpperCase() + lastTok.slice(1).toLowerCase();
+      if (!map[key]) map[key] = fullName;
+    }
+    return map;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Load JSON and initialise
   // ---------------------------------------------------------------------------
 
   async function loadData() {
@@ -702,20 +742,27 @@ import Layout from '../layouts/Layout.astro';
     if (!container) return;
 
     try {
-      const response = await fetch('/data/pbp-events-2026.json');
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const data = await response.json();
+      // Load PBP and pitching stats in parallel — both are static JSON files
+      const [pbpRes, pitchRes] = await Promise.all([
+        fetch('/data/pbp-events-2026.json'),
+        fetch('/data/pitching-stats-2026.json'),
+      ]);
+      if (!pbpRes.ok)   throw new Error(`PBP HTTP ${pbpRes.status}`);
+      if (!pitchRes.ok) throw new Error(`Pitching HTTP ${pitchRes.status}`);
 
-      allPAs = data.batter_pas || [];
+      const pbp     = await pbpRes.json();
+      const pitching = await pitchRes.json();
 
-      // Update subtitle with games-included count
+      allPAs = pbp.pitcher_pas || [];
+      pitcherNameMap = buildPitcherNameMap(pitching);
+
       const subtitle = document.getElementById('splits-subtitle');
-      if (subtitle && data.gamesIncluded) {
-        subtitle.textContent = `Mississippi State Bulldog baseball — 2026 season. Play-by-play from ${data.gamesIncluded} games.`;
+      if (subtitle && pbp.gamesIncluded) {
+        subtitle.textContent = `Mississippi State Bulldog baseball. Play-by-play from ${pbp.gamesIncluded} games.`;
       }
 
       // Wire up filter change listeners
-      ['f-hand', 'f-loc', 'f-opp', 'f-count', 'f-bases', 'f-lev'].forEach(id => {
+      ['f-bat', 'f-loc', 'f-opp', 'f-count', 'f-bases', 'f-lev'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.addEventListener('change', recompute);
       });
@@ -723,7 +770,7 @@ import Layout from '../layouts/Layout.astro';
       recompute();
     } catch (err) {
       container.textContent = 'Could not load play-by-play data. Run scripts/parse_pbp.py to regenerate it.';
-      console.error('Batter splits load error:', err);
+      console.error('Pitcher splits load error:', err);
     }
   }
 

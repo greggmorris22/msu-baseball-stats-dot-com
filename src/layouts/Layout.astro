@@ -60,21 +60,49 @@ type NavItem = SimpleLink | DropdownLink;
 
 const navItems: NavItem[] = [
   { kind: 'link', href: '/', label: 'Home' },
+  { kind: 'link', href: '/about', label: 'About' },
+  { kind: 'link', href: 'https://diamond-dawg-tracker.streamlit.app/', label: 'Diamond Dawg Tracker' },
   {
     kind: 'dropdown',
-    label: '2026 Stats',
-    basePath: '/',
+    label: 'Team Info',
+    basePath: '/roster',
     items: [
-      { href: '/batting-2026',              label: 'Hitting Stats' },
-      { href: '/pitching-2026',             label: 'Pitching Stats' },
-      { href: '/fielding-2026',             label: 'Fielding Stats' },
-      { href: '/situational-hitting-2026',  label: 'Situational Hitting' },
-      { href: '/situational-pitching-2026', label: 'Situational Pitching' },
-      { href: '/batter-splits-2026',        label: 'Batter Splits Selector' },
-      { href: '/pitcher-splits-2026',       label: 'Pitcher Splits Selector' },
-      { href: 'https://diamond-dawg-tracker.streamlit.app/', label: 'Diamond Dawg Tracker' },
-      { href: '/amegy-batters-2026',        label: 'Amegy Series — Batters' },
-      { href: '/amegy-pitchers-2026',       label: 'Amegy Series — Pitchers' },
+      { href: '/roster',         label: 'Roster' },
+      { href: '/sec-standings',  label: 'SEC Standings' },
+      { href: '/schedule',       label: 'Schedule' },
+    ],
+  },
+  {
+    kind: 'dropdown',
+    label: 'Player Stats',
+    basePath: '/batting',
+    items: [
+      { href: '/batting',              label: 'Batting' },
+      { href: '/pitching',             label: 'Pitching' },
+      { href: '/fielding',             label: 'Fielding' },
+      { href: '/batting-splits-tool',  label: 'Batting Splits Tool' },
+      { href: '/pitching-splits-tool', label: 'Pitching Splits Tool' },
+      { href: '/situational-batting',  label: 'Situational Batting' },
+      { href: '/situational-pitching', label: 'Situational Pitching' },
+    ],
+  },
+  {
+    kind: 'dropdown',
+    label: 'Team Stats',
+    basePath: '/team-hitting-ranks',
+    items: [
+      { href: '/team-hitting-ranks',  label: 'Team Hitting & SEC Ranks' },
+      { href: '/team-pitching-ranks', label: 'Team Pitching & SEC Ranks' },
+      { href: '/team-fielding-ranks', label: 'Team Fielding & SEC Ranks' },
+    ],
+  },
+  {
+    kind: 'dropdown',
+    label: 'Amegy Series',
+    basePath: '/amegy-statcast',
+    items: [
+      { href: '/amegy-statcast-hitting',  label: 'Amegy Series Statcast Hitting Data' },
+      { href: '/amegy-statcast-pitching', label: 'Amegy Series Statcast Pitching Data' },
     ],
   },
 ];
