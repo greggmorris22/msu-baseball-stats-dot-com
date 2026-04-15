@@ -44,10 +44,10 @@ import Layout from '../layouts/Layout.astro';
   /* ---- Outer wrapper ---- */
   .table-wrap {
     overflow-x: auto;
+    overflow-y: hidden;
     border-radius: 0.75rem;
     border: 1px solid rgb(214 211 209);   /* stone-300 */
     background-color: #ffffff;
-    overflow: hidden;
   }
 
   :where(.dark) .table-wrap {
@@ -68,7 +68,7 @@ import Layout from '../layouts/Layout.astro';
   #standings-table thead th {
     background-color: #5D1725;
     color: #ffffff;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 1.5rem 0.5rem 0.75rem;
     font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
