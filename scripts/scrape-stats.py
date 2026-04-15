@@ -38,6 +38,18 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright
 
+# SEC standings scraper — runs as the final step of the main scrape.
+# The filename uses a hyphen (scrape-sec-standings.py) so we use importlib
+# to load it, since Python module names cannot contain hyphens.
+import importlib.util as _ilu
+_spec = _ilu.spec_from_file_location(
+    "scrape_sec_standings",
+    Path(__file__).parent / "scrape-sec-standings.py",
+)
+_mod = _ilu.module_from_spec(_spec)
+_spec.loader.exec_module(_mod)
+scrape_sec_standings = _mod.scrape_sec_standings
+
 
 # ===========================================================================
 # Configuration
@@ -2631,6 +2643,18 @@ def main():
         if cache.get(g["contestId"], {}).get("play_by_play", {}).get("innings")
     )
     print(f"  PBP cached:     {pbp_covered} / {len(games)} games")
+
+    # ==============================================================
+    # SEC Standings (secsports.com) — runs after all NCAA scraping is done
+    # ==============================================================
+    print("\n" + "=" * 60)
+    print("Scraping SEC standings...")
+    print("=" * 60)
+    try:
+        scrape_sec_standings(headless=args.headless)
+    except Exception as e:
+        print(f"WARNING: SEC standings scrape failed: {e}")
+        print("  The rest of the data was written successfully.")
 
 
 if __name__ == "__main__":
