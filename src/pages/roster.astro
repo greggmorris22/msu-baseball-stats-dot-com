@@ -50,6 +50,29 @@ import Layout from '../layouts/Layout.astro';
     border-bottom: 2px solid #4a1020;
   }
 
+  /* ===== SORTABLE HEADERS ===== */
+  .roster-table th.sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s;
+  }
+
+  .roster-table th.sortable:hover {
+    background-color: #7a1f30;
+  }
+
+  .roster-table .sort-arrow {
+    display: inline-block;
+    margin-left: 3px;
+    font-size: 0.6rem;
+    vertical-align: middle;
+    opacity: 0.85;
+  }
+
+  .dark .roster-table th.sortable:hover {
+    background-color: #93253b;
+  }
+
   /* ===== DATA CELLS ===== */
   .roster-table tbody td {
     padding: 0.4rem 0.75rem;
@@ -121,95 +144,178 @@ import Layout from '../layouts/Layout.astro';
 </style>
 
 <script>
-  // Index of the jersey number column — used for default sort
-  const NUM_COL_HEADER = '#';
+  // ===========================================================================
+  // State
+  // ===========================================================================
+
+  let columns    = [];   // column header labels from JSON
+  let playerRows = [];   // all player rows (arrays of cell strings)
+  let sortCol    = -1;   // index of currently sorted column (-1 = default)
+  let sortAsc    = true; // true = ascending, false = descending
+  let scrapedStr = '';   // formatted scrape date
+  let sourceUrl  = '';   // NCAA source URL
+
+  // ===========================================================================
+  // Helpers
+  // ===========================================================================
 
   /**
-   * Parse a jersey number string to an integer for sorting.
-   * Non-numeric values (e.g. blank) sort to the end.
+   * Try to parse a cell value as a number. Returns null if not numeric.
+   * Handles jersey numbers, heights like "6-3" (converts to inches for
+   * comparison), and plain integers/floats.
    */
-  function parseNum(s) {
-    const n = parseInt(s, 10);
-    return isNaN(n) ? Infinity : n;
+  function parseNum(str) {
+    if (!str || str.trim() === '') return null;
+    const s = str.trim();
+    // Heights like "6-3" → convert to total inches for numeric comparison
+    const htMatch = s.match(/^(\d+)-(\d+)$/);
+    if (htMatch) return parseInt(htMatch[1]) * 12 + parseInt(htMatch[2]);
+    const num = parseFloat(s);
+    return isNaN(num) ? null : num;
   }
 
-  /**
-   * Render the roster table from the JSON data object.
-   * @param {Object} data - Parsed roster-2026.json
-   */
-  function renderRoster(data) {
+  /** Compare two data rows by the current sort column. */
+  function compareRows(a, b) {
+    const va = parseNum(a[sortCol]);
+    const vb = parseNum(b[sortCol]);
+
+    // Both numeric — compare numerically
+    if (va !== null && vb !== null) {
+      const diff = va - vb;
+      return sortAsc ? diff : -diff;
+    }
+    // Push non-numeric / empty values to the bottom
+    if (va === null && vb === null) {
+      // Fall back to string comparison for text columns
+      const sa = (a[sortCol] || '').toLowerCase();
+      const sb = (b[sortCol] || '').toLowerCase();
+      const cmp = sa.localeCompare(sb);
+      return sortAsc ? cmp : -cmp;
+    }
+    if (va === null) return 1;
+    if (vb === null) return -1;
+    return 0;
+  }
+
+  // ===========================================================================
+  // Render
+  // ===========================================================================
+
+  function render() {
     const container = document.getElementById('roster-container');
-    const subtitle  = document.getElementById('roster-subtitle');
-    const columns   = data.columns || [];
-    let   players   = data.players || [];
+    if (!container) return;
 
-    // Sort by jersey number ascending by default
-    const numIdx = columns.indexOf(NUM_COL_HEADER);
-    if (numIdx >= 0) {
-      players = [...players].sort((a, b) => parseNum(a[numIdx]) - parseNum(b[numIdx]));
-    }
+    const sorted = sortCol >= 0
+      ? [...playerRows].sort(compareRows)
+      : [...playerRows];
 
-    // Update subtitle with scrape date
-    if (data.scraped) {
-      const d = new Date(data.scraped);
-      const formatted = d.toLocaleDateString('en-US', {
-        year: 'numeric', month: 'long', day: 'numeric',
+    // --- Wrapper ---
+    const wrapper = document.createElement('div');
+    wrapper.className = 'roster-wrapper';
+
+    const table = document.createElement('table');
+    table.className = 'roster-table';
+
+    // --- THEAD ---
+    const thead = document.createElement('thead');
+    const headerTr = document.createElement('tr');
+
+    columns.forEach((label, i) => {
+      const th = document.createElement('th');
+      th.textContent = label;
+
+      // All columns are sortable
+      th.classList.add('sortable');
+      if (label === '#') th.classList.add('col-num');
+
+      if (sortCol === i) {
+        const arrow = document.createElement('span');
+        arrow.className = 'sort-arrow';
+        arrow.textContent = sortAsc ? '\u25B2' : '\u25BC';
+        th.appendChild(arrow);
+      }
+
+      th.addEventListener('click', () => handleSort(i));
+      headerTr.appendChild(th);
+    });
+
+    thead.appendChild(headerTr);
+    table.appendChild(thead);
+
+    // --- TBODY ---
+    const tbody = document.createElement('tbody');
+    sorted.forEach(row => {
+      const tr = document.createElement('tr');
+      columns.forEach((col, i) => {
+        const td = document.createElement('td');
+        td.textContent = row[i] ?? '';
+        if (col === '#') td.classList.add('col-num');
+        if (col === 'Name') td.classList.add('col-name');
+        tr.appendChild(td);
       });
-      subtitle.textContent = `Mississippi State Bulldog baseball • ${players.length} players`;
-    } else {
-      subtitle.textContent = `Mississippi State Bulldog baseball • ${players.length} players`;
-    }
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
 
-    // --- Build header row ---
-    const thCells = columns.map(col => {
-      const cls = col === '#' ? 'col-num' : '';
-      return `<th class="${cls}">${col}</th>`;
-    }).join('');
+    // --- Footer note ---
+    const note = document.createElement('p');
+    note.className = 'roster-updated';
+    note.innerHTML = `Source: <a href="${sourceUrl}" target="_blank" rel="noopener noreferrer"
+      class="underline hover:text-stone-700 dark:hover:text-stone-300">stats.ncaa.org</a>
+      &nbsp;&middot;&nbsp; Scraped ${scrapedStr}`;
 
-    // --- Build body rows ---
-    const bodyRows = players.map(row => {
-      const cells = columns.map((col, i) => {
-        const val = row[i] ?? '';
-        const cls = col === '#' ? 'col-num'
-                  : col === 'Name' ? 'col-name'
-                  : '';
-        return `<td class="${cls}">${val}</td>`;
-      }).join('');
-      return `<tr>${cells}</tr>`;
-    }).join('');
-
-    // --- Assemble table ---
-    const scraped = data.scraped
-      ? new Date(data.scraped).toLocaleDateString('en-US', {
-          year: 'numeric', month: 'long', day: 'numeric',
-        })
-      : 'unknown date';
-
-    container.innerHTML = `
-      <div class="roster-wrapper">
-        <table class="roster-table">
-          <thead><tr>${thCells}</tr></thead>
-          <tbody>${bodyRows}</tbody>
-        </table>
-      </div>
-      <p class="roster-updated">
-        Source: <a href="${data.source}" target="_blank" rel="noopener noreferrer"
-          class="underline hover:text-stone-700 dark:hover:text-stone-300">stats.ncaa.org</a>
-        &nbsp;&middot;&nbsp; Scraped ${scraped}
-      </p>
-    `;
+    wrapper.appendChild(table);
+    container.replaceChildren(wrapper, note);
   }
 
-  // ---------------------------------------------------------------------------
-  // Load data and render
-  // ---------------------------------------------------------------------------
+  // ===========================================================================
+  // Sort handler
+  // ===========================================================================
+
+  function handleSort(colIdx) {
+    if (sortCol === colIdx) {
+      sortAsc = !sortAsc;             // same column → toggle direction
+    } else {
+      sortCol = colIdx;
+      // Default direction: ascending for text columns, ascending for # too
+      sortAsc = true;
+    }
+    render();
+  }
+
+  // ===========================================================================
+  // Load data and initialise
+  // ===========================================================================
+
   async function init() {
     const container = document.getElementById('roster-container');
+    const subtitle  = document.getElementById('roster-subtitle');
+
     try {
       const res = await fetch('/data/roster-2026.json');
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      renderRoster(data);
+
+      columns    = data.columns || [];
+      playerRows = data.players || [];
+      sourceUrl  = data.source || '';
+
+      scrapedStr = data.scraped
+        ? new Date(data.scraped).toLocaleDateString('en-US', {
+            year: 'numeric', month: 'long', day: 'numeric',
+          })
+        : 'unknown date';
+
+      subtitle.textContent = `Mississippi State Bulldog baseball \u2022 ${playerRows.length} players`;
+
+      // Default sort: jersey number ascending
+      const numIdx = columns.indexOf('#');
+      if (numIdx >= 0) {
+        sortCol = numIdx;
+        sortAsc = true;
+      }
+
+      render();
     } catch (err) {
       container.innerHTML = `
         <p class="text-red-600 dark:text-red-400 font-medium">
