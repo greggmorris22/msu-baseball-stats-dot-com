@@ -40,7 +40,7 @@ import Layout from '../layouts/Layout.astro';
 
 </Layout>
 
-<style>
+<style is:global>
   /* ---- Outer wrapper ---- */
   .table-wrap {
     overflow-x: auto;
@@ -154,18 +154,9 @@ import Layout from '../layouts/Layout.astro';
     background-color: #242424;
   }
 
-  /* ---- MSU highlight row (overrides even/odd stripe) ---- */
-  #standings-table tbody tr.msu-row td,
-  #standings-table tbody tr.msu-row:nth-child(even) td {
-    background-color: #5D1725;
-    color: #ffffff;
-    font-weight: 600;
-  }
-
-  :where(.dark) #standings-table tbody tr.msu-row td,
-  :where(.dark) #standings-table tbody tr.msu-row:nth-child(even) td {
-    background-color: #5D1725;
-    color: #ffffff;
+  /* ---- MSU row: bold team name only ---- */
+  #standings-table tbody tr.msu-row td:first-child {
+    font-weight: 700;
   }
 
   /* ---- Streak coloring ---- */
@@ -174,9 +165,6 @@ import Layout from '../layouts/Layout.astro';
 
   :where(.dark) .strk-win  { color: #4ade80; }
   :where(.dark) .strk-loss { color: #f87171; }
-
-  .msu-row .strk-win,
-  .msu-row .strk-loss { color: #ffffff; }
 </style>
 
 <script>
