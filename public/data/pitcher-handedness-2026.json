@@ -448,8 +448,8 @@
           "bats": ""
         },
         "Evan Bouldin": {
-          "throws": "R",
-          "bats": "R"
+          "throws": "",
+          "bats": ""
         },
         "Dylan Bryan": {
           "throws": "L",
@@ -484,8 +484,8 @@
           "bats": "L"
         },
         "Vincent Davis": {
-          "throws": "R",
-          "bats": "R"
+          "throws": "",
+          "bats": ""
         },
         "Anthony DeCesare": {
           "throws": "R",
@@ -544,8 +544,8 @@
           "bats": ""
         },
         "Matthew Minckler": {
-          "throws": "R",
-          "bats": "R"
+          "throws": "",
+          "bats": ""
         },
         "Sal Mineo": {
           "throws": "L",
@@ -1207,176 +1207,7 @@
     },
     "614780": {
       "name": "Southern Miss.",
-      "players": {
-        "Cade Adams": {
-          "throws": "R",
-          "bats": "S"
-        },
-        "Chase Adams": {
-          "throws": "L",
-          "bats": "L"
-        },
-        "Colby Allen": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "JW Armistead": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Drey Barrett": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Teague Broadhead": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Dylan Causey": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Camden Clark": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Thomas Crabtree": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Cade Durbin": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "McCarty English": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Gray Eubanks": {
-          "throws": "R",
-          "bats": "L"
-        },
-        "Kevin Farr": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Davis Gillespie": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Grayden Harris": {
-          "throws": "L",
-          "bats": "L"
-        },
-        "Ben Higdon": {
-          "throws": "R",
-          "bats": "L"
-        },
-        "Bruce Littleton": {
-          "throws": "L",
-          "bats": "L"
-        },
-        "Ty Long": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Braden Maranto": {
-          "throws": "R",
-          "bats": "L"
-        },
-        "Drake Meeks": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Sam Mitchell": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Kyle Morrison": {
-          "throws": "R",
-          "bats": "L"
-        },
-        "Jake Neely": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Jace Norton": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Josh Och": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Lawson Odom": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Jackson Parker": {
-          "throws": "L",
-          "bats": "L"
-        },
-        "Logan Pratt": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Cole Richardson": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Camden Rodgers": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Matthew Russo": {
-          "throws": "R",
-          "bats": "L"
-        },
-        "Kros Sivley": {
-          "throws": "L",
-          "bats": "L"
-        },
-        "Seth Smith": {
-          "throws": "R",
-          "bats": "L"
-        },
-        "Caleb Stelly": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Tucker Stockman": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Camden Sunstrom": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "William Tonsmeire": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Joey Urban": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Andrew Visconti": {
-          "throws": "L",
-          "bats": "L"
-        },
-        "Cooper Waddle": {
-          "throws": "L",
-          "bats": "L"
-        },
-        "Micah Wascom": {
-          "throws": "R",
-          "bats": "R"
-        },
-        "Brooks Willoughby": {
-          "throws": "L",
-          "bats": "L"
-        }
-      }
+      "players": {}
     },
     "614840": {
       "name": "Lipscomb",
@@ -2931,6 +2762,163 @@
           "bats": "R"
         },
         "Garrett Wright": {
+          "throws": "R",
+          "bats": "R"
+        }
+      }
+    },
+    "614729": {
+      "name": "Samford",
+      "players": {
+        "Will Andre": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Andrew Arnold": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Noah Berry": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Mason Blasche": {
+          "throws": "",
+          "bats": ""
+        },
+        "Luke Boykin": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Charlie Bozeman": {
+          "throws": "",
+          "bats": ""
+        },
+        "Cade Carr": {
+          "throws": "",
+          "bats": ""
+        },
+        "Drew Druckenmiller": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Pierce Dutton": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Michael Fredette": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Alex Gaeto": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Gus Gandy": {
+          "throws": "",
+          "bats": ""
+        },
+        "Jackson Harris": {
+          "throws": "",
+          "bats": ""
+        },
+        "Trey Higgins": {
+          "throws": "",
+          "bats": ""
+        },
+        "Cason Hill": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jeffrey Ince": {
+          "throws": "",
+          "bats": ""
+        },
+        "Grant Largen": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Will Lawrence": {
+          "throws": "",
+          "bats": ""
+        },
+        "Joseph Lee": {
+          "throws": "",
+          "bats": ""
+        },
+        "John Malone": {
+          "throws": "",
+          "bats": ""
+        },
+        "Andrew Marble": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Eddie Marshall": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "David Martin": {
+          "throws": "",
+          "bats": ""
+        },
+        "Parker McDonald": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Edward McLeod": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Ben Moyer": {
+          "throws": "",
+          "bats": ""
+        },
+        "Easton Nelms": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Palmer O'Beirne": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Hayden Perry": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Braden Rosenthal": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Trey Sanders": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jake Souders": {
+          "throws": "",
+          "bats": ""
+        },
+        "Zak Spurrier": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Austin Tommasini": {
+          "throws": "",
+          "bats": ""
+        },
+        "Ryan Vermillion": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Elijah Wellman": {
+          "throws": "",
+          "bats": ""
+        },
+        "John Whitney": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Madden Williams": {
           "throws": "R",
           "bats": "R"
         }
