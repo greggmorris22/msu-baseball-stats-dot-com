@@ -281,19 +281,23 @@ import Layout from '../layouts/Layout.astro';
 
 <script>
   /**
-   * Fetches hitting and pitching JSON, then populates the dashboard cards.
+   * Fetches hitting, pitching, and SEC standings JSON, then populates the
+   * dashboard cards. The record comes from the standings JSON (secsports.com)
+   * because it reflects the most current game results.
    */
   async function loadDashboard() {
     try {
-      const [hitRes, pitRes] = await Promise.all([
+      const [hitRes, pitRes, standingsRes] = await Promise.all([
         fetch('/data/hitting-stats-2026.json'),
         fetch('/data/pitching-stats-2026.json'),
+        fetch('/data/sec-standings-2026.json'),
       ]);
 
-      if (!hitRes.ok || !pitRes.ok) throw new Error('Failed to fetch stats data');
+      if (!hitRes.ok || !pitRes.ok || !standingsRes.ok) throw new Error('Failed to fetch stats data');
 
-      const hitting = await hitRes.json();
+      const hitting  = await hitRes.json();
       const pitching = await pitRes.json();
+      const standings = await standingsRes.json();
 
       /* ---- Last updated ---- */
       const updatedEl = document.getElementById('last-updated');
@@ -309,13 +313,16 @@ import Layout from '../layouts/Layout.astro';
       /* ---- Helpers ---- */
       const col = (columns: string[], name: string) => columns.indexOf(name);
 
-      /* ---- Record (from pitching summary W-L) ---- */
-      const pitCols = pitching.all.columns;
-      const wlIdx = col(pitCols, 'W-L');
-      const overallWL = pitching.all.summary[0][wlIdx];
-      const secWL = pitching.sec.summary[0][wlIdx];
-      setText('record-overall', overallWL);
-      setText('record-sec', secWL);
+      /* ---- Record (from SEC standings JSON — most current source) ---- */
+      const msuRow = standings.teams.find(
+        (t: string[]) => t[0].toLowerCase().includes('mississippi state')
+      );
+      if (msuRow) {
+        const overallIdx = standings.columns.indexOf('Overall W-L');
+        const confIdx    = standings.columns.indexOf('Conf W-L');
+        setText('record-overall', msuRow[overallIdx] ?? '--');
+        setText('record-sec',     msuRow[confIdx]    ?? '--');
+      }
 
       /* ---- Team Hitting ---- */
       const hitCols = hitting.all.columns;
@@ -325,6 +332,7 @@ import Layout from '../layouts/Layout.astro';
       setText('hit-slg', hitSummary[col(hitCols, 'SLG')]);
 
       /* ---- Team Pitching ---- */
+      const pitCols = pitching.all.columns;
       const pitSummary = pitching.all.summary[0];
       setText('pit-era', pitSummary[col(pitCols, 'ERA')]);
       setText('pit-whip', pitSummary[col(pitCols, 'WHIP')]);
