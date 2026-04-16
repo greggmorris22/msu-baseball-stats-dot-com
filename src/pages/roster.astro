@@ -15,9 +15,13 @@ import Layout from '../layouts/Layout.astro';
 <Layout title="Roster" description="Mississippi State baseball 2026 roster.">
 
   <h1 class="text-3xl font-bold mb-2">Roster</h1>
-  <p id="roster-subtitle" class="text-stone-500 dark:text-stone-400 mb-4 text-lg">
-    Mississippi State Bulldog baseball.
-  </p>
+
+  <div class="mb-4">
+    <label for="season-select" class="text-sm font-medium text-stone-600 dark:text-stone-400 mr-2">Season:</label>
+    <select id="season-select" class="text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+      <option value="2026">2026</option>
+    </select>
+  </div>
 
   <div class="rounded-xl border border-stone-200 dark:border-stone-700 overflow-hidden bg-white dark:bg-stone-800 shadow-sm">
     <div id="roster-container" class="p-4 text-sm text-stone-500 dark:text-stone-400">
@@ -53,7 +57,6 @@ import Layout from '../layouts/Layout.astro';
   /* ===== SORTABLE HEADERS ===== */
   .roster-table th.sortable {
     cursor: pointer;
-    user-select: none;
     transition: background-color 0.15s;
   }
 
@@ -61,16 +64,8 @@ import Layout from '../layouts/Layout.astro';
     background-color: #7a1f30;
   }
 
-  .roster-table .sort-arrow {
-    display: inline-block;
-    margin-left: 3px;
-    font-size: 0.6rem;
-    vertical-align: middle;
-    opacity: 0.85;
-  }
-
   .dark .roster-table th.sortable:hover {
-    background-color: #93253b;
+    background-color: #7a1f30;
   }
 
   /* ===== DATA CELLS ===== */
@@ -86,7 +81,7 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .roster-table tbody tr:nth-child(even) td {
-    background-color: rgb(250 250 249);
+    background-color: #f5f5f5;
   }
 
   /* Row hover highlight */
@@ -109,8 +104,8 @@ import Layout from '../layouts/Layout.astro';
 
   /* ===== DARK MODE ===== */
   .dark .roster-table thead th {
-    background-color: #7a1f30;
-    border-bottom-color: #5D1725;
+    background-color: #5D1725;
+    border-bottom-color: #3d0f18;
   }
 
   .dark .roster-table tbody td {
@@ -228,13 +223,6 @@ import Layout from '../layouts/Layout.astro';
       th.classList.add('sortable');
       if (label === '#') th.classList.add('col-num');
 
-      if (sortCol === i) {
-        const arrow = document.createElement('span');
-        arrow.className = 'sort-arrow';
-        arrow.textContent = sortAsc ? '\u25B2' : '\u25BC';
-        th.appendChild(arrow);
-      }
-
       th.addEventListener('click', () => handleSort(i));
       headerTr.appendChild(th);
     });
@@ -265,7 +253,10 @@ import Layout from '../layouts/Layout.astro';
       &nbsp;&middot;&nbsp; Scraped ${scrapedStr}`;
 
     wrapper.appendChild(table);
+    const oldWrapper = container.querySelector('.roster-wrapper');
+    const savedScroll = oldWrapper ? oldWrapper.scrollLeft : 0;
     container.replaceChildren(wrapper, note);
+    wrapper.scrollLeft = savedScroll;
   }
 
   // ===========================================================================
@@ -289,7 +280,6 @@ import Layout from '../layouts/Layout.astro';
 
   async function init() {
     const container = document.getElementById('roster-container');
-    const subtitle  = document.getElementById('roster-subtitle');
 
     try {
       const res = await fetch('/data/roster-2026.json');
@@ -305,8 +295,6 @@ import Layout from '../layouts/Layout.astro';
             year: 'numeric', month: 'long', day: 'numeric',
           })
         : 'unknown date';
-
-      subtitle.textContent = `Mississippi State Bulldog baseball \u2022 ${playerRows.length} players`;
 
       // Default sort: jersey number ascending
       const numIdx = columns.indexOf('#');

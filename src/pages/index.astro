@@ -3,10 +3,12 @@
  * Home/dashboard page for msubaseballstats.com.
  *
  * Displays:
+ *   - Dynamic "last updated" timestamp
  *   - Current record (overall & SEC)
- *   - Team hitting stats (AVG / OBP / SLG)
- *   - Team pitching stats (ERA / WHIP / K-BB%)
- *   - Team leaders: HR, SB (hitters), IP, K (pitchers)
+ *   - Team hitting stats (AVG, OBP, SLG, HR, SB-SBA, R/G)
+ *   - Team pitching stats (ERA, WHIP, K-BB%, Opp AVG, Opp OBP, Opp SLG)
+ *   - Batting leaders (AVG, OBP, SLG, R, HR, SB — 6 rows)
+ *   - Pitching leaders (IP, K-BB%, K, WHIP, ERA, FIP — 6 rows, rate stats min 10 IP)
  *
  * Data is fetched client-side from the pre-scraped JSON files,
  * consistent with how all other stats pages work.
@@ -39,10 +41,10 @@ import Layout from '../layouts/Layout.astro';
       </div>
     </div>
 
-    <!-- Team Hitting card -->
+    <!-- Team Hitting card (3x2 grid) -->
     <div class="dash-card" id="card-hitting">
       <h2 class="dash-card-title">Team Hitting</h2>
-      <div class="dash-card-body stat-grid-3">
+      <div class="dash-card-body stat-grid-3x2">
         <div class="stat-cell">
           <span class="stat-value" id="hit-avg">--</span>
           <span class="stat-label">AVG</span>
@@ -55,13 +57,25 @@ import Layout from '../layouts/Layout.astro';
           <span class="stat-value" id="hit-slg">--</span>
           <span class="stat-label">SLG</span>
         </div>
+        <div class="stat-cell">
+          <span class="stat-value" id="hit-hr">--</span>
+          <span class="stat-label">HR</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-value" id="hit-sb">--</span>
+          <span class="stat-label">SB-SBA</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-value" id="hit-rpg">--</span>
+          <span class="stat-label">R/G</span>
+        </div>
       </div>
     </div>
 
-    <!-- Team Pitching card -->
+    <!-- Team Pitching card (3x2 grid) -->
     <div class="dash-card" id="card-pitching">
       <h2 class="dash-card-title">Team Pitching</h2>
-      <div class="dash-card-body stat-grid-3">
+      <div class="dash-card-body stat-grid-3x2">
         <div class="stat-cell">
           <span class="stat-value" id="pit-era">--</span>
           <span class="stat-label">ERA</span>
@@ -74,34 +88,97 @@ import Layout from '../layouts/Layout.astro';
           <span class="stat-value" id="pit-kbb">--</span>
           <span class="stat-label">K-BB%</span>
         </div>
+        <div class="stat-cell">
+          <span class="stat-value" id="pit-opp-avg">--</span>
+          <span class="stat-label">Opp AVG</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-value" id="pit-opp-obp">--</span>
+          <span class="stat-label">Opp OBP</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-value" id="pit-opp-slg">--</span>
+          <span class="stat-label">Opp SLG</span>
+        </div>
       </div>
     </div>
 
-    <!-- Team Leaders card -->
-    <div class="dash-card" id="card-leaders">
-      <h2 class="dash-card-title">Team Leaders</h2>
+    <!-- Batting Leaders card (6 rows) -->
+    <div class="dash-card" id="card-bat-leaders">
+      <h2 class="dash-card-title">Batting Leaders</h2>
       <div class="dash-card-body">
         <table class="leaders-table">
           <tbody>
             <tr>
+              <td class="leader-cat">AVG</td>
+              <td class="leader-name" id="bldr-avg-name">--</td>
+              <td class="leader-val" id="bldr-avg-val">--</td>
+            </tr>
+            <tr>
+              <td class="leader-cat">OBP</td>
+              <td class="leader-name" id="bldr-obp-name">--</td>
+              <td class="leader-val" id="bldr-obp-val">--</td>
+            </tr>
+            <tr>
+              <td class="leader-cat">SLG</td>
+              <td class="leader-name" id="bldr-slg-name">--</td>
+              <td class="leader-val" id="bldr-slg-val">--</td>
+            </tr>
+            <tr>
+              <td class="leader-cat">R</td>
+              <td class="leader-name" id="bldr-r-name">--</td>
+              <td class="leader-val" id="bldr-r-val">--</td>
+            </tr>
+            <tr>
               <td class="leader-cat">HR</td>
-              <td class="leader-name" id="leader-hr-name">--</td>
-              <td class="leader-val" id="leader-hr-val">--</td>
+              <td class="leader-name" id="bldr-hr-name">--</td>
+              <td class="leader-val" id="bldr-hr-val">--</td>
             </tr>
             <tr>
               <td class="leader-cat">SB</td>
-              <td class="leader-name" id="leader-sb-name">--</td>
-              <td class="leader-val" id="leader-sb-val">--</td>
+              <td class="leader-name" id="bldr-sb-name">--</td>
+              <td class="leader-val" id="bldr-sb-val">--</td>
             </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Pitching Leaders card (6 rows) -->
+    <div class="dash-card" id="card-pit-leaders">
+      <h2 class="dash-card-title">Pitching Leaders</h2>
+      <div class="dash-card-body">
+        <table class="leaders-table">
+          <tbody>
             <tr>
               <td class="leader-cat">IP</td>
-              <td class="leader-name" id="leader-ip-name">--</td>
-              <td class="leader-val" id="leader-ip-val">--</td>
+              <td class="leader-name" id="pldr-ip-name">--</td>
+              <td class="leader-val" id="pldr-ip-val">--</td>
+            </tr>
+            <tr>
+              <td class="leader-cat">K-BB%</td>
+              <td class="leader-name" id="pldr-kbb-name">--</td>
+              <td class="leader-val" id="pldr-kbb-val">--</td>
             </tr>
             <tr>
               <td class="leader-cat">K</td>
-              <td class="leader-name" id="leader-k-name">--</td>
-              <td class="leader-val" id="leader-k-val">--</td>
+              <td class="leader-name" id="pldr-k-name">--</td>
+              <td class="leader-val" id="pldr-k-val">--</td>
+            </tr>
+            <tr>
+              <td class="leader-cat">WHIP</td>
+              <td class="leader-name" id="pldr-whip-name">--</td>
+              <td class="leader-val" id="pldr-whip-val">--</td>
+            </tr>
+            <tr>
+              <td class="leader-cat">ERA</td>
+              <td class="leader-name" id="pldr-era-name">--</td>
+              <td class="leader-val" id="pldr-era-val">--</td>
+            </tr>
+            <tr>
+              <td class="leader-cat">FIP</td>
+              <td class="leader-name" id="pldr-fip-name">--</td>
+              <td class="leader-val" id="pldr-fip-val">--</td>
             </tr>
           </tbody>
         </table>
@@ -110,19 +187,9 @@ import Layout from '../layouts/Layout.astro';
 
   </div>
 
-  <!-- Quick-links section -->
-  <div class="max-w-3xl mx-auto mt-8">
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-      <a href="/batting" class="quick-link">Batting Stats</a>
-      <a href="/pitching" class="quick-link">Pitching Stats</a>
-      <a href="/batting-splits-tool" class="quick-link">Batting Splits</a>
-      <a href="/pitching-splits-tool" class="quick-link">Pitching Splits</a>
-    </div>
-  </div>
-
 </Layout>
 
-<style>
+<style is:global>
   /* ---------- Dashboard card ---------- */
   .dash-card {
     border: 1px solid var(--color-light-grey);
@@ -177,12 +244,12 @@ import Layout from '../layouts/Layout.astro';
     color: var(--color-text);
   }
 
-  /* ---------- 3-column stat grid ---------- */
-  .stat-grid-3 {
+  /* ---------- 3x2 stat grid ---------- */
+  .stat-grid-3x2 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     text-align: center;
-    gap: 0.5rem;
+    gap: 1rem 0.5rem;
   }
 
   .stat-cell {
@@ -230,7 +297,7 @@ import Layout from '../layouts/Layout.astro';
     text-transform: uppercase;
     letter-spacing: 0.04em;
     color: #5D1725;
-    width: 2.5rem;
+    width: 3.5rem;
   }
 
   :where(.dark) .leader-cat {
@@ -247,35 +314,6 @@ import Layout from '../layouts/Layout.astro';
     font-weight: 700;
     text-align: right;
     color: var(--color-text);
-  }
-
-  /* ---------- Quick links ---------- */
-  .quick-link {
-    display: block;
-    text-align: center;
-    padding: 0.6rem 0.5rem;
-    font-size: 0.85rem;
-    font-weight: 600;
-    border: 1px solid var(--color-light-grey);
-    border-radius: 0.375rem;
-    color: var(--color-text) !important;
-    text-decoration: none !important;
-    transition: background-color 0.15s, border-color 0.15s;
-  }
-
-  .quick-link:hover {
-    background-color: #5D1725;
-    border-color: #5D1725;
-    color: #ffffff !important;
-  }
-
-  :where(.dark) .quick-link {
-    border-color: #333;
-  }
-
-  :where(.dark) .quick-link:hover {
-    background-color: #5D1725;
-    border-color: #5D1725;
   }
 </style>
 
@@ -303,11 +341,13 @@ import Layout from '../layouts/Layout.astro';
       const updatedEl = document.getElementById('last-updated');
       if (updatedEl && hitting.lastUpdated) {
         const d = new Date(hitting.lastUpdated);
-        const formatted = d.toLocaleDateString('en-US', {
+        const dateStr = d.toLocaleDateString('en-US', {
           month: 'long', day: 'numeric', year: 'numeric',
         });
-        const games = hitting.gamesScraped || '?';
-        updatedEl.textContent = `Through ${games} games \u2014 Last updated ${formatted}`;
+        const timeStr = d.toLocaleTimeString('en-US', {
+          hour: 'numeric', minute: '2-digit', hour12: true,
+        }).toLowerCase();
+        updatedEl.textContent = `Site data last updated ${dateStr} at ${timeStr} Central Time`;
       }
 
       /* ---- Helpers ---- */
@@ -324,51 +364,130 @@ import Layout from '../layouts/Layout.astro';
         setText('record-sec',     msuRow[confIdx]    ?? '--');
       }
 
-      /* ---- Team Hitting ---- */
+      /* ---- Team Hitting (6 stats) ---- */
       const hitCols = hitting.all.columns;
       const hitSummary = hitting.all.summary[0];
       setText('hit-avg', hitSummary[col(hitCols, 'AVG')]);
       setText('hit-obp', hitSummary[col(hitCols, 'OBP')]);
       setText('hit-slg', hitSummary[col(hitCols, 'SLG')]);
+      setText('hit-hr',  hitSummary[col(hitCols, 'HR')]);
+      setText('hit-sb',  hitSummary[col(hitCols, 'SB-ATT')]);
 
-      /* ---- Team Pitching ---- */
+      // Runs per game = R / gamesScraped
+      const runs = parseInt(hitSummary[col(hitCols, 'R')], 10) || 0;
+      const games = hitting.gamesScraped || 1;
+      setText('hit-rpg', (runs / games).toFixed(1));
+
+      /* ---- Team Pitching (6 stats) ---- */
       const pitCols = pitching.all.columns;
       const pitSummary = pitching.all.summary[0];
-      setText('pit-era', pitSummary[col(pitCols, 'ERA')]);
+      setText('pit-era',  pitSummary[col(pitCols, 'ERA')]);
       setText('pit-whip', pitSummary[col(pitCols, 'WHIP')]);
-      setText('pit-kbb', pitSummary[col(pitCols, 'K%-BB%')]);
+      setText('pit-kbb',  pitSummary[col(pitCols, 'K%-BB%')]);
+      setText('pit-opp-avg', pitSummary[col(pitCols, 'b/avg')]);
 
-      /* ---- Team Leaders ---- */
+      // Compute Opp OBP = (H + BB + HBP) / (AB + BB + HBP + SFA)
+      const pH  = parseInt(pitSummary[col(pitCols, 'H')], 10) || 0;
+      const pBB = parseInt(pitSummary[col(pitCols, 'BB')], 10) || 0;
+      const pHBP = parseInt(pitSummary[col(pitCols, 'HBP')], 10) || 0;
+      const pAB  = parseInt(pitSummary[col(pitCols, 'AB')], 10) || 0;
+      const pSFA = parseInt(pitSummary[col(pitCols, 'SFA')], 10) || 0;
+      const oppOBP = (pH + pBB + pHBP) / (pAB + pBB + pHBP + pSFA);
+      setText('pit-opp-obp', isNaN(oppOBP) ? '--' : '.' + oppOBP.toFixed(3).slice(2));
+
+      // Compute Opp SLG = ((1B) + 2*2B + 3*3B + 4*HR) / AB
+      const p2B = parseInt(pitSummary[col(pitCols, '2B')], 10) || 0;
+      const p3B = parseInt(pitSummary[col(pitCols, '3B')], 10) || 0;
+      const pHR = parseInt(pitSummary[col(pitCols, 'HR')], 10) || 0;
+      const singles = pH - p2B - p3B - pHR;
+      const oppSLG = (singles + 2 * p2B + 3 * p3B + 4 * pHR) / pAB;
+      setText('pit-opp-slg', isNaN(oppSLG) ? '--' : '.' + oppSLG.toFixed(3).slice(2));
+
+      /* ---- Batting Leaders (6 rows) ---- */
       const hitters = hitting.all.players;
-      const pitchers = pitching.all.players;
 
-      // HR leader (among hitters)
+      // AVG leader
+      const avgIdx = col(hitCols, 'AVG');
+      const avgLeader = findMax(hitters, avgIdx, parseFloatSafe);
+      setText('bldr-avg-name', avgLeader.name);
+      setText('bldr-avg-val', hitters.find((p: string[]) => p[0] === avgLeader.name)?.[avgIdx] ?? '--');
+
+      // OBP leader
+      const obpIdx = col(hitCols, 'OBP');
+      const obpLeader = findMax(hitters, obpIdx, parseFloatSafe);
+      setText('bldr-obp-name', obpLeader.name);
+      setText('bldr-obp-val', hitters.find((p: string[]) => p[0] === obpLeader.name)?.[obpIdx] ?? '--');
+
+      // SLG leader
+      const slgIdx = col(hitCols, 'SLG');
+      const slgLeader = findMax(hitters, slgIdx, parseFloatSafe);
+      setText('bldr-slg-name', slgLeader.name);
+      setText('bldr-slg-val', hitters.find((p: string[]) => p[0] === slgLeader.name)?.[slgIdx] ?? '--');
+
+      // R leader
+      const rIdx = col(hitCols, 'R');
+      const rLeader = findMax(hitters, rIdx, parseIntSafe);
+      setText('bldr-r-name', rLeader.name);
+      setText('bldr-r-val', String(rLeader.value));
+
+      // HR leader
       const hrIdx = col(hitCols, 'HR');
       const hrLeader = findMax(hitters, hrIdx, parseIntSafe);
-      setText('leader-hr-name', hrLeader.name);
-      setText('leader-hr-val', String(hrLeader.value));
+      setText('bldr-hr-name', hrLeader.name);
+      setText('bldr-hr-val', String(hrLeader.value));
 
-      // SB leader (among hitters) — format is "SB-ATT", e.g. "10-12"
+      // SB leader — format is "SB-ATT", e.g. "10-12"; sort by SB (first number)
       const sbIdx = col(hitCols, 'SB-ATT');
       const sbLeader = findMax(hitters, sbIdx, (v: string) => {
         const parts = v.split('-');
         return parseInt(parts[0], 10) || 0;
       });
-      setText('leader-sb-name', sbLeader.name);
-      // Show stolen bases count, not the "SB-ATT" string
-      setText('leader-sb-val', String(sbLeader.value));
+      setText('bldr-sb-name', sbLeader.name);
+      setText('bldr-sb-val', String(sbLeader.value));
 
-      // IP leader (among pitchers)
+      /* ---- Pitching Leaders (6 rows) ---- */
+      const pitchers = pitching.all.players;
       const ipIdx = col(pitCols, 'IP');
-      const ipLeader = findMax(pitchers, ipIdx, parseFloatSafe);
-      setText('leader-ip-name', ipLeader.name);
-      setText('leader-ip-val', pitchers.find((p: string[]) => p[0] === ipLeader.name)?.[ipIdx] ?? '--');
 
-      // K leader (among pitchers)
+      // Filter pitchers with >= 10.0 IP for rate stats
+      const qualifiedPitchers = pitchers.filter(
+        (p: string[]) => parseFloatSafe(p[ipIdx]) >= 10.0
+      );
+
+      // IP leader (all pitchers)
+      const ipLeader = findMax(pitchers, ipIdx, parseFloatSafe);
+      setText('pldr-ip-name', ipLeader.name);
+      setText('pldr-ip-val', pitchers.find((p: string[]) => p[0] === ipLeader.name)?.[ipIdx] ?? '--');
+
+      // K-BB% leader (min 10 IP)
+      const kbbIdx = col(pitCols, 'K%-BB%');
+      const kbbLeader = findMax(qualifiedPitchers, kbbIdx, (v: string) => parseFloat(v.replace('%', '')) || 0);
+      setText('pldr-kbb-name', kbbLeader.name);
+      setText('pldr-kbb-val', qualifiedPitchers.find((p: string[]) => p[0] === kbbLeader.name)?.[kbbIdx] ?? '--');
+
+      // K leader (all pitchers)
       const soIdx = col(pitCols, 'SO');
       const kLeader = findMax(pitchers, soIdx, parseIntSafe);
-      setText('leader-k-name', kLeader.name);
-      setText('leader-k-val', String(kLeader.value));
+      setText('pldr-k-name', kLeader.name);
+      setText('pldr-k-val', String(kLeader.value));
+
+      // WHIP leader (min 10 IP — lowest is best)
+      const whipIdx = col(pitCols, 'WHIP');
+      const whipLeader = findMin(qualifiedPitchers, whipIdx, parseFloatSafe);
+      setText('pldr-whip-name', whipLeader.name);
+      setText('pldr-whip-val', qualifiedPitchers.find((p: string[]) => p[0] === whipLeader.name)?.[whipIdx] ?? '--');
+
+      // ERA leader (min 10 IP — lowest is best)
+      const eraIdx = col(pitCols, 'ERA');
+      const eraLeader = findMin(qualifiedPitchers, eraIdx, parseFloatSafe);
+      setText('pldr-era-name', eraLeader.name);
+      setText('pldr-era-val', qualifiedPitchers.find((p: string[]) => p[0] === eraLeader.name)?.[eraIdx] ?? '--');
+
+      // FIP leader (min 10 IP — lowest is best)
+      const fipIdx = col(pitCols, 'FIP');
+      const fipLeader = findMin(qualifiedPitchers, fipIdx, parseFloatSafe);
+      setText('pldr-fip-name', fipLeader.name);
+      setText('pldr-fip-val', qualifiedPitchers.find((p: string[]) => p[0] === fipLeader.name)?.[fipIdx] ?? '--');
 
     } catch (err) {
       console.error('Dashboard load error:', err);
@@ -414,6 +533,30 @@ import Layout from '../layouts/Layout.astro';
     }
 
     return { name: bestName, value: bestVal === -Infinity ? 0 : bestVal };
+  }
+
+  /**
+   * Find the player with the min value in a given column.
+   * parser converts the string cell value to a number for comparison.
+   * Skips zero/non-positive values (avoids pitchers with 0.00 ERA on few IP).
+   */
+  function findMin(
+    players: string[][],
+    colIdx: number,
+    parser: (v: string) => number,
+  ): { name: string; value: number } {
+    let bestName = '--';
+    let bestVal = Infinity;
+
+    for (const row of players) {
+      const parsed = parser(row[colIdx]);
+      if (parsed > 0 && parsed < bestVal) {
+        bestVal = parsed;
+        bestName = row[0];
+      }
+    }
+
+    return { name: bestName, value: bestVal === Infinity ? 0 : bestVal };
   }
 
   loadDashboard();

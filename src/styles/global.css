@@ -24,8 +24,8 @@
   --color-text:       #000000;
 }
 
-:where(.dark) {
-  --color-bg:   #0d0608;
+html.dark {
+  --color-bg:   #000000;
   --color-text: #FFFFFF;
 }
 

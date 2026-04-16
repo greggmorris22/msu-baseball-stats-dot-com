@@ -258,6 +258,74 @@ def extract_game_info(page):
     return games
 
 
+def extract_full_schedule(page):
+    """
+    Extract the full schedule (played AND unplayed games) from the team page.
+
+    Parses every row in the schedule table, not just completed games.
+    For each game, captures: date, opponent, whether it's an away game,
+    and the contest ID (if the game has been played and has a box score).
+
+    The result/score and attendance are derived later from cached box-score
+    data, not scraped here (the NCAA schedule table doesn't show scores inline).
+
+    Args:
+        page: Playwright page object on the team schedule URL.
+
+    Returns:
+        List of dicts with keys:
+          - date (str): e.g. "02/14/2026" or "02/14/2026(1)" for doubleheaders
+          - opponent (str): cleaned opponent name (ranking prefixes removed)
+          - isAway (bool): True if the opponent text started with "@"
+          - isSEC (bool): whether the opponent is an SEC team
+          - contestId (str or None): present only for completed games
+    """
+    html = page.content()
+    soup = BeautifulSoup(html, "html.parser")
+    schedule = []
+
+    # Find the schedule table — it's the main content table with game rows.
+    # Look for all <tr> that contain <td> cells (skip header rows).
+    # The schedule table lives inside the team page's main content area.
+    for tr in soup.find_all("tr"):
+        cells = tr.find_all("td")
+        if len(cells) < 2:
+            continue
+
+        date_text = cells[0].get_text(strip=True)
+        # Skip rows that don't look like dates (e.g. header rows, empty rows)
+        if not re.match(r"\d{2}/\d{2}/\d{4}", date_text):
+            continue
+
+        opponent_cell = cells[1]
+        opponent_text = opponent_cell.get_text(strip=True)
+
+        # Detect away games (opponent prefixed with "@")
+        is_away = opponent_text.strip().startswith("@")
+
+        # Clean opponent name: remove "@", ranking prefix
+        opponent_clean = re.sub(r"^@\s*", "", opponent_text)
+        opponent_clean = re.sub(r"^#\d+\s*", "", opponent_clean)
+
+        # Check for box_score link (completed game)
+        contest_id = None
+        box_link = tr.find("a", href=re.compile(r"/contests/\d+/box_score"))
+        if box_link:
+            id_match = re.search(r"/contests/(\d+)/box_score", box_link["href"])
+            if id_match:
+                contest_id = id_match.group(1)
+
+        schedule.append({
+            "date": date_text,
+            "opponent": opponent_clean,
+            "isAway": is_away,
+            "isSEC": is_sec_opponent(opponent_text),
+            "contestId": contest_id,
+        })
+
+    return schedule
+
+
 def find_team_tables(html, team_name, table_type):
     """
     Find the correct table for a given team and type on an NCAA stats page.
@@ -1976,7 +2044,8 @@ def main():
         print("Loading team schedule page...")
         page.goto(TEAM_URL, wait_until="networkidle", timeout=30000)
         games = extract_game_info(page)
-        print(f"Found {len(games)} completed games.\n")
+        full_schedule = extract_full_schedule(page)
+        print(f"Found {len(games)} completed games, {len(full_schedule)} total schedule entries.\n")
 
         if not games:
             print("ERROR: No completed games found. Check the team URL.")
@@ -2618,6 +2687,59 @@ def main():
     with open(pitching_splits_path, "w", encoding="utf-8") as f:
         json.dump(pitching_splits_output, f, indent=2)
     print(f"Wrote {pitching_splits_path}")
+
+    # --- schedule-2026.json ---
+    # Build schedule entries from the full schedule + cached box-score data.
+    # For completed games, derive the result (W/L) and score from cache.
+    schedule_games = []
+    for entry in full_schedule:
+        game_out = {
+            "date": entry["date"],
+            "opponent": entry["opponent"],
+            "location": "Away" if entry["isAway"] else "Home",
+            "isSEC": entry["isSEC"],
+            "result": None,
+            "attendance": None,
+        }
+
+        cid = entry.get("contestId")
+        if cid and cid in cache:
+            cached = cache[cid]
+            opp_runs = cached.get("opponent_runs", 0)
+
+            # Sum MSU runs from hitting box-score data.
+            # Players are stored as dicts keyed by column name.
+            hit_data = cached.get("hitting", {})
+            hit_players = hit_data.get("players", [])
+            msu_runs = 0
+            for p in hit_players:
+                try:
+                    val = p.get("R", 0) if isinstance(p, dict) else p[2]
+                    msu_runs += int(val)
+                except (ValueError, IndexError, KeyError, TypeError):
+                    pass
+
+            # Determine W/L
+            if msu_runs > opp_runs:
+                game_out["result"] = f"W {msu_runs}-{opp_runs}"
+            elif msu_runs < opp_runs:
+                game_out["result"] = f"L {msu_runs}-{opp_runs}"
+            else:
+                game_out["result"] = f"T {msu_runs}-{opp_runs}"
+
+        schedule_games.append(game_out)
+
+    schedule_output = {
+        "lastUpdated": timestamp,
+        "gamesScraped": games_scraped,
+        "lastGame": last_game_meta,
+        "games": schedule_games,
+    }
+
+    schedule_path = OUTPUT_DIR / "schedule-2026.json"
+    with open(schedule_path, "w", encoding="utf-8") as f:
+        json.dump(schedule_output, f, indent=2)
+    print(f"Wrote {schedule_path}")
 
     # ==============================================================
     # Summary

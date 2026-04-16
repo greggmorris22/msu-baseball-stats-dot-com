@@ -1,10 +1,367 @@
 ---
+/**
+ * MSU Baseball — Schedule
+ *
+ * Loads the pre-scraped schedule data from public/data/schedule-2026.json,
+ * which is produced by scripts/scrape-stats.py. Displays all games in a
+ * styled table with sortable columns.
+ *
+ * Features:
+ *   - Sortable columns (click headers)
+ *   - Result column: W = green, L = red
+ *   - SEC games indicated
+ *   - Season filter dropdown (placeholder for multi-year)
+ *   - Subtitle with game count and latest game info
+ */
 import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Schedule" description="Mississippi State baseball schedule.">
-  <div class="max-w-2xl mx-auto py-8 text-center">
-    <h1 class="text-3xl font-bold mb-4" style="color: #5D1725;">Schedule</h1>
-    <p style="color: #777777;">Coming soon.</p>
+  <div class="max-w-5xl mx-auto">
+
+    <h1 class="text-3xl font-bold mb-2">Schedule</h1>
+    <p id="schedule-subtitle" class="text-stone-500 dark:text-stone-400 mb-4 text-lg">
+      Mississippi State Bulldog baseball.
+    </p>
+
+    <div class="mb-4">
+      <label for="season-select" class="text-sm font-medium text-stone-600 dark:text-stone-400 mr-2">Season:</label>
+      <select id="season-select" class="text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
+        <option value="2026">2026</option>
+      </select>
+    </div>
+
+    <div class="rounded-xl border border-stone-200 dark:border-stone-700 overflow-hidden bg-white dark:bg-stone-800 shadow-sm">
+      <div id="schedule-container" class="p-4 text-sm text-stone-500 dark:text-stone-400">
+        Loading schedule&hellip;
+      </div>
+    </div>
+
   </div>
 </Layout>
+
+<style is:global>
+  /* ===== BASE TABLE ===== */
+  .schedule-wrapper { overflow-x: auto; }
+
+  .schedule-table {
+    width: 100%;
+    font-size: 0.8125rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    white-space: nowrap;
+  }
+
+  /* ===== COLUMN HEADER ROW ===== */
+  .schedule-table thead th {
+    background-color: #5D1725;
+    color: #ffffff;
+    padding: 0.55rem 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    border-bottom: 2px solid #3d0f18;
+  }
+
+  /* ===== SORTABLE HEADERS ===== */
+  .schedule-table th.sortable {
+    cursor: pointer;
+    transition: background-color 0.15s;
+  }
+
+  .schedule-table th.sortable:hover {
+    background-color: #7a1f30;
+  }
+
+  /* ===== DATA CELLS ===== */
+  .schedule-table tbody td {
+    padding: 0.4rem 0.75rem;
+    border-bottom: 1px solid rgb(245 245 244);
+    color: rgb(41 37 36);
+  }
+
+  /* Alternating row stripe */
+  .schedule-table tbody tr:nth-child(odd) td {
+    background-color: #ffffff;
+  }
+
+  .schedule-table tbody tr:nth-child(even) td {
+    background-color: #f5f5f5;
+  }
+
+  /* Row hover highlight */
+  .schedule-table tbody tr:hover td {
+    background-color: rgb(245 245 244);
+  }
+
+  /* ===== RESULT COLORING ===== */
+  .result-win  { color: #16a34a; font-weight: 700; }
+  .result-loss { color: #dc2626; font-weight: 700; }
+
+  /* ===== SEC BADGE ===== */
+  .sec-badge {
+    display: inline-block;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background-color: #5D1725;
+    color: #ffffff;
+    padding: 0.1rem 0.35rem;
+    border-radius: 0.2rem;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+  }
+
+  /* ===== DARK MODE ===== */
+  .dark .schedule-table thead th {
+    background-color: #5D1725;
+    color: #ffffff;
+    border-bottom-color: #3d0f18;
+  }
+
+  .dark .schedule-table th.sortable:hover {
+    background-color: #7a1f30;
+  }
+
+  .dark .schedule-table tbody td {
+    color: rgb(214 211 209);
+    border-bottom-color: rgb(41 37 36);
+  }
+
+  .dark .schedule-table tbody tr:nth-child(odd) td {
+    background-color: rgb(41 37 36);
+  }
+
+  .dark .schedule-table tbody tr:nth-child(even) td {
+    background-color: rgb(35 31 30);
+  }
+
+  .dark .schedule-table tbody tr:hover td {
+    background-color: rgb(50 46 44);
+  }
+
+  .dark .result-win  { color: #4ade80; }
+  .dark .result-loss { color: #f87171; }
+</style>
+
+<script>
+  // ===========================================================================
+  // State
+  // ===========================================================================
+
+  const COLUMNS = ['Date', 'Opponent', 'Location', 'Result'];
+
+  let gameRows: string[][] = [];  // each row: [date, opponent, location, result]
+  let secFlags: boolean[]  = [];  // parallel array: is this an SEC game?
+  let sortCol  = -1;              // index of currently sorted column (-1 = default)
+  let sortAsc  = true;
+
+  // ===========================================================================
+  // Helpers
+  // ===========================================================================
+
+  /** Try to parse a cell value as a number for sorting. */
+  function parseNum(str: string): number | null {
+    if (!str || str.trim() === '' || str.trim() === '-') return null;
+    const num = parseFloat(str);
+    return isNaN(num) ? null : num;
+  }
+
+  /** Compare two data rows by the current sort column. */
+  function compareRows(a: string[], b: string[]): number {
+    const va = a[sortCol];
+    const vb = b[sortCol];
+
+    // Date column: sort chronologically
+    if (sortCol === 0) {
+      // Dates like "02/14/2026" or "02/14/2026(1)"
+      const da = va.replace(/\(\d+\)$/, '');
+      const db = vb.replace(/\(\d+\)$/, '');
+      const cmp = da.localeCompare(db);
+      if (cmp !== 0) return sortAsc ? cmp : -cmp;
+      // Same date (doubleheader) - sort by suffix
+      return sortAsc ? va.localeCompare(vb) : vb.localeCompare(va);
+    }
+
+    // Result column: sort by W/L then score
+    if (sortCol === 3) {
+      // "W 12-5" → sort W before L, then by run differential
+      const ra = parseResult(va);
+      const rb = parseResult(vb);
+      if (ra === null && rb === null) return 0;
+      if (ra === null) return 1;
+      if (rb === null) return -1;
+      const diff = ra - rb;
+      return sortAsc ? diff : -diff;
+    }
+
+    // Try numeric comparison
+    const na = parseNum(va);
+    const nb = parseNum(vb);
+    if (na !== null && nb !== null) {
+      const diff = na - nb;
+      return sortAsc ? diff : -diff;
+    }
+
+    // String comparison
+    const cmp = (va || '').localeCompare(vb || '');
+    return sortAsc ? cmp : -cmp;
+  }
+
+  /** Convert result string to a sortable number (positive = good). */
+  function parseResult(val: string): number | null {
+    if (!val) return null;
+    const match = val.match(/^([WLT])\s+(\d+)-(\d+)$/);
+    if (!match) return null;
+    const us = parseInt(match[2], 10);
+    const them = parseInt(match[3], 10);
+    // W gets positive differential, L gets negative
+    return us - them;
+  }
+
+  // ===========================================================================
+  // Render
+  // ===========================================================================
+
+  function render() {
+    const container = document.getElementById('schedule-container');
+    if (!container) return;
+
+    // Build ordered index array for sorting without losing secFlags alignment
+    const indices = gameRows.map((_, i) => i);
+    if (sortCol >= 0) {
+      indices.sort((a, b) => compareRows(gameRows[a], gameRows[b]));
+    }
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'schedule-wrapper';
+
+    const table = document.createElement('table');
+    table.className = 'schedule-table';
+
+    // --- THEAD ---
+    const thead = document.createElement('thead');
+    const headerTr = document.createElement('tr');
+
+    COLUMNS.forEach((label, i) => {
+      const th = document.createElement('th');
+      th.textContent = label;
+      th.classList.add('sortable');
+      th.addEventListener('click', () => handleSort(i));
+      headerTr.appendChild(th);
+    });
+
+    thead.appendChild(headerTr);
+    table.appendChild(thead);
+
+    // --- TBODY ---
+    const tbody = document.createElement('tbody');
+
+    for (const idx of indices) {
+      const row = gameRows[idx];
+      const isSec = secFlags[idx];
+      const tr = document.createElement('tr');
+
+      COLUMNS.forEach((col, i) => {
+        const td = document.createElement('td');
+        const val = row[i] ?? '';
+
+        if (col === 'Opponent') {
+          // Opponent name + optional SEC badge
+          td.textContent = val;
+          if (isSec) {
+            const badge = document.createElement('span');
+            badge.className = 'sec-badge';
+            badge.textContent = 'SEC';
+            td.appendChild(badge);
+          }
+        } else if (col === 'Result' && val) {
+          const span = document.createElement('span');
+          span.textContent = val;
+          if (val.startsWith('W')) span.className = 'result-win';
+          else if (val.startsWith('L')) span.className = 'result-loss';
+          td.appendChild(span);
+        } else {
+          td.textContent = val;
+        }
+
+        tr.appendChild(td);
+      });
+
+      tbody.appendChild(tr);
+    }
+
+    table.appendChild(tbody);
+    wrapper.appendChild(table);
+
+    const oldWrapper = container.querySelector('.schedule-wrapper');
+    const savedScroll = oldWrapper ? oldWrapper.scrollLeft : 0;
+    container.replaceChildren(wrapper);
+    wrapper.scrollLeft = savedScroll;
+  }
+
+  // ===========================================================================
+  // Sort handler
+  // ===========================================================================
+
+  function handleSort(colIdx: number) {
+    if (sortCol === colIdx) {
+      sortAsc = !sortAsc;
+    } else {
+      sortCol = colIdx;
+      sortAsc = colIdx === 0;  // Date defaults ascending, others too
+    }
+    render();
+  }
+
+  // ===========================================================================
+  // Load data and initialise
+  // ===========================================================================
+
+  async function init() {
+    const container = document.getElementById('schedule-container');
+
+    try {
+      const res = await fetch('/data/schedule-2026.json');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      // Update subtitle
+      const subtitle = document.getElementById('schedule-subtitle');
+      if (subtitle && data.lastGame) {
+        subtitle.textContent = `Data current through ${data.gamesScraped} games, up to the ${data.lastGame.date} game vs ${data.lastGame.opponent}`;
+      }
+
+      // Build row arrays
+      const games = data.games || [];
+      gameRows = games.map((g: any) => [
+        g.date || '',
+        g.opponent || '',
+        g.location || '',
+        g.result || '',
+      ]);
+      secFlags = games.map((g: any) => !!g.isSEC);
+
+      // Default sort: date ascending (chronological)
+      sortCol = 0;
+      sortAsc = true;
+
+      render();
+
+    } catch (err: any) {
+      if (container) {
+        container.innerHTML = `
+          <p class="text-red-600 dark:text-red-400 font-medium">
+            Failed to load schedule data: ${err.message}
+          </p>
+          <p class="mt-1 text-xs">
+            Run <code>scripts/scrape-stats.py</code> to generate the data file.
+          </p>
+        `;
+      }
+    }
+  }
+
+  init();
+</script>
