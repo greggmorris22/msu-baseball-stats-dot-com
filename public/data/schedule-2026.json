@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-14T22:01:00",
+  "lastUpdated": "2026-04-15T22:55:57",
   "gamesScraped": 37,
   "lastGame": {
     "date": "04/14/2026",
@@ -89,7 +89,7 @@
     {
       "date": "02/28/2026",
       "opponent": "Virginia Tech",
-      "location": "Home",
+      "location": "Away",
       "isSEC": false,
       "result": "W 30-8",
       "attendance": null
@@ -105,7 +105,7 @@
     {
       "date": "03/03/2026",
       "opponent": "Southern Miss.",
-      "location": "Home",
+      "location": "Away",
       "isSEC": false,
       "result": "W 12-7",
       "attendance": null
@@ -145,25 +145,25 @@
     {
       "date": "03/13/2026",
       "opponent": "Arkansas",
-      "location": "Home",
+      "location": "Away",
       "isSEC": true,
       "result": "W 8-5",
       "attendance": null
     },
     {
-      "date": "03/14/2026(1)",
+      "date": "03/14/2026(2)",
       "opponent": "Arkansas",
-      "location": "Home",
+      "location": "Away",
       "isSEC": true,
-      "result": "W 14-2",
+      "result": "L 6-7",
       "attendance": null
     },
     {
-      "date": "03/14/2026(2)",
+      "date": "03/14/2026(1)",
       "opponent": "Arkansas",
-      "location": "Home",
+      "location": "Away",
       "isSEC": true,
-      "result": "L 6-7",
+      "result": "W 14-2",
       "attendance": null
     },
     {
@@ -209,7 +209,7 @@
     {
       "date": "03/27/2026",
       "opponent": "Ole Miss",
-      "location": "Home",
+      "location": "Away",
       "isSEC": true,
       "result": "W 10-4",
       "attendance": null
@@ -217,7 +217,7 @@
     {
       "date": "03/28/2026",
       "opponent": "Ole Miss",
-      "location": "Home",
+      "location": "Away",
       "isSEC": true,
       "result": "W 12-1",
       "attendance": null
@@ -225,7 +225,7 @@
     {
       "date": "03/29/2026",
       "opponent": "Ole Miss",
-      "location": "Home",
+      "location": "Away",
       "isSEC": true,
       "result": "W 14-1",
       "attendance": null
@@ -297,9 +297,153 @@
     {
       "date": "04/14/2026",
       "opponent": "Samford",
-      "location": "Home",
+      "location": "Away",
       "isSEC": false,
       "result": "W 22-0",
+      "attendance": null
+    },
+    {
+      "date": "04/17/2026 TBA",
+      "opponent": "South Carolina",
+      "location": "Away",
+      "isSEC": true,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "04/18/2026 TBA",
+      "opponent": "South Carolina",
+      "location": "Away",
+      "isSEC": true,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "04/19/2026 TBA",
+      "opponent": "South Carolina",
+      "location": "Away",
+      "isSEC": true,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "04/21/2026 07:00 PM",
+      "opponent": "Memphis",
+      "location": "Home",
+      "isSEC": false,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "04/24/2026 TBA",
+      "opponent": "LSU",
+      "location": "Home",
+      "isSEC": true,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "04/25/2026 TBA",
+      "opponent": "LSU",
+      "location": "Home",
+      "isSEC": true,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "04/26/2026 TBA",
+      "opponent": "LSU",
+      "location": "Home",
+      "isSEC": true,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "04/28/2026 07:00 PM",
+      "opponent": "Ole Miss@Pearl, MS",
+      "location": "Home",
+      "isSEC": true,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "05/01/2026 TBA",
+      "opponent": "Texas",
+      "location": "Away",
+      "isSEC": true,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "05/02/2026 TBA",
+      "opponent": "Texas",
+      "location": "Away",
+      "isSEC": true,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "05/03/2026 TBA",
+      "opponent": "Texas",
+      "location": "Away",
+      "isSEC": true,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "05/05/2026 07:00 PM",
+      "opponent": "Nicholls",
+      "location": "Home",
+      "isSEC": false,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "05/07/2026 TBA",
+      "opponent": "Auburn",
+      "location": "Home",
+      "isSEC": true,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "05/08/2026 TBA",
+      "opponent": "Auburn",
+      "location": "Home",
+      "isSEC": true,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "05/09/2026 TBA",
+      "opponent": "Auburn",
+      "location": "Home",
+      "isSEC": true,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "05/14/2026 07:00 PM",
+      "opponent": "Texas A&M",
+      "location": "Away",
+      "isSEC": true,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "05/15/2026 07:00 PM",
+      "opponent": "Texas A&M",
+      "location": "Away",
+      "isSEC": true,
+      "result": null,
+      "attendance": null
+    },
+    {
+      "date": "05/16/2026 03:00 PM",
+      "opponent": "Texas A&M",
+      "location": "Away",
+      "isSEC": true,
+      "result": null,
       "attendance": null
     }
   ]
