@@ -315,26 +315,14 @@ import Layout from '../layouts/Layout.astro';
     return String(n ?? 0);
   }
 
-  /**
-   * Format innings pitched in baseball notation: full innings, then a decimal
-   * representing thirds. e.g. 86 outs → 28 full innings + 2 outs → "28.2".
-   */
-  function fmtIP(outs) {
-    if (!outs) return '0.0';
-    const full = Math.floor(outs / 3);
-    const frac = outs % 3;
-    return `${full}.${frac}`;
-  }
-
   // ---------------------------------------------------------------------------
   // Column definitions
   // Each row in the aggregated player object gets the keys listed below.
   // ---------------------------------------------------------------------------
 
   const COLUMNS = [
-    { key: 'Player', label: 'Pitcher', fmt: (v) => v,    group: null      },
-    { key: 'IP',     label: 'IP',      fmt: (v, row) => fmtIP(row.outs), group: 'PITCHING' },
-    { key: 'PA',     label: 'PA',      fmt: fmtInt,   group: 'PITCHING' },
+    { key: 'Player', label: 'Pitcher', fmt: (v) => v,    group: null     },
+    { key: 'PA',     label: 'PA',      fmt: fmtInt,   group: 'VOLUME'  },
     { key: 'K9',     label: 'K/9',     fmt: fmtPer9,  group: 'RATE'     },
     { key: 'BB9',    label: 'BB/9',    fmt: fmtPer9,  group: 'RATE'     },
     { key: 'Kpct',   label: 'K%',      fmt: fmtPct,   group: 'RATE'     },
@@ -366,7 +354,7 @@ import Layout from '../layouts/Layout.astro';
   let playerRows = [];
   let teamRow    = null;
 
-  let sortKey  = 'outs';   // sort by IP descending by default (more workload first)
+  let sortKey  = 'PA';   // sort by PA descending by default (most usage first)
   let sortDesc = true;
 
   // ---------------------------------------------------------------------------
@@ -627,17 +615,13 @@ import Layout from '../layouts/Layout.astro';
       const th = document.createElement('th');
       th.textContent = col.label;
 
-      // The IP column sorts by raw `outs`, not by an `IP` key (which doesn't
-      // exist on the row). All other non-Player columns sort by their key.
-      const effectiveSortKey = col.key === 'IP' ? 'outs' : col.key;
-
       if (col.key !== 'Player') {
         th.classList.add('sortable');
         th.addEventListener('click', () => {
-          if (sortKey === effectiveSortKey) {
+          if (sortKey === col.key) {
             sortDesc = !sortDesc;
           } else {
-            sortKey  = effectiveSortKey;
+            sortKey  = col.key;
             sortDesc = true;
           }
           render();
