@@ -26,6 +26,25 @@ import Layout from '../layouts/Layout.astro';
   <!-- Dashboard grid -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
 
+    <!-- Next Game card -->
+    <div class="dash-card" id="card-next-game">
+      <h2 class="dash-card-title">Next Game</h2>
+      <div class="dash-card-body">
+        <div class="record-row">
+          <span class="record-label">Date</span>
+          <span class="record-value" id="next-date">--</span>
+        </div>
+        <div class="record-row">
+          <span class="record-label">Opponent</span>
+          <span class="record-value" id="next-opponent">--</span>
+        </div>
+        <div class="record-row">
+          <span class="record-label">Location</span>
+          <span class="record-value" id="next-location">--</span>
+        </div>
+      </div>
+    </div>
+
     <!-- Record card -->
     <div class="dash-card" id="card-record">
       <h2 class="dash-card-title">2026 Record</h2>
@@ -325,29 +344,38 @@ import Layout from '../layouts/Layout.astro';
    */
   async function loadDashboard() {
     try {
-      const [hitRes, pitRes, standingsRes] = await Promise.all([
+      const [hitRes, pitRes, standingsRes, schedRes] = await Promise.all([
         fetch('/data/hitting-stats-2026.json'),
         fetch('/data/pitching-stats-2026.json'),
         fetch('/data/sec-standings-2026.json'),
+        fetch('/data/schedule-2026.json'),
       ]);
 
-      if (!hitRes.ok || !pitRes.ok || !standingsRes.ok) throw new Error('Failed to fetch stats data');
+      if (!hitRes.ok || !pitRes.ok || !standingsRes.ok || !schedRes.ok) throw new Error('Failed to fetch stats data');
 
       const hitting  = await hitRes.json();
       const pitching = await pitRes.json();
       const standings = await standingsRes.json();
+      const schedule = await schedRes.json();
 
-      /* ---- Last updated ---- */
+      /* ---- Last updated (match Batting page format) ---- */
       const updatedEl = document.getElementById('last-updated');
-      if (updatedEl && hitting.lastUpdated) {
-        const d = new Date(hitting.lastUpdated);
-        const dateStr = d.toLocaleDateString('en-US', {
-          month: 'long', day: 'numeric', year: 'numeric',
-        });
-        const timeStr = d.toLocaleTimeString('en-US', {
-          hour: 'numeric', minute: '2-digit', hour12: true,
-        }).toLowerCase();
-        updatedEl.textContent = `Site data last updated ${dateStr} at ${timeStr} Central Time`;
+      if (updatedEl && hitting.gamesScraped && hitting.lastGame) {
+        updatedEl.textContent =
+          `Data current through ${hitting.gamesScraped} games, up to the ${hitting.lastGame.date} game vs ${hitting.lastGame.opponent}`;
+      }
+
+      /* ---- Next Game card ---- */
+      // Find the first scheduled game with no result (i.e., not yet played).
+      const nextGame = (schedule.games || []).find((g: any) => !g.result);
+      if (nextGame) {
+        setText('next-date', nextGame.date || '--');
+        setText('next-opponent', nextGame.opponent || '--');
+        setText('next-location', nextGame.location || '--');
+      } else {
+        setText('next-date', 'Season complete');
+        setText('next-opponent', 'Season complete');
+        setText('next-location', 'Season complete');
       }
 
       /* ---- Helpers ---- */

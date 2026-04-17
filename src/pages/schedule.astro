@@ -150,7 +150,7 @@ import Layout from '../layouts/Layout.astro';
   // State
   // ===========================================================================
 
-  const COLUMNS = ['Date', 'Opponent', 'Location', 'Result'];
+  const COLUMNS = ['Date', 'Opponent', 'Location', 'Result', 'Attendance'];
 
   let gameRows: string[][] = [];  // each row: [date, opponent, location, result]
   let secFlags: boolean[]  = [];  // parallel array: is this an SEC game?
@@ -193,6 +193,17 @@ import Layout from '../layouts/Layout.astro';
       if (ra === null) return 1;
       if (rb === null) return -1;
       const diff = ra - rb;
+      return sortAsc ? diff : -diff;
+    }
+
+    // Attendance column: numeric, with commas stripped; blanks sort last
+    if (sortCol === 4) {
+      const na = parseNum((va || '').replace(/,/g, ''));
+      const nb = parseNum((vb || '').replace(/,/g, ''));
+      if (na === null && nb === null) return 0;
+      if (na === null) return 1;
+      if (nb === null) return -1;
+      const diff = na - nb;
       return sortAsc ? diff : -diff;
     }
 
@@ -340,6 +351,7 @@ import Layout from '../layouts/Layout.astro';
         g.opponent || '',
         g.location || '',
         g.result || '',
+        (g.attendance != null) ? Number(g.attendance).toLocaleString('en-US') : '',
       ]);
       secFlags = games.map((g: any) => !!g.isSEC);
 

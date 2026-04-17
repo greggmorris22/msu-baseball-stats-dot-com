@@ -21,14 +21,14 @@ import Layout from '../layouts/Layout.astro';
 
     <h1 class="text-2xl font-bold mb-1" style="color: var(--color-text);">SEC Standings</h1>
 
+    <p id="last-updated" class="text-sm mb-4" style="color: #777777;">Loading...</p>
+
     <div class="mb-4">
       <label for="season-select" class="text-sm font-medium text-stone-600 dark:text-stone-400 mr-2">Season:</label>
       <select id="season-select" class="text-sm rounded-lg border border-stone-300 dark:border-stone-600 bg-white dark:bg-stone-700 text-stone-800 dark:text-stone-200 px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500">
         <option value="2026">2026</option>
       </select>
     </div>
-
-    <p id="last-updated" class="text-sm mb-6" style="color: #777777;">Loading...</p>
 
     <div id="standings-container" class="table-wrap">
       <table id="standings-table">
@@ -184,18 +184,22 @@ import Layout from '../layouts/Layout.astro';
       allColumns    = data.columns;
       originalTeams = data.teams.map((r: string[]) => [...r]); // deep copy
 
-      /* ---- Subtitle from hitting stats ---- */
+      /* ---- Subtitle: when the standings were scraped ---- */
+      // secsports.com updates whenever any SEC team plays, which may be a
+      // different cadence than MSU's per-game stats — show the standings
+      // scrape timestamp, not the hitting stats timestamp.
       const updatedEl = document.getElementById('last-updated');
-      try {
-        const hitRes = await fetch('/data/hitting-stats-2026.json');
-        if (hitRes.ok) {
-          const hitData = await hitRes.json();
-          if (updatedEl && hitData.lastGame) {
-            updatedEl.textContent = `Data current through ${hitData.gamesScraped} games, up to the ${hitData.lastGame.date} game vs ${hitData.lastGame.opponent}`;
-          }
-        }
-      } catch (_) {
-        if (updatedEl) updatedEl.textContent = '';
+      if (updatedEl && data.lastUpdated) {
+        const d = new Date(data.lastUpdated);
+        const dateStr = d.toLocaleDateString('en-US', {
+          month: 'long', day: 'numeric', year: 'numeric',
+        });
+        const timeStr = d.toLocaleTimeString('en-US', {
+          hour: 'numeric', minute: '2-digit', hour12: true,
+        }).toLowerCase();
+        updatedEl.textContent = `Standings last updated ${dateStr} at ${timeStr} Central Time`;
+      } else if (updatedEl) {
+        updatedEl.textContent = '';
       }
 
       /* ---- Header row ---- */

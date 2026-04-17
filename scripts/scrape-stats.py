@@ -89,6 +89,85 @@ SEC_TEAMS = {
     "Texas A&M", "Vanderbilt",
 }
 
+# ===========================================================================
+# Hardcoded game locations (source: hailstate.com/sports/baseball/schedule)
+#
+# Keyed by the NCAA schedule date string (as it appears in the schedule JSON).
+# Home games → "Starkville, MS"; away games → opponent's city; neutral-site
+# games → tournament city. This avoids relying on box-score venue parsing,
+# which can pick up wrong city text from other parts of the page.
+#
+# Dates that include a time ("04/17/2026 07:00 PM") are keyed on the full
+# string as returned by the NCAA schedule scraper. Doubleheaders use the
+# "(1)"/"(2)" suffix that NCAA appends.
+#
+# Update this dict at the start of each season (or when new games are added).
+# ===========================================================================
+GAME_LOCATIONS: dict[str, str] = {
+    # ── February ──
+    "02/13/2026":         "Starkville, MS",    # vs Hofstra
+    "02/14/2026(1)":      "Starkville, MS",    # vs Hofstra DH
+    "02/14/2026(2)":      "Starkville, MS",    # vs Hofstra DH
+    "02/17/2026":         "Starkville, MS",    # vs Troy
+    "02/18/2026":         "Starkville, MS",    # vs Alcorn State
+    "02/20/2026":         "Starkville, MS",    # vs Delaware
+    "02/21/2026":         "Starkville, MS",    # vs Delaware
+    "02/22/2026":         "Starkville, MS",    # vs Delaware
+    "02/24/2026":         "Starkville, MS",    # vs Austin Peay
+    # Amegy Bank College Baseball Series @ Globe Life Field, Arlington TX
+    "02/27/2026":         "Arlington, TX",     # vs Arizona St.
+    "02/28/2026":         "Arlington, TX",     # vs Virginia Tech
+    "03/01/2026":         "Arlington, TX",     # vs UCLA
+    # ── March ──
+    "03/03/2026":         "Hattiesburg, MS",   # at Southern Miss
+    "03/05/2026":         "Starkville, MS",    # vs Lipscomb
+    "03/06/2026":         "Starkville, MS",    # vs Lipscomb
+    "03/07/2026":         "Starkville, MS",    # vs Lipscomb
+    # Hancock Whitney Classic @ Keesler Federal Park, Biloxi MS
+    "03/10/2026":         "Biloxi, MS",        # vs Tulane
+    "03/13/2026":         "Fayetteville, AR",  # at Arkansas
+    "03/14/2026(1)":      "Fayetteville, AR",  # at Arkansas DH
+    "03/14/2026(2)":      "Fayetteville, AR",  # at Arkansas DH
+    "03/17/2026":         "Starkville, MS",    # vs Jackson State
+    "03/20/2026":         "Starkville, MS",    # vs Vanderbilt
+    "03/21/2026":         "Starkville, MS",    # vs Vanderbilt
+    "03/22/2026":         "Starkville, MS",    # vs Vanderbilt
+    "03/24/2026":         "Starkville, MS",    # vs Southern Miss
+    "03/27/2026":         "Oxford, MS",        # at Ole Miss
+    "03/28/2026":         "Oxford, MS",        # at Ole Miss
+    "03/29/2026":         "Oxford, MS",        # at Ole Miss
+    "03/31/2026":         "Starkville, MS",    # vs Grambling
+    # ── April ──
+    "04/02/2026":         "Starkville, MS",    # vs Georgia
+    "04/03/2026":         "Starkville, MS",    # vs Georgia
+    "04/04/2026":         "Starkville, MS",    # vs Georgia
+    "04/07/2026":         "Starkville, MS",    # vs UAB
+    "04/10/2026":         "Starkville, MS",    # vs Tennessee
+    "04/11/2026":         "Starkville, MS",    # vs Tennessee
+    "04/12/2026":         "Starkville, MS",    # vs Tennessee
+    "04/14/2026":         "Birmingham, AL",    # at Samford
+    "04/17/2026 07:00 PM": "Columbia, SC",     # at South Carolina
+    "04/18/2026 01:00 PM": "Columbia, SC",     # at South Carolina
+    "04/19/2026 01:00 PM": "Columbia, SC",     # at South Carolina
+    "04/21/2026 07:00 PM": "Starkville, MS",   # vs Memphis
+    "04/24/2026 TBA":     "Starkville, MS",    # vs LSU (Super Bulldog Weekend)
+    "04/25/2026 TBA":     "Starkville, MS",    # vs LSU
+    "04/26/2026 TBA":     "Starkville, MS",    # vs LSU
+    # Governor's Cup @ Trustmark Park, Pearl MS
+    "04/28/2026 07:00 PM": "Pearl, MS",        # vs Ole Miss (neutral)
+    # ── May ──
+    "05/01/2026 07:30 PM": "Austin, TX",       # at Texas
+    "05/02/2026 03:30 PM": "Austin, TX",       # at Texas
+    "05/03/2026 02:00 PM": "Austin, TX",       # at Texas
+    "05/05/2026 07:00 PM": "Starkville, MS",   # vs Nicholls
+    "05/07/2026 TBA":     "Starkville, MS",    # vs Auburn
+    "05/08/2026 TBA":     "Starkville, MS",    # vs Auburn
+    "05/09/2026 TBA":     "Starkville, MS",    # vs Auburn
+    "05/14/2026 07:00 PM": "Bryan-College Station, TX",  # at Texas A&M
+    "05/15/2026 07:00 PM": "Bryan-College Station, TX",  # at Texas A&M
+    "05/16/2026 03:00 PM": "Bryan-College Station, TX",  # at Texas A&M
+}
+
 
 # ===========================================================================
 # IP (Innings Pitched) Conversion Utilities
@@ -713,6 +792,113 @@ def parse_opponent_runs(html, team_name):
                 continue
 
     return 0
+
+
+def parse_team_runs(html, team_name):
+    """
+    Parse OUR team's total runs from the box score linescore.
+
+    Mirror of parse_opponent_runs but returns the MSU row's 'R' cell instead of
+    the other team's. Using the linescore (rather than summing individual
+    hitters' R values) is authoritative — it matches the final box-score total
+    even when pinch-runners score runs without a hitter record, which is the
+    cause of some previously-wrong results on the schedule page.
+
+    Args:
+        html: Full page HTML string of the box_score page.
+        team_name: Our team name (e.g. "Mississippi St.").
+
+    Returns:
+        Integer: our team's total runs, or None if parsing fails.
+    """
+    soup = BeautifulSoup(html, "html.parser")
+
+    for table in soup.find_all("table"):
+        rows = table.find_all("tr")
+        if len(rows) < 2:
+            continue
+
+        header_cells = rows[0].find_all(["th", "td"])
+        header_texts = [c.get_text(strip=True) for c in header_cells]
+
+        r_index = None
+        for idx, h in enumerate(header_texts):
+            if h == "R":
+                r_index = idx
+                break
+
+        if r_index is None:
+            continue
+
+        # Find OUR team's row (the row that DOES contain our team name)
+        for row in rows[1:]:
+            cells = row.find_all(["th", "td"])
+            if len(cells) <= r_index:
+                continue
+
+            row_text = cells[0].get_text(strip=True)
+            if team_name.lower() not in row_text.lower():
+                continue
+
+            try:
+                return int(cells[r_index].get_text(strip=True))
+            except (ValueError, IndexError):
+                continue
+
+    return None
+
+
+def parse_attendance(html):
+    """
+    Parse the attendance figure from the box score page.
+
+    The box score page contains a line like "Attendance: 12,824". We match
+    that literal text and strip the commas before converting to int.
+
+    Args:
+        html: Full page HTML string of the box_score page.
+
+    Returns:
+        Integer attendance count, or None if the line isn't present
+        (e.g. attendance not reported).
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    page_text = soup.get_text()
+
+    match = re.search(r"Attendance:\s*([\d,]+)", page_text, re.IGNORECASE)
+    if not match:
+        return None
+
+    try:
+        return int(match.group(1).replace(",", ""))
+    except ValueError:
+        return None
+
+
+def parse_venue_city_state(html):
+    """
+    Parse the venue's city and state from the box score page.
+
+    The box score page shows the venue as a line like:
+        "Dudy Noble Field, Polk-DeMent Stadium (Starkville, MS)"
+    We match the "(City, ST)" portion and return "City, ST" as a single string.
+
+    Args:
+        html: Full page HTML string of the box_score page.
+
+    Returns:
+        String "City, ST" (e.g. "Starkville, MS"), or None if not found.
+    """
+    soup = BeautifulSoup(html, "html.parser")
+    page_text = soup.get_text()
+
+    # Match "(City, ST)" — US state codes are two uppercase letters.
+    # City names can include spaces, periods ("St. Louis"), and hyphens.
+    # Use the first match on the page; the venue line appears early.
+    match = re.search(r"\(([A-Za-z.\-\s]+,\s*[A-Z]{2})\)", page_text)
+    if not match:
+        return None
+    return match.group(1).strip()
 
 
 # ===========================================================================
@@ -2134,6 +2320,9 @@ def main():
             g_fielding = {"headers": [], "players": []}
             g_decisions    = {"win": None, "loss": None, "save": None}
             g_opp_runs     = 0
+            g_msu_runs     = None
+            g_attendance   = None
+            g_venue        = None
             g_hit_splits   = ([], [])
             g_pitch_splits = ([], [])
             g_pitchers     = []
@@ -2181,8 +2370,11 @@ def main():
                 url = f"https://stats.ncaa.org/contests/{cid}/box_score"
                 page.goto(url, wait_until="networkidle", timeout=30000)
                 html = page.content()
-                g_decisions = parse_box_score_decisions(html, TEAM_NAME)
-                g_opp_runs  = parse_opponent_runs(html, TEAM_NAME)
+                g_decisions  = parse_box_score_decisions(html, TEAM_NAME)
+                g_opp_runs   = parse_opponent_runs(html, TEAM_NAME)
+                g_msu_runs   = parse_team_runs(html, TEAM_NAME)
+                g_attendance = parse_attendance(html)
+                g_venue      = parse_venue_city_state(html)
                 status_parts.append("box_score OK")
             except Exception as e:
                 status_parts.append(f"box_score FAILED ({e})")
@@ -2242,6 +2434,9 @@ def main():
                 "fielding":          g_fielding,
                 "decisions":         g_decisions,
                 "opponent_runs":     g_opp_runs,
+                "msu_runs":          g_msu_runs,
+                "attendance":        g_attendance,
+                "venue":             g_venue,
                 "hitting_splits":    list(g_hit_splits),   # tuple -> list for JSON
                 "pitching_splits":   list(g_pitch_splits),
                 "pitcher_list":      g_pitchers,
@@ -2690,13 +2885,29 @@ def main():
 
     # --- schedule-2026.json ---
     # Build schedule entries from the full schedule + cached box-score data.
-    # For completed games, derive the result (W/L) and score from cache.
+    # For completed games, pull the result, location, and attendance from the
+    # cached box-score data (parse_team_runs / parse_attendance / parse_venue).
     schedule_games = []
     for entry in full_schedule:
+        raw_opp = entry["opponent"] or ""
+        # Strip any trailing "@City, State" suffix from neutral-site opponents.
+        opp_name = raw_opp.split("@", 1)[0].strip()
+        # Fallback city/state derived from the @suffix, for games not yet played.
+        suffix_location = None
+        if "@" in raw_opp:
+            suffix_location = raw_opp.split("@", 1)[1].strip()
+
+        # Resolve location from the hardcoded GAME_LOCATIONS dict.
+        # This is the primary source — derived from the official team schedule
+        # at hailstate.com so every game (past and future) has an accurate city.
+        # The @suffix from the raw NCAA opponent string is used as a fallback
+        # for any game not yet in the dict (e.g. newly added games or playoffs).
+        game_location = GAME_LOCATIONS.get(entry["date"]) or suffix_location
+
         game_out = {
             "date": entry["date"],
-            "opponent": entry["opponent"],
-            "location": "Away" if entry["isAway"] else "Home",
+            "opponent": opp_name,
+            "location": game_location,
             "isSEC": entry["isSEC"],
             "result": None,
             "attendance": None,
@@ -2706,26 +2917,29 @@ def main():
         if cid and cid in cache:
             cached = cache[cid]
             opp_runs = cached.get("opponent_runs", 0)
+            msu_runs = cached.get("msu_runs")
 
-            # Sum MSU runs from hitting box-score data.
-            # Players are stored as dicts keyed by column name.
-            hit_data = cached.get("hitting", {})
-            hit_players = hit_data.get("players", [])
-            msu_runs = 0
-            for p in hit_players:
-                try:
-                    val = p.get("R", 0) if isinstance(p, dict) else p[2]
-                    msu_runs += int(val)
-                except (ValueError, IndexError, KeyError, TypeError):
-                    pass
+            # Prefer the authoritative linescore total; fall back to the old
+            # hitting-R sum only if the new field is missing (pre-backfill cache).
+            if msu_runs is None:
+                hit_data = cached.get("hitting", {})
+                hit_players = hit_data.get("players", [])
+                msu_runs = 0
+                for p in hit_players:
+                    try:
+                        val = p.get("R", 0) if isinstance(p, dict) else p[2]
+                        msu_runs += int(val)
+                    except (ValueError, IndexError, KeyError, TypeError):
+                        pass
 
-            # Determine W/L
             if msu_runs > opp_runs:
                 game_out["result"] = f"W {msu_runs}-{opp_runs}"
             elif msu_runs < opp_runs:
                 game_out["result"] = f"L {msu_runs}-{opp_runs}"
             else:
                 game_out["result"] = f"T {msu_runs}-{opp_runs}"
+
+            game_out["attendance"] = cached.get("attendance")
 
         schedule_games.append(game_out)
 

@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-15T22:55:57",
+  "lastUpdated": "2026-04-16T23:05:06",
   "gamesScraped": 37,
   "lastGame": {
     "date": "04/14/2026",
@@ -9,319 +9,319 @@
     {
       "date": "02/13/2026",
       "opponent": "Hofstra",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "W 12-5",
-      "attendance": null
+      "result": "W 6-5",
+      "attendance": 12824
     },
     {
       "date": "02/14/2026(1)",
       "opponent": "Hofstra",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "W 12-1",
-      "attendance": null
+      "result": "W 6-1",
+      "attendance": 12667
     },
     {
       "date": "02/14/2026(2)",
       "opponent": "Hofstra",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "W 14-5",
-      "attendance": null
+      "result": "W 7-5",
+      "attendance": 12667
     },
     {
       "date": "02/17/2026",
       "opponent": "Troy",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "W 26-7",
-      "attendance": null
+      "result": "W 13-7",
+      "attendance": 9842
     },
     {
       "date": "02/18/2026",
       "opponent": "Alcorn",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "W 38-0",
-      "attendance": null
+      "result": "W 19-0",
+      "attendance": 9752
     },
     {
       "date": "02/20/2026",
       "opponent": "Delaware",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "W 18-2",
-      "attendance": null
+      "result": "W 9-2",
+      "attendance": 11632
     },
     {
       "date": "02/21/2026",
       "opponent": "Delaware",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "W 20-0",
-      "attendance": null
+      "result": "W 10-0",
+      "attendance": 13194
     },
     {
       "date": "02/22/2026",
       "opponent": "Delaware",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "W 14-3",
-      "attendance": null
+      "result": "W 7-3",
+      "attendance": 9473
     },
     {
       "date": "02/24/2026",
       "opponent": "Austin Peay",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "W 32-3",
-      "attendance": null
+      "result": "W 16-3",
+      "attendance": 9337
     },
     {
       "date": "02/27/2026",
-      "opponent": "Arizona St.@Arlington, TX",
-      "location": "Home",
+      "opponent": "Arizona St.",
+      "location": "Arlington, TX",
       "isSEC": false,
-      "result": "W 16-4",
-      "attendance": null
+      "result": "W 8-4",
+      "attendance": 7181
     },
     {
       "date": "02/28/2026",
       "opponent": "Virginia Tech",
-      "location": "Away",
+      "location": "Arlington, TX",
       "isSEC": false,
-      "result": "W 30-8",
-      "attendance": null
+      "result": "W 15-8",
+      "attendance": 0
     },
     {
       "date": "03/01/2026",
-      "opponent": "UCLA@Arlington, TX",
-      "location": "Home",
+      "opponent": "UCLA",
+      "location": "Arlington, TX",
       "isSEC": false,
-      "result": "W 14-8",
-      "attendance": null
+      "result": "L 7-8",
+      "attendance": 0
     },
     {
       "date": "03/03/2026",
       "opponent": "Southern Miss.",
-      "location": "Away",
+      "location": "Hattiesburg, MS",
       "isSEC": false,
-      "result": "W 12-7",
-      "attendance": null
+      "result": "L 6-7",
+      "attendance": 5716
     },
     {
       "date": "03/05/2026",
       "opponent": "Lipscomb",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "W 16-3",
-      "attendance": null
+      "result": "W 8-3",
+      "attendance": 10057
     },
     {
       "date": "03/06/2026",
       "opponent": "Lipscomb",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "W 18-4",
-      "attendance": null
+      "result": "W 9-4",
+      "attendance": 11499
     },
     {
       "date": "03/07/2026",
       "opponent": "Lipscomb",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "W 52-0",
-      "attendance": null
+      "result": "W 26-0",
+      "attendance": 10375
     },
     {
       "date": "03/10/2026",
-      "opponent": "Tulane@Biloxi, MS",
-      "location": "Home",
+      "opponent": "Tulane",
+      "location": "Biloxi, MS",
       "isSEC": false,
-      "result": "W 22-7",
-      "attendance": null
+      "result": "W 11-7",
+      "attendance": 6112
     },
     {
       "date": "03/13/2026",
       "opponent": "Arkansas",
-      "location": "Away",
+      "location": "Fayetteville, AR",
       "isSEC": true,
-      "result": "W 8-5",
-      "attendance": null
+      "result": "L 4-5",
+      "attendance": 10464
     },
     {
       "date": "03/14/2026(2)",
       "opponent": "Arkansas",
-      "location": "Away",
+      "location": "Fayetteville, AR",
       "isSEC": true,
-      "result": "L 6-7",
-      "attendance": null
+      "result": "L 3-7",
+      "attendance": 9653
     },
     {
       "date": "03/14/2026(1)",
       "opponent": "Arkansas",
-      "location": "Away",
+      "location": "Fayetteville, AR",
       "isSEC": true,
-      "result": "W 14-2",
-      "attendance": null
+      "result": "W 7-2",
+      "attendance": 10790
     },
     {
       "date": "03/17/2026",
       "opponent": "Jackson St.",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "W 34-1",
-      "attendance": null
+      "result": "W 17-1",
+      "attendance": 7967
     },
     {
       "date": "03/20/2026",
       "opponent": "Vanderbilt",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": true,
-      "result": "W 8-2",
-      "attendance": null
+      "result": "W 4-2",
+      "attendance": 14649
     },
     {
       "date": "03/21/2026",
       "opponent": "Vanderbilt",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": true,
-      "result": "L 0-2",
-      "attendance": null
+      "result": "W 7-2",
+      "attendance": 14834
     },
     {
       "date": "03/22/2026",
       "opponent": "Vanderbilt",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": true,
-      "result": "W 34-7",
-      "attendance": null
+      "result": "W 17-7",
+      "attendance": 12207
     },
     {
       "date": "03/24/2026",
       "opponent": "Southern Miss.",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "W 24-0",
-      "attendance": null
+      "result": "W 12-0",
+      "attendance": 12887
     },
     {
       "date": "03/27/2026",
       "opponent": "Ole Miss",
-      "location": "Away",
+      "location": "Oxford, MS",
       "isSEC": true,
-      "result": "W 10-4",
-      "attendance": null
+      "result": "W 5-4",
+      "attendance": 11758
     },
     {
       "date": "03/28/2026",
       "opponent": "Ole Miss",
-      "location": "Away",
+      "location": "Oxford, MS",
       "isSEC": true,
-      "result": "W 12-1",
-      "attendance": null
+      "result": "W 6-1",
+      "attendance": 11336
     },
     {
       "date": "03/29/2026",
       "opponent": "Ole Miss",
-      "location": "Away",
+      "location": "Oxford, MS",
       "isSEC": true,
-      "result": "W 14-1",
-      "attendance": null
+      "result": "W 7-1",
+      "attendance": 9408
     },
     {
       "date": "03/31/2026",
       "opponent": "Grambling",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "W 24-0",
-      "attendance": null
+      "result": "W 12-0",
+      "attendance": 9473
     },
     {
       "date": "04/02/2026",
       "opponent": "Georgia",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": true,
-      "result": "W 18-10",
-      "attendance": null
+      "result": "L 9-10",
+      "attendance": 12828
     },
     {
       "date": "04/03/2026",
       "opponent": "Georgia",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": true,
-      "result": "L 2-3",
-      "attendance": null
+      "result": "L 1-3",
+      "attendance": 14348
     },
     {
       "date": "04/04/2026",
       "opponent": "Georgia",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": true,
-      "result": "W 10-8",
-      "attendance": null
+      "result": "L 5-8",
+      "attendance": 10256
     },
     {
       "date": "04/07/2026",
       "opponent": "UAB",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
-      "result": "L 0-3",
-      "attendance": null
+      "result": "W 5-3",
+      "attendance": 9329
     },
     {
       "date": "04/10/2026",
       "opponent": "Tennessee",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": true,
-      "result": "W 10-6",
-      "attendance": null
+      "result": "L 5-6",
+      "attendance": 13543
     },
     {
       "date": "04/11/2026",
       "opponent": "Tennessee",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": true,
-      "result": "L 4-6",
-      "attendance": null
+      "result": "L 2-6",
+      "attendance": 14814
     },
     {
       "date": "04/12/2026",
       "opponent": "Tennessee",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": true,
-      "result": "L 4-7",
-      "attendance": null
+      "result": "L 2-7",
+      "attendance": 10376
     },
     {
       "date": "04/14/2026",
       "opponent": "Samford",
-      "location": "Away",
+      "location": "Birmingham, AL",
       "isSEC": false,
-      "result": "W 22-0",
-      "attendance": null
+      "result": "W 11-1",
+      "attendance": 2113
     },
     {
-      "date": "04/17/2026 TBA",
+      "date": "04/17/2026 07:00 PM",
       "opponent": "South Carolina",
-      "location": "Away",
+      "location": "Columbia, SC",
       "isSEC": true,
       "result": null,
       "attendance": null
     },
     {
-      "date": "04/18/2026 TBA",
+      "date": "04/18/2026 01:00 PM",
       "opponent": "South Carolina",
-      "location": "Away",
+      "location": "Columbia, SC",
       "isSEC": true,
       "result": null,
       "attendance": null
     },
     {
-      "date": "04/19/2026 TBA",
+      "date": "04/19/2026 01:00 PM",
       "opponent": "South Carolina",
-      "location": "Away",
+      "location": "Columbia, SC",
       "isSEC": true,
       "result": null,
       "attendance": null
@@ -329,7 +329,7 @@
     {
       "date": "04/21/2026 07:00 PM",
       "opponent": "Memphis",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
       "result": null,
       "attendance": null
@@ -337,7 +337,7 @@
     {
       "date": "04/24/2026 TBA",
       "opponent": "LSU",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": true,
       "result": null,
       "attendance": null
@@ -345,7 +345,7 @@
     {
       "date": "04/25/2026 TBA",
       "opponent": "LSU",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": true,
       "result": null,
       "attendance": null
@@ -353,39 +353,39 @@
     {
       "date": "04/26/2026 TBA",
       "opponent": "LSU",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": true,
       "result": null,
       "attendance": null
     },
     {
       "date": "04/28/2026 07:00 PM",
-      "opponent": "Ole Miss@Pearl, MS",
-      "location": "Home",
+      "opponent": "Ole Miss",
+      "location": "Pearl, MS",
       "isSEC": true,
       "result": null,
       "attendance": null
     },
     {
-      "date": "05/01/2026 TBA",
+      "date": "05/01/2026 07:30 PM",
       "opponent": "Texas",
-      "location": "Away",
+      "location": "Austin, TX",
       "isSEC": true,
       "result": null,
       "attendance": null
     },
     {
-      "date": "05/02/2026 TBA",
+      "date": "05/02/2026 03:30 PM",
       "opponent": "Texas",
-      "location": "Away",
+      "location": "Austin, TX",
       "isSEC": true,
       "result": null,
       "attendance": null
     },
     {
-      "date": "05/03/2026 TBA",
+      "date": "05/03/2026 02:00 PM",
       "opponent": "Texas",
-      "location": "Away",
+      "location": "Austin, TX",
       "isSEC": true,
       "result": null,
       "attendance": null
@@ -393,7 +393,7 @@
     {
       "date": "05/05/2026 07:00 PM",
       "opponent": "Nicholls",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": false,
       "result": null,
       "attendance": null
@@ -401,7 +401,7 @@
     {
       "date": "05/07/2026 TBA",
       "opponent": "Auburn",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": true,
       "result": null,
       "attendance": null
@@ -409,7 +409,7 @@
     {
       "date": "05/08/2026 TBA",
       "opponent": "Auburn",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": true,
       "result": null,
       "attendance": null
@@ -417,7 +417,7 @@
     {
       "date": "05/09/2026 TBA",
       "opponent": "Auburn",
-      "location": "Home",
+      "location": "Starkville, MS",
       "isSEC": true,
       "result": null,
       "attendance": null
@@ -425,7 +425,7 @@
     {
       "date": "05/14/2026 07:00 PM",
       "opponent": "Texas A&M",
-      "location": "Away",
+      "location": "Bryan-College Station, TX",
       "isSEC": true,
       "result": null,
       "attendance": null
@@ -433,7 +433,7 @@
     {
       "date": "05/15/2026 07:00 PM",
       "opponent": "Texas A&M",
-      "location": "Away",
+      "location": "Bryan-College Station, TX",
       "isSEC": true,
       "result": null,
       "attendance": null
@@ -441,7 +441,7 @@
     {
       "date": "05/16/2026 03:00 PM",
       "opponent": "Texas A&M",
-      "location": "Away",
+      "location": "Bryan-College Station, TX",
       "isSEC": true,
       "result": null,
       "attendance": null
