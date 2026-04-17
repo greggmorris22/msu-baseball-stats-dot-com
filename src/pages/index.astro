@@ -412,7 +412,7 @@ import Layout from '../layouts/Layout.astro';
       setText('pit-era',  pitSummary[col(pitCols, 'ERA')]);
       setText('pit-whip', pitSummary[col(pitCols, 'WHIP')]);
       setText('pit-kbb',  pitSummary[col(pitCols, 'K%-BB%')]);
-      setText('pit-opp-avg', pitSummary[col(pitCols, 'b/avg')]);
+      setText('pit-opp-avg', pitSummary[col(pitCols, 'AVG')]);
 
       // Compute Opp OBP = (H + BB + HBP) / (AB + BB + HBP + SFA)
       const pH  = parseInt(pitSummary[col(pitCols, 'H')], 10) || 0;
