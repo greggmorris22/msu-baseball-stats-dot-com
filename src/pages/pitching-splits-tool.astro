@@ -13,11 +13,13 @@
  *   5. Baserunners    — All / Empty / On Base / RISP
  *   6. Leverage       — All / Low / Medium / High
  *
- * Columns (23):
+ * Columns (19):
  *   Pitcher, IP, PA,
  *   K/9, BB/9, K%, BB%, K-BB%, WHIP, AVG, OBP, SLG, BABIP,
- *   BB, SO, 2B, 3B, HR, AB,
- *   WP, HBP, BK, SFA, SHA
+ *   BB, SO, 2B, 3B, HR, AB
+ *
+ * NOTE: HBP and SFA are tracked internally to keep OBP and BABIP accurate
+ * but are not shown as columns.
  *
  * NOTES on data limitations:
  *   - bat_side resolves to ~91% of pitcher PAs (NCAA's batter name format
@@ -25,16 +27,12 @@
  *     a period, which we can't always match against the roster). PAs with
  *     unknown bat_side are excluded from L/R-only views and counted under
  *     "All".
- *   - WP (wild pitches) and BK (balks) are NOT parsed per-PA in the PBP data.
- *     When ALL filters are at "all", we overlay authoritative season totals
- *     from pitching-stats-2026.json. When any filter is active, these cells
- *     show "—" because the season total wouldn't reflect the filter.
  *   - IP is computed from outs_recorded per PA and reconciles to NCAA's
  *     pitching totals within ~1 IP across the season for each pitcher.
  *   - Pitcher names from PBP are last-name only; we resolve them to full
- *     names client-side via pitching-stats-2026.json. The name-map is
- *     careful to strip generational suffixes (Jr./Sr./II/III) so names
- *     like "Chris Billingsley Jr." key as "Billingsley" matching PBP.
+ *     names client-side via pitching-stats-2026.json. The name-map strips
+ *     generational suffixes (Jr./Sr./II/III) so names like "Chris Billingsley
+ *     Jr." key as "Billingsley" matching PBP.
  */
 import Layout from '../layouts/Layout.astro';
 ---
@@ -333,17 +331,6 @@ import Layout from '../layouts/Layout.astro';
   // Each row in the aggregated player object gets the keys listed below.
   // ---------------------------------------------------------------------------
 
-  /**
-   * Formatter for WP/BK cells. These aren't tracked per-PA in the PBP data,
-   * so we pull season totals from pitching-stats-2026.json. When the user
-   * narrows the view with any filter, we show "—" because the season total
-   * would be misleading (it doesn't reflect the filter).
-   */
-  function fmtSeasonStat(n) {
-    if (n === null || n === undefined) return '\u2014';
-    return String(n);
-  }
-
   const COLUMNS = [
     { key: 'Player', label: 'Pitcher', fmt: (v) => v,    group: null      },
     { key: 'IP',     label: 'IP',      fmt: (v, row) => fmtIP(row.outs), group: 'PITCHING' },
@@ -364,11 +351,6 @@ import Layout from '../layouts/Layout.astro';
     { key: 'TPL',    label: '3B',      fmt: fmtInt,   group: 'COUNTING' },
     { key: 'HR',     label: 'HR',      fmt: fmtInt,   group: 'COUNTING' },
     { key: 'AB',     label: 'AB',      fmt: fmtInt,   group: 'COUNTING' },
-    { key: 'WP',     label: 'WP',      fmt: fmtSeasonStat, group: 'OTHER' },
-    { key: 'HBP',    label: 'HBP',     fmt: fmtInt,   group: 'OTHER'    },
-    { key: 'BK',     label: 'BK',      fmt: fmtSeasonStat, group: 'OTHER' },
-    { key: 'SFA',    label: 'SFA',     fmt: fmtInt,   group: 'OTHER'    },
-    { key: 'SHA',    label: 'SHA',     fmt: fmtInt,   group: 'OTHER'    },
   ];
 
   // ---------------------------------------------------------------------------
@@ -380,15 +362,6 @@ import Layout from '../layouts/Layout.astro';
 
   /** lastName → fullName map built from pitching-stats-2026.json. */
   let pitcherNameMap = {};
-
-  /**
-   * Full-season WP / BK counts per pitcher, keyed by full display name.
-   * Populated from pitching-stats-2026.json at load time. These are applied
-   * to each row in recompute() ONLY when the user has no filters narrowing
-   * the view — otherwise the season total would be misleading.
-   */
-  let seasonWP = {};
-  let seasonBK = {};
 
   let playerRows = [];
   let teamRow    = null;
@@ -466,17 +439,14 @@ import Layout from '../layouts/Layout.astro';
     return {
       Player: name,
       // Counting stats accumulated from PA records
-      PA: 0, AB: 0, H: 0, TB: 0, DBL: 0, TPL: 0, HR: 0, BB: 0, IBB: 0, HBP: 0,
-      SO: 0, SFA: 0, SHA: 0,
+      PA: 0, AB: 0, H: 0, TB: 0, DBL: 0, TPL: 0, HR: 0, BB: 0, IBB: 0,
+      SO: 0,
+      // HBP and SFA are tracked internally for OBP / BABIP but not displayed
+      HBP: 0, SFA: 0,
       outs: 0,           // total outs recorded → drives IP
       // Derived rate stats filled in by finalizeRow()
       AVG: 0, OBP: 0, SLG: 0, BABIP: 0, K9: 0, BB9: 0, Kpct: 0, BBpct: 0,
       KBBpct: 0, WHIP: 0,
-      // WP and BK aren't tracked per-PA in PBP data. Filled in after aggregation
-      // from pitching-stats-2026.json season totals — and nulled out whenever
-      // the user has any filter narrowing the view, since season totals wouldn't
-      // reflect the filter.
-      WP: null, BK: null,
     };
   }
 
@@ -487,10 +457,9 @@ import Layout from '../layouts/Layout.astro';
     row.TB   += pa.TB   || 0;
     row.BB   += pa.BB   || 0;
     row.IBB  += pa.IBB  || 0;
-    row.HBP  += pa.HBP  || 0;
+    row.HBP  += pa.HBP  || 0;     // internal only — used for OBP
     row.SO   += pa.K    || 0;     // K on the record, displayed as SO
-    row.SFA  += pa.SF   || 0;     // sac flies allowed
-    row.SHA  += pa.SAC  || 0;     // sac bunts allowed
+    row.SFA  += pa.SF   || 0;     // internal only — used for BABIP
     row.outs += pa.outs_recorded || 0;
 
     switch (pa.outcome) {
@@ -565,30 +534,6 @@ import Layout from '../layouts/Layout.astro';
     // Hide pitchers with zero PAs under this filter
     playerRows = players.filter(p => p.PA > 0);
     teamRow    = team;
-
-    // ---- WP / BK overlay ----
-    // These aren't tracked per-PA in the PBP data, so we can't compute them
-    // per-split. Instead, when the user has ALL filters at "all", overlay
-    // the authoritative season totals from pitching-stats-2026.json. When
-    // any filter is active, leave them as null so the formatter shows "—".
-    const noFilters =
-      f.bat === 'all' && f.loc === 'all' && f.opp === 'all' &&
-      f.count === 'all' && f.bases === 'all' && f.lev === 'all';
-    if (noFilters) {
-      let teamWP = 0, teamBK = 0;
-      for (const row of playerRows) {
-        const wp = seasonWP[row.Player];
-        const bk = seasonBK[row.Player];
-        row.WP = (wp !== undefined) ? wp : null;
-        row.BK = (bk !== undefined) ? bk : null;
-        if (typeof row.WP === 'number') teamWP += row.WP;
-        if (typeof row.BK === 'number') teamBK += row.BK;
-      }
-      if (teamRow) {
-        teamRow.WP = teamWP;
-        teamRow.BK = teamBK;
-      }
-    }
 
     const counter = document.getElementById('pa-counter');
     if (counter) {
@@ -795,27 +740,6 @@ import Layout from '../layouts/Layout.astro';
     return map;
   }
 
-  /**
-   * Extract per-pitcher season totals for WP and BK from pitching-stats-2026.json.
-   * These values are authoritative (scraped directly from NCAA season stats)
-   * and are shown unfiltered as a "season total" overlay on the splits tool.
-   */
-  function buildSeasonStatMaps(pitchingData) {
-    const wp = {};
-    const bk = {};
-    const cols = pitchingData?.all?.columns || [];
-    const wpIdx = cols.indexOf('WP');
-    const bkIdx = cols.indexOf('BK');
-    if (wpIdx < 0 && bkIdx < 0) return { wp, bk };
-    for (const row of pitchingData.all.players) {
-      if (!row || !row[0]) continue;
-      const name = String(row[0]).trim();
-      if (wpIdx >= 0) wp[name] = parseInt(row[wpIdx], 10) || 0;
-      if (bkIdx >= 0) bk[name] = parseInt(row[bkIdx], 10) || 0;
-    }
-    return { wp, bk };
-  }
-
   // ---------------------------------------------------------------------------
   // Load JSON and initialise
   // ---------------------------------------------------------------------------
@@ -838,9 +762,6 @@ import Layout from '../layouts/Layout.astro';
 
       allPAs = pbp.pitcher_pas || [];
       pitcherNameMap = buildPitcherNameMap(pitching);
-      const seasonMaps = buildSeasonStatMaps(pitching);
-      seasonWP = seasonMaps.wp;
-      seasonBK = seasonMaps.bk;
 
       // Update subtitle with game info from hitting stats
       const subtitle = document.getElementById('splits-subtitle');
