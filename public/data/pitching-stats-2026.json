@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-16T23:05:06",
+  "lastUpdated": "2026-04-17T05:55:09",
   "gamesScraped": 37,
   "lastGame": {
     "date": "04/14/2026",
@@ -33,7 +33,7 @@
       "3B",
       "HR",
       "AB",
-      "b/avg",
+      "AVG",
       "WP",
       "HBP",
       "BK",
@@ -816,7 +816,7 @@
       "3B",
       "HR",
       "AB",
-      "b/avg",
+      "AVG",
       "WP",
       "HBP",
       "BK",
@@ -1451,7 +1451,7 @@
       "3B",
       "HR",
       "AB",
-      "b/avg",
+      "AVG",
       "WP",
       "HBP",
       "BK",

@@ -1759,7 +1759,7 @@ PITCHING_COLUMNS = [
     "Player", "IP", "PA", "K/9", "BB/9", "HR/9", "K%", "BB%", "K%-BB%",
     "WHIP", "ERA", "FIP", "LOB%", "BABIP",
     "APP-GS", "W-L", "SV", "H", "R", "ER", "BB", "SO", "2B", "3B", "HR",
-    "AB", "b/avg", "WP", "HBP", "BK", "SFA", "SHA", "SBA", "CSB", "SBA%",
+    "AB", "AVG", "WP", "HBP", "BK", "SFA", "SHA", "SBA", "CSB", "SBA%",
 ]
 
 
