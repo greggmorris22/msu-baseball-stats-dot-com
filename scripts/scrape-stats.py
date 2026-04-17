@@ -1996,15 +1996,27 @@ def calculate_pitching_stats(pitching_agg, decisions_per_game, cg_tracker, sho_t
 # Derived Stats — Fielding
 # ===========================================================================
 
-# The exact output column order for the fielding stats JSON
+# The exact output column order for the fielding stats JSON.
+# Matches the order requested by the user (verified against
+# https://stats.ncaa.org/teams/614666/season_to_date_stats?year_stat_category_id=15869).
+# Note: NCAA calls Double Plays "IDP" (Induced Double Plays); we surface them as "DP".
+# SBA% is calculated as SBA / (SBA + CSB), i.e. the pct of stolen-base attempts
+# that the catcher/pitcher allowed to succeed.
 FIELDING_COLUMNS = [
-    "Player", "C", "GP", "INN", "TC", "PO", "A", "E", "CI", "FLD%", "DP", "SBA",
+    "Player", "TC", "PO", "A", "E", "FLD%", "DP", "SBA", "CSB", "SBA%", "PB", "CI",
 ]
 
 
 def calculate_fielding_stats(fielding_agg):
     """
     Calculate fielding stats for all players and build the output rows.
+
+    Columns follow FIELDING_COLUMNS order:
+      Player, TC, PO, A, E, FLD%, DP, SBA, CSB, SBA%, PB, CI
+
+    SBA% = SBA / (SBA + CSB) — percentage of stolen-base attempts that
+    succeeded against this player.  Formatted as a 3-decimal batting-average
+    string (e.g. ".833").  Displayed as "-" when both SBA and CSB are zero.
 
     Args:
         fielding_agg: Output of aggregate_individual_stats() for fielding.
@@ -2018,54 +2030,53 @@ def calculate_fielding_stats(fielding_agg):
     for name, data in fielding_agg["players"].items():
         s = data["stats"]
         gp = data["gp"]
-        positions = data.get("positions", [])
 
-        # Primary position = most frequently played
-        if positions:
-            pos_counts = defaultdict(int)
-            for p in positions:
-                pos_counts[p] += 1
-            primary_pos = max(pos_counts, key=pos_counts.get)
-        else:
-            primary_pos = "-"
-
-        po = s.get("PO", 0)
-        a = s.get("A", 0)
-        tc = s.get("TC", 0)
-        e = s.get("E", 0)
-        ci = s.get("CI", 0)
+        po  = s.get("PO", 0)
+        a   = s.get("A", 0)
+        tc  = s.get("TC", 0)
+        e   = s.get("E", 0)
+        ci  = s.get("CI", 0)
         idp = s.get("IDP", 0)
         sba = s.get("SBA", 0)
+        csb = s.get("CSB", 0)
+        pb  = s.get("PB", 0)
 
-        # If TC wasn't in the table, calculate it
+        # If TC wasn't in the table, derive it
         if tc == 0 and (po + a + e) > 0:
             tc = po + a + e
 
         fld_denom = po + a + e
         fld_pct = fmt_avg(po + a, fld_denom) if fld_denom > 0 else ".000"
 
+        sba_total = sba + csb
+        sba_pct = fmt_avg(sba, sba_total) if sba_total > 0 else "-"
+
         if gp == 0:
             continue
 
         row = [
-            name, primary_pos, str(gp), "-",  # INN = "-" (not available from NCAA)
-            str(tc), str(po), str(a), str(e), str(ci),
-            fld_pct, str(idp), str(sba),
+            name,
+            str(tc), str(po), str(a), str(e),
+            fld_pct,
+            str(idp), str(sba), str(csb), sba_pct,
+            str(pb), str(ci),
         ]
         player_rows.append(row)
 
-    # Sort by GP descending, then by name
-    player_rows.sort(key=lambda row: (-int(row[2]), row[0]))
+    # Sort by TC descending, then alphabetically by name
+    player_rows.sort(key=lambda row: (-int(row[1]), row[0]))
 
     # --- Team totals row ---
-    ft = fielding_agg["team_totals"]
-    t_po = ft.get("PO", 0)
-    t_a = ft.get("A", 0)
-    t_tc = ft.get("TC", 0)
-    t_e = ft.get("E", 0)
-    t_ci = ft.get("CI", 0)
+    ft  = fielding_agg["team_totals"]
+    t_po  = ft.get("PO", 0)
+    t_a   = ft.get("A", 0)
+    t_tc  = ft.get("TC", 0)
+    t_e   = ft.get("E", 0)
+    t_ci  = ft.get("CI", 0)
     t_idp = ft.get("IDP", 0)
     t_sba = ft.get("SBA", 0)
+    t_csb = ft.get("CSB", 0)
+    t_pb  = ft.get("PB", 0)
 
     if t_tc == 0 and (t_po + t_a + t_e) > 0:
         t_tc = t_po + t_a + t_e
@@ -2073,10 +2084,15 @@ def calculate_fielding_stats(fielding_agg):
     t_fld_denom = t_po + t_a + t_e
     t_fld_pct = fmt_avg(t_po + t_a, t_fld_denom) if t_fld_denom > 0 else ".000"
 
+    t_sba_total = t_sba + t_csb
+    t_sba_pct = fmt_avg(t_sba, t_sba_total) if t_sba_total > 0 else "-"
+
     totals_row = [
-        "Totals", "-", "-", "-",
-        str(t_tc), str(t_po), str(t_a), str(t_e), str(t_ci),
-        t_fld_pct, str(t_idp), str(t_sba),
+        "Totals",
+        str(t_tc), str(t_po), str(t_a), str(t_e),
+        t_fld_pct,
+        str(t_idp), str(t_sba), str(t_csb), t_sba_pct,
+        str(t_pb), str(t_ci),
     ]
 
     return player_rows, [totals_row]

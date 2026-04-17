@@ -198,8 +198,8 @@ import Layout from '../layouts/Layout.astro';
     colHeaders  = subset.columns || [];
     playerRows  = subset.players || [];
     summaryRows = subset.summary || [];
-    // Default sort: GP descending (most games played first)
-    const defaultCol = colHeaders.indexOf('GP');
+    // Default sort: TC descending (most total chances first)
+    const defaultCol = colHeaders.indexOf('TC');
     sortCol  = defaultCol >= 0 ? defaultCol : -1;
     sortDesc = true;
     render();
