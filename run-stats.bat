@@ -16,6 +16,17 @@ if %errorlevel% neq 0 (
 )
 
 echo.
+echo Running PBP parser (Batting/Pitching Splits pages)...
+echo ============================================
+.venv\Scripts\python.exe scripts\parse_pbp.py
+if %errorlevel% neq 0 (
+    echo.
+    echo ERROR: PBP parser failed. Skipping git commit.
+    pause
+    exit /b 1
+)
+
+echo.
 echo Committing and pushing updated stats to GitHub...
 git add public\data\*.json
 git diff --cached --quiet
