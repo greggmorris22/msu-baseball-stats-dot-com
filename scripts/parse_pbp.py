@@ -2013,6 +2013,46 @@ def main():
         print(f"Leverage index resolved:        "
               f"{lev_hits}/{lev_hits + lev_miss} ({pct:.1f}%)")
 
+    # --- Load hitting/pitching stats for name resolution ---
+    hitting_stats = None
+    pitching_stats = None
+    if HITTING_STATS_PATH.exists():
+        with open(HITTING_STATS_PATH, "r", encoding="utf-8") as f:
+            hitting_stats = json.load(f)
+    if PITCHING_STATS_PATH.exists():
+        with open(PITCHING_STATS_PATH, "r", encoding="utf-8") as f:
+            pitching_stats = json.load(f)
+
+    # --- Resolve batter names from last-name to full name ---
+    if hitting_stats:
+        batter_name_map = {}
+        for row in hitting_stats.get("all", {}).get("players", []):
+            if row:
+                full_name = row[0]  # e.g. "Ace Reese"
+                last_name = full_name.split()[-1].lower()  # e.g. "reese"
+                batter_name_map[last_name] = full_name
+
+        for pa in all_batter_pas:
+            if pa.get("batter"):
+                last_name_key = pa["batter"].lower()
+                if last_name_key in batter_name_map:
+                    pa["batter"] = batter_name_map[last_name_key]
+
+    # --- Resolve pitcher names from last-name to full name ---
+    if pitching_stats:
+        pitcher_name_map = {}
+        for row in pitching_stats.get("all", {}).get("players", []):
+            if row:
+                full_name = row[0]  # e.g. "Tomas Valincius"
+                last_name = full_name.split()[-1].lower()  # e.g. "valincius"
+                pitcher_name_map[last_name] = full_name
+
+        for pa in all_pitcher_pas:
+            if pa.get("pitcher"):
+                last_name_key = pa["pitcher"].lower()
+                if last_name_key in pitcher_name_map:
+                    pa["pitcher"] = pitcher_name_map[last_name_key]
+
     # --- Write output ---
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
@@ -2029,15 +2069,6 @@ def main():
 
     # --- Validate ---
     if args.validate:
-        hitting_stats = None
-        pitching_stats = None
-        if HITTING_STATS_PATH.exists():
-            with open(HITTING_STATS_PATH, "r", encoding="utf-8") as f:
-                hitting_stats = json.load(f)
-        if PITCHING_STATS_PATH.exists():
-            with open(PITCHING_STATS_PATH, "r", encoding="utf-8") as f:
-                pitching_stats = json.load(f)
-
         validate_against_ncaa(all_batter_pas, hitting_stats)
         validate_pitchers_against_ncaa(all_pitcher_pas, pitching_stats)
 
