@@ -2043,8 +2043,14 @@ def main():
         pitcher_name_map = {}
         for row in pitching_stats.get("all", {}).get("players", []):
             if row:
-                full_name = row[0]  # e.g. "Tomas Valincius"
-                last_name = full_name.split()[-1].lower()  # e.g. "valincius"
+                full_name = row[0]  # e.g. "Tomas Valincius" or "Chris Billingsley Jr."
+                # Extract last name, skipping generational suffixes (Jr., Sr., II, III, etc.)
+                parts = full_name.split()
+                last_name = parts[-1].lower()
+                # If the last part is a suffix, use the second-to-last part instead
+                if last_name in ("jr.", "sr.", "ii", "iii", "iv"):
+                    if len(parts) >= 2:
+                        last_name = parts[-2].lower()
                 pitcher_name_map[last_name] = full_name
 
         for pa in all_pitcher_pas:
