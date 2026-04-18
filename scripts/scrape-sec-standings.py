@@ -182,8 +182,8 @@ def scrape_sec_standings(headless: bool = False) -> dict:
 
         page = context.new_page()
 
-        print("Loading standings page (waiting for network idle)...")
-        page.goto(STANDINGS_URL, wait_until="networkidle", timeout=45000)
+        print("Loading standings page (waiting for DOM ready)...")
+        page.goto(STANDINGS_URL, wait_until="domcontentloaded", timeout=45000)
 
         # Give JS frameworks extra time to render the table after network idle.
         # Sidearm Sports often fires a second render pass after the initial load.
