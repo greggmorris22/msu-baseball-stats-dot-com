@@ -1,8 +1,8 @@
 {
-  "lastUpdated": "2026-04-18T09:16:24",
-  "gamesScraped": 38,
+  "lastUpdated": "2026-04-18T16:27:07",
+  "gamesScraped": 39,
   "lastGame": {
-    "date": "04/17/2026",
+    "date": "04/18/2026",
     "opponent": "South Carolina"
   },
   "games": [
@@ -311,12 +311,12 @@
       "attendance": 6752
     },
     {
-      "date": "04/18/2026 01:00 PM",
+      "date": "04/18/2026",
       "opponent": "South Carolina",
-      "location": "Columbia, SC",
+      "location": null,
       "isSEC": true,
-      "result": null,
-      "attendance": null
+      "result": "W 9-0",
+      "attendance": 6735
     },
     {
       "date": "04/19/2026 01:00 PM",
