@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-04-17T05:55:09",
-  "gamesScraped": 37,
+  "lastUpdated": "2026-04-17T23:10:32",
+  "gamesScraped": 38,
   "lastGame": {
-    "date": "04/14/2026",
-    "opponent": "Samford"
+    "date": "04/17/2026",
+    "opponent": "South Carolina"
   },
   "all": {
     "columns": [
@@ -24,44 +24,44 @@
         "pos": "p",
         "splits": {
           "leadoff pct": [
-            13,
-            56
+            14,
+            63
           ],
           "runners": [
-            11,
-            59
+            13,
+            67
           ],
           "vs LHB": [
-            7,
-            59
+            11,
+            65
           ],
           "with 2Outs": [
-            7,
-            57
+            11,
+            67
           ],
           "emtpy": [
-            25,
-            130
+            29,
+            148
           ],
           "with scorepos": [
-            11,
-            55
+            12,
+            57
           ],
           "with scorepos2": [
-            5,
-            35
+            6,
+            36
           ],
           "with runners2": [
-            1,
-            23
+            3,
+            28
           ],
           "bases loaded": [
             0,
             3
           ],
           "vs RHB": [
-            29,
-            130
+            31,
+            150
           ]
         }
       },
@@ -163,43 +163,43 @@
         "splits": {
           "leadoff pct": [
             6,
-            23
+            25
           ],
           "runners": [
-            13,
-            39
+            15,
+            44
           ],
           "vs LHB": [
             7,
-            41
+            42
           ],
           "with 2Outs": [
-            11,
-            37
+            12,
+            41
           ],
           "emtpy": [
             10,
-            57
+            61
           ],
           "with scorepos": [
-            7,
-            35
+            8,
+            39
           ],
           "with scorepos2": [
-            6,
-            27
+            7,
+            30
           ],
           "with runners2": [
-            8,
-            20
+            9,
+            23
           ],
           "bases loaded": [
             0,
             2
           ],
           "vs RHB": [
-            16,
-            55
+            18,
+            63
           ]
         }
       },
@@ -896,44 +896,44 @@
     ],
     "totals": {
       "leadoff pct": [
-        91,
-        316
+        92,
+        325
       ],
       "runners": [
-        118,
-        487
+        122,
+        500
       ],
       "vs LHB": [
-        99,
-        458
+        103,
+        465
       ],
       "with 2Outs": [
-        85,
-        390
+        90,
+        404
       ],
       "emtpy": [
-        152,
-        733
+        156,
+        755
       ],
       "with scorepos": [
-        94,
-        394
+        96,
+        400
       ],
       "with scorepos2": [
-        63,
-        268
+        65,
+        272
       ],
       "with runners2": [
-        46,
-        195
+        49,
+        203
       ],
       "bases loaded": [
         5,
         39
       ],
       "vs RHB": [
-        161,
-        712
+        165,
+        740
       ]
     }
   },
@@ -956,44 +956,44 @@
         "pos": "p",
         "splits": {
           "leadoff pct": [
-            7,
-            34
+            8,
+            41
           ],
           "runners": [
-            6,
-            33
+            8,
+            41
           ],
           "vs LHB": [
-            4,
-            40
+            8,
+            46
           ],
           "with 2Outs": [
-            5,
-            36
+            9,
+            46
           ],
           "emtpy": [
-            13,
-            81
+            17,
+            99
           ],
           "with scorepos": [
-            3,
-            20
+            4,
+            22
           ],
           "with scorepos2": [
-            1,
-            11
+            2,
+            12
           ],
           "with runners2": [
-            1,
-            15
+            3,
+            20
           ],
           "bases loaded": [
             0,
             0
           ],
           "vs RHB": [
-            15,
-            74
+            17,
+            94
           ]
         }
       },
@@ -1049,43 +1049,43 @@
         "splits": {
           "leadoff pct": [
             2,
-            12
+            14
           ],
           "runners": [
-            10,
-            27
+            12,
+            32
           ],
           "vs LHB": [
             4,
-            24
+            25
           ],
           "with 2Outs": [
-            10,
-            26
+            11,
+            30
           ],
           "emtpy": [
             7,
-            32
+            36
           ],
           "with scorepos": [
-            5,
-            17
+            6,
+            21
           ],
           "with scorepos2": [
-            4,
-            12
+            5,
+            15
           ],
           "with runners2": [
-            8,
-            17
+            9,
+            20
           ],
           "bases loaded": [
             0,
             2
           ],
           "vs RHB": [
-            13,
-            35
+            15,
+            43
           ]
         }
       },
@@ -1644,44 +1644,44 @@
     ],
     "totals": {
       "leadoff pct": [
-        38,
-        133
+        39,
+        142
       ],
       "runners": [
-        54,
-        212
+        58,
+        225
       ],
       "vs LHB": [
-        49,
-        215
+        53,
+        222
       ],
       "with 2Outs": [
-        42,
-        172
+        47,
+        186
       ],
       "emtpy": [
-        65,
-        293
+        69,
+        315
       ],
       "with scorepos": [
-        32,
-        139
+        34,
+        145
       ],
       "with scorepos2": [
-        18,
-        71
+        20,
+        75
       ],
       "with runners2": [
-        26,
-        98
+        29,
+        106
       ],
       "bases loaded": [
         1,
         18
       ],
       "vs RHB": [
-        70,
-        290
+        74,
+        318
       ]
     }
   },

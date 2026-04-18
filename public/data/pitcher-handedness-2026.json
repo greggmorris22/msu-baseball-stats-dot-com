@@ -2923,6 +2923,159 @@
           "bats": "R"
         }
       }
+    },
+    "614738": {
+      "name": "South Carolina",
+      "players": {
+        "Tyler Bak": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Gavin Braland": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Connor Chicoli": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Will Craddock": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brandon Cromer": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Patrick Dudley": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Patrick Evans": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Elijah Foster": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Riley Goodman": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Josh Gregoire": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Josh Gunther": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Dawson Harman": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Bradley Hodges": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Beau Hollins": {
+          "throws": "L",
+          "bats": "S"
+        },
+        "Caleb Hoover": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Cullen Horowicz": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Aaron Jamison": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Talmadge LeCroy": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Hudson Lee": {
+          "throws": "L",
+          "bats": "R"
+        },
+        "Ethan Lizama": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Parker Marlatt": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jake McCoy": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Reese Moore": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Bryce Navarre": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Erik Parker": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cooper Parks": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Amp Phillips": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Alex Philpott": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Logan Prisco": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Jake Randolph": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jack Reynolds": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Zach Russell": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "KJ Scobey": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brandon Stone": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Logan Sutter": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Alex Valentin": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Luke Yuhasz": {
+          "throws": "R",
+          "bats": "R"
+        }
+      }
     }
   }
 }

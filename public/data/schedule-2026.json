@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2026-04-16T23:05:06",
-  "gamesScraped": 37,
+  "lastUpdated": "2026-04-17T23:10:32",
+  "gamesScraped": 38,
   "lastGame": {
-    "date": "04/14/2026",
-    "opponent": "Samford"
+    "date": "04/17/2026",
+    "opponent": "South Carolina"
   },
   "games": [
     {
@@ -303,12 +303,12 @@
       "attendance": 2113
     },
     {
-      "date": "04/17/2026 07:00 PM",
+      "date": "04/17/2026",
       "opponent": "South Carolina",
-      "location": "Columbia, SC",
+      "location": null,
       "isSEC": true,
-      "result": null,
-      "attendance": null
+      "result": "W 5-3",
+      "attendance": 6752
     },
     {
       "date": "04/18/2026 01:00 PM",
@@ -335,25 +335,25 @@
       "attendance": null
     },
     {
-      "date": "04/24/2026 TBA",
+      "date": "04/24/2026 07:00 PM",
       "opponent": "LSU",
-      "location": "Starkville, MS",
+      "location": null,
       "isSEC": true,
       "result": null,
       "attendance": null
     },
     {
-      "date": "04/25/2026 TBA",
+      "date": "04/25/2026 07:30 PM",
       "opponent": "LSU",
-      "location": "Starkville, MS",
+      "location": null,
       "isSEC": true,
       "result": null,
       "attendance": null
     },
     {
-      "date": "04/26/2026 TBA",
+      "date": "04/26/2026 02:00 PM",
       "opponent": "LSU",
-      "location": "Starkville, MS",
+      "location": null,
       "isSEC": true,
       "result": null,
       "attendance": null
@@ -399,25 +399,25 @@
       "attendance": null
     },
     {
-      "date": "05/07/2026 TBA",
+      "date": "05/07/2026 08:00 PM",
       "opponent": "Auburn",
-      "location": "Starkville, MS",
+      "location": null,
       "isSEC": true,
       "result": null,
       "attendance": null
     },
     {
-      "date": "05/08/2026 TBA",
+      "date": "05/08/2026 08:30 PM",
       "opponent": "Auburn",
-      "location": "Starkville, MS",
+      "location": null,
       "isSEC": true,
       "result": null,
       "attendance": null
     },
     {
-      "date": "05/09/2026 TBA",
+      "date": "05/09/2026 04:00 PM",
       "opponent": "Auburn",
-      "location": "Starkville, MS",
+      "location": null,
       "isSEC": true,
       "result": null,
       "attendance": null
