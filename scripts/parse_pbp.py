@@ -50,6 +50,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT_DIR   = SCRIPT_DIR.parent
 CACHE_PATH        = ROOT_DIR / "data" / "scrape-cache.json"
 ROSTER_CACHE_PATH = ROOT_DIR / "data" / "roster-cache.json"
+HAND_OVERRIDES_PATH = ROOT_DIR / "data" / "pitcher-hand-overrides.json"
 LI_TABLE_PATH     = ROOT_DIR / "data" / "leverage-index.json"
 HITTING_STATS_PATH  = ROOT_DIR / "public" / "data" / "hitting-stats-2026.json"
 PITCHING_STATS_PATH = ROOT_DIR / "public" / "data" / "pitching-stats-2026.json"
@@ -1418,12 +1419,60 @@ def _canonicalise_name(raw_name, canon_map):
     return raw_name
 
 
+# ---------------------------------------------------------------------------
+# Manual handedness overrides for pitchers missing from NCAA roster data
+# ---------------------------------------------------------------------------
+# Loaded lazily on first lookup. Keys from data/pitcher-hand-overrides.json
+# are checked BEFORE the roster cache — this handles the cases where NCAA's
+# own roster page lists a pitcher but leaves their throws field blank.
+
+_HAND_OVERRIDES_CACHE = None
+
+
+def _load_hand_overrides():
+    """Load & cache manual pitcher-hand overrides. Returns dict of {lowercase name: 'R'/'L'/'S'}."""
+    global _HAND_OVERRIDES_CACHE
+    if _HAND_OVERRIDES_CACHE is not None:
+        return _HAND_OVERRIDES_CACHE
+    _HAND_OVERRIDES_CACHE = {}
+    if HAND_OVERRIDES_PATH.exists():
+        try:
+            with open(HAND_OVERRIDES_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            for name, hand in (data.get("overrides") or {}).items():
+                if hand and hand.strip().upper() in ("R", "L", "S"):
+                    # Index by both full name and last name (lowercase)
+                    full = name.lower().strip()
+                    _HAND_OVERRIDES_CACHE[full] = hand.strip().upper()
+                    last = full.split()[-1] if full else ""
+                    if last:
+                        _HAND_OVERRIDES_CACHE[last] = hand.strip().upper()
+        except Exception:
+            pass
+    return _HAND_OVERRIDES_CACHE
+
+
 def _lookup_hand_side(pitcher_name, hand_index, diag, side):
     """
     Wrapper around _lookup_hand that routes hit/miss counters to the
     correct diagnostic bucket (opp vs msu) so we can report the pitcher-
     handedness resolve rate separately for each side.
+
+    Checks the manual overrides file first so NCAA-blank pitchers can be
+    filled in by hand.
     """
+    # Manual override check (Strategy 0)
+    overrides = _load_hand_overrides()
+    if overrides and pitcher_name:
+        key_full = pitcher_name.lower().strip()
+        if key_full in overrides:
+            diag[f"{side}_hand_hits"] += 1
+            return overrides[key_full]
+        key_last = last_name_from(pitcher_name)
+        if key_last and key_last in overrides:
+            diag[f"{side}_hand_hits"] += 1
+            return overrides[key_last]
+
     # Use a side-local diag proxy so _lookup_hand's counters end up in the
     # right bucket. We do this by passing a small shim dict with the same
     # keys _lookup_hand expects, then merging after.

@@ -2541,9 +2541,11 @@ def main():
             if tid:
                 opp_team_ids[tid] = g["opponent"]
 
+        # Re-fetch any team whose cached roster is empty (previous scrape failed)
         rosters_to_fetch = [
             (tid, name) for tid, name in opp_team_ids.items()
             if tid not in roster_cache
+            or not roster_cache[tid].get("players")
         ]
 
         if not opp_team_ids:
@@ -2566,7 +2568,8 @@ def main():
                 print(label, end=" ")
                 try:
                     url = f"https://stats.ncaa.org/teams/{tid}/roster"
-                    page.goto(url, wait_until="networkidle", timeout=30000)
+                    page.goto(url, wait_until="domcontentloaded", timeout=30000)
+                    page.wait_for_selector("table", timeout=15000)
                     html = page.content()
                     players = parse_roster(html)
                     roster_cache[tid] = {

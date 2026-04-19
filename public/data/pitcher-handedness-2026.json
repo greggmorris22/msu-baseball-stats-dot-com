@@ -1207,7 +1207,176 @@
     },
     "614780": {
       "name": "Southern Miss.",
-      "players": {}
+      "players": {
+        "Cade Adams": {
+          "throws": "R",
+          "bats": "S"
+        },
+        "Chase Adams": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Colby Allen": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "JW Armistead": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Drey Barrett": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Teague Broadhead": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Dylan Causey": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Camden Clark": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Thomas Crabtree": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cade Durbin": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "McCarty English": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Gray Eubanks": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Kevin Farr": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Davis Gillespie": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Grayden Harris": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Ben Higdon": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Bruce Littleton": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Ty Long": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Braden Maranto": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Drake Meeks": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Sam Mitchell": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Kyle Morrison": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Jake Neely": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jace Norton": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Josh Och": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Lawson Odom": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Jackson Parker": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Logan Pratt": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Cole Richardson": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Camden Rodgers": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Matthew Russo": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Kros Sivley": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Seth Smith": {
+          "throws": "R",
+          "bats": "L"
+        },
+        "Caleb Stelly": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Tucker Stockman": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Camden Sunstrom": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "William Tonsmeire": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Joey Urban": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Andrew Visconti": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Cooper Waddle": {
+          "throws": "L",
+          "bats": "L"
+        },
+        "Micah Wascom": {
+          "throws": "R",
+          "bats": "R"
+        },
+        "Brooks Willoughby": {
+          "throws": "L",
+          "bats": "L"
+        }
+      }
     },
     "614840": {
       "name": "Lipscomb",
