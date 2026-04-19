@@ -92,81 +92,97 @@ SEC_TEAMS = {
 # ===========================================================================
 # Hardcoded game locations (source: hailstate.com/sports/baseball/schedule)
 #
-# Keyed by the NCAA schedule date string (as it appears in the schedule JSON).
+# Keyed by the NCAA schedule date string WITHOUT any trailing time or "TBA".
 # Home games → "Starkville, MS"; away games → opponent's city; neutral-site
 # games → tournament city. This avoids relying on box-score venue parsing,
 # which can pick up wrong city text from other parts of the page.
 #
-# Dates that include a time ("04/17/2026 07:00 PM") are keyed on the full
-# string as returned by the NCAA schedule scraper. Doubleheaders use the
-# "(1)"/"(2)" suffix that NCAA appends.
+# Key format: "MM/DD/YYYY" or "MM/DD/YYYY(1)"/"MM/DD/YYYY(2)" for doubleheaders.
+# The lookup in _lookup_game_location() normalizes the raw schedule date by
+# stripping any trailing " HH:MM XM" or " TBA" so this dict stays stable even
+# when the NCAA updates game times or drops the time after a game is played.
 #
 # Update this dict at the start of each season (or when new games are added).
 # ===========================================================================
 GAME_LOCATIONS: dict[str, str] = {
     # ── February ──
-    "02/13/2026":         "Starkville, MS",    # vs Hofstra
-    "02/14/2026(1)":      "Starkville, MS",    # vs Hofstra DH
-    "02/14/2026(2)":      "Starkville, MS",    # vs Hofstra DH
-    "02/17/2026":         "Starkville, MS",    # vs Troy
-    "02/18/2026":         "Starkville, MS",    # vs Alcorn State
-    "02/20/2026":         "Starkville, MS",    # vs Delaware
-    "02/21/2026":         "Starkville, MS",    # vs Delaware
-    "02/22/2026":         "Starkville, MS",    # vs Delaware
-    "02/24/2026":         "Starkville, MS",    # vs Austin Peay
+    "02/13/2026":    "Starkville, MS",    # vs Hofstra
+    "02/14/2026(1)": "Starkville, MS",    # vs Hofstra DH
+    "02/14/2026(2)": "Starkville, MS",    # vs Hofstra DH
+    "02/17/2026":    "Starkville, MS",    # vs Troy
+    "02/18/2026":    "Starkville, MS",    # vs Alcorn State
+    "02/20/2026":    "Starkville, MS",    # vs Delaware
+    "02/21/2026":    "Starkville, MS",    # vs Delaware
+    "02/22/2026":    "Starkville, MS",    # vs Delaware
+    "02/24/2026":    "Starkville, MS",    # vs Austin Peay
     # Amegy Bank College Baseball Series @ Globe Life Field, Arlington TX
-    "02/27/2026":         "Arlington, TX",     # vs Arizona St.
-    "02/28/2026":         "Arlington, TX",     # vs Virginia Tech
-    "03/01/2026":         "Arlington, TX",     # vs UCLA
+    "02/27/2026":    "Arlington, TX",     # vs Arizona St.
+    "02/28/2026":    "Arlington, TX",     # vs Virginia Tech
+    "03/01/2026":    "Arlington, TX",     # vs UCLA
     # ── March ──
-    "03/03/2026":         "Hattiesburg, MS",   # at Southern Miss
-    "03/05/2026":         "Starkville, MS",    # vs Lipscomb
-    "03/06/2026":         "Starkville, MS",    # vs Lipscomb
-    "03/07/2026":         "Starkville, MS",    # vs Lipscomb
+    "03/03/2026":    "Hattiesburg, MS",   # at Southern Miss
+    "03/05/2026":    "Starkville, MS",    # vs Lipscomb
+    "03/06/2026":    "Starkville, MS",    # vs Lipscomb
+    "03/07/2026":    "Starkville, MS",    # vs Lipscomb
     # Hancock Whitney Classic @ Keesler Federal Park, Biloxi MS
-    "03/10/2026":         "Biloxi, MS",        # vs Tulane
-    "03/13/2026":         "Fayetteville, AR",  # at Arkansas
-    "03/14/2026(1)":      "Fayetteville, AR",  # at Arkansas DH
-    "03/14/2026(2)":      "Fayetteville, AR",  # at Arkansas DH
-    "03/17/2026":         "Starkville, MS",    # vs Jackson State
-    "03/20/2026":         "Starkville, MS",    # vs Vanderbilt
-    "03/21/2026":         "Starkville, MS",    # vs Vanderbilt
-    "03/22/2026":         "Starkville, MS",    # vs Vanderbilt
-    "03/24/2026":         "Starkville, MS",    # vs Southern Miss
-    "03/27/2026":         "Oxford, MS",        # at Ole Miss
-    "03/28/2026":         "Oxford, MS",        # at Ole Miss
-    "03/29/2026":         "Oxford, MS",        # at Ole Miss
-    "03/31/2026":         "Starkville, MS",    # vs Grambling
+    "03/10/2026":    "Biloxi, MS",        # vs Tulane
+    "03/13/2026":    "Fayetteville, AR",  # at Arkansas
+    "03/14/2026(1)": "Fayetteville, AR",  # at Arkansas DH
+    "03/14/2026(2)": "Fayetteville, AR",  # at Arkansas DH
+    "03/17/2026":    "Starkville, MS",    # vs Jackson State
+    "03/20/2026":    "Starkville, MS",    # vs Vanderbilt
+    "03/21/2026":    "Starkville, MS",    # vs Vanderbilt
+    "03/22/2026":    "Starkville, MS",    # vs Vanderbilt
+    "03/24/2026":    "Starkville, MS",    # vs Southern Miss
+    "03/27/2026":    "Oxford, MS",        # at Ole Miss
+    "03/28/2026":    "Oxford, MS",        # at Ole Miss
+    "03/29/2026":    "Oxford, MS",        # at Ole Miss
+    "03/31/2026":    "Starkville, MS",    # vs Grambling
     # ── April ──
-    "04/02/2026":         "Starkville, MS",    # vs Georgia
-    "04/03/2026":         "Starkville, MS",    # vs Georgia
-    "04/04/2026":         "Starkville, MS",    # vs Georgia
-    "04/07/2026":         "Starkville, MS",    # vs UAB
-    "04/10/2026":         "Starkville, MS",    # vs Tennessee
-    "04/11/2026":         "Starkville, MS",    # vs Tennessee
-    "04/12/2026":         "Starkville, MS",    # vs Tennessee
-    "04/14/2026":         "Birmingham, AL",    # at Samford
-    "04/17/2026 07:00 PM": "Columbia, SC",     # at South Carolina
-    "04/18/2026 01:00 PM": "Columbia, SC",     # at South Carolina
-    "04/19/2026 01:00 PM": "Columbia, SC",     # at South Carolina
-    "04/21/2026 07:00 PM": "Starkville, MS",   # vs Memphis
-    "04/24/2026 TBA":     "Starkville, MS",    # vs LSU (Super Bulldog Weekend)
-    "04/25/2026 TBA":     "Starkville, MS",    # vs LSU
-    "04/26/2026 TBA":     "Starkville, MS",    # vs LSU
+    "04/02/2026":    "Starkville, MS",    # vs Georgia
+    "04/03/2026":    "Starkville, MS",    # vs Georgia
+    "04/04/2026":    "Starkville, MS",    # vs Georgia
+    "04/07/2026":    "Starkville, MS",    # vs UAB
+    "04/10/2026":    "Starkville, MS",    # vs Tennessee
+    "04/11/2026":    "Starkville, MS",    # vs Tennessee
+    "04/12/2026":    "Starkville, MS",    # vs Tennessee
+    "04/14/2026":    "Birmingham, AL",    # at Samford
+    "04/17/2026":    "Columbia, SC",      # at South Carolina
+    "04/18/2026":    "Columbia, SC",      # at South Carolina
+    "04/19/2026":    "Columbia, SC",      # at South Carolina
+    "04/21/2026":    "Starkville, MS",    # vs Memphis
+    "04/24/2026":    "Starkville, MS",    # vs LSU (Super Bulldog Weekend)
+    "04/25/2026":    "Starkville, MS",    # vs LSU
+    "04/26/2026":    "Starkville, MS",    # vs LSU
     # Governor's Cup @ Trustmark Park, Pearl MS
-    "04/28/2026 07:00 PM": "Pearl, MS",        # vs Ole Miss (neutral)
+    "04/28/2026":    "Pearl, MS",         # vs Ole Miss (neutral)
     # ── May ──
-    "05/01/2026 07:30 PM": "Austin, TX",       # at Texas
-    "05/02/2026 03:30 PM": "Austin, TX",       # at Texas
-    "05/03/2026 02:00 PM": "Austin, TX",       # at Texas
-    "05/05/2026 07:00 PM": "Starkville, MS",   # vs Nicholls
-    "05/07/2026 TBA":     "Starkville, MS",    # vs Auburn
-    "05/08/2026 TBA":     "Starkville, MS",    # vs Auburn
-    "05/09/2026 TBA":     "Starkville, MS",    # vs Auburn
-    "05/14/2026 07:00 PM": "Bryan-College Station, TX",  # at Texas A&M
-    "05/15/2026 07:00 PM": "Bryan-College Station, TX",  # at Texas A&M
-    "05/16/2026 03:00 PM": "Bryan-College Station, TX",  # at Texas A&M
+    "05/01/2026":    "Austin, TX",        # at Texas
+    "05/02/2026":    "Austin, TX",        # at Texas
+    "05/03/2026":    "Austin, TX",        # at Texas
+    "05/05/2026":    "Starkville, MS",    # vs Nicholls
+    "05/07/2026":    "Starkville, MS",    # vs Auburn
+    "05/08/2026":    "Starkville, MS",    # vs Auburn
+    "05/09/2026":    "Starkville, MS",    # vs Auburn
+    "05/14/2026":    "Bryan-College Station, TX",  # at Texas A&M
+    "05/15/2026":    "Bryan-College Station, TX",  # at Texas A&M
+    "05/16/2026":    "Bryan-College Station, TX",  # at Texas A&M
 }
+
+
+def _normalize_game_date_key(raw_date: str) -> str:
+    """
+    Strip any trailing time (" 07:00 PM") or " TBA" from a NCAA schedule date
+    so it can be matched against GAME_LOCATIONS. Doubleheader suffixes like
+    "(1)"/"(2)" are preserved because they attach directly to the date with
+    no intervening space.
+
+        "04/17/2026 07:00 PM" → "04/17/2026"
+        "04/24/2026 TBA"      → "04/24/2026"
+        "03/14/2026(1)"       → "03/14/2026(1)"
+        "03/13/2026"          → "03/13/2026"
+    """
+    return (raw_date or "").split(" ", 1)[0]
 
 
 # ===========================================================================
@@ -2921,7 +2937,10 @@ def main():
         # at hailstate.com so every game (past and future) has an accurate city.
         # The @suffix from the raw NCAA opponent string is used as a fallback
         # for any game not yet in the dict (e.g. newly added games or playoffs).
-        game_location = GAME_LOCATIONS.get(entry["date"]) or suffix_location
+        game_location = (
+            GAME_LOCATIONS.get(_normalize_game_date_key(entry["date"]))
+            or suffix_location
+        )
 
         game_out = {
             "date": entry["date"],

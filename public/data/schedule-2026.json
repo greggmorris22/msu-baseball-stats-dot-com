@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-18T20:10:05",
+  "lastUpdated": "2026-04-18T20:18:05",
   "gamesScraped": 39,
   "lastGame": {
     "date": "04/18/2026",
@@ -305,7 +305,7 @@
     {
       "date": "04/17/2026",
       "opponent": "South Carolina",
-      "location": null,
+      "location": "Columbia, SC",
       "isSEC": true,
       "result": "W 5-3",
       "attendance": 6752
@@ -313,7 +313,7 @@
     {
       "date": "04/18/2026",
       "opponent": "South Carolina",
-      "location": null,
+      "location": "Columbia, SC",
       "isSEC": true,
       "result": "W 9-0",
       "attendance": 6735
@@ -337,7 +337,7 @@
     {
       "date": "04/24/2026 07:00 PM",
       "opponent": "LSU",
-      "location": null,
+      "location": "Starkville, MS",
       "isSEC": true,
       "result": null,
       "attendance": null
@@ -345,7 +345,7 @@
     {
       "date": "04/25/2026 07:30 PM",
       "opponent": "LSU",
-      "location": null,
+      "location": "Starkville, MS",
       "isSEC": true,
       "result": null,
       "attendance": null
@@ -353,7 +353,7 @@
     {
       "date": "04/26/2026 02:00 PM",
       "opponent": "LSU",
-      "location": null,
+      "location": "Starkville, MS",
       "isSEC": true,
       "result": null,
       "attendance": null
@@ -401,7 +401,7 @@
     {
       "date": "05/07/2026 08:00 PM",
       "opponent": "Auburn",
-      "location": null,
+      "location": "Starkville, MS",
       "isSEC": true,
       "result": null,
       "attendance": null
@@ -409,7 +409,7 @@
     {
       "date": "05/08/2026 08:30 PM",
       "opponent": "Auburn",
-      "location": null,
+      "location": "Starkville, MS",
       "isSEC": true,
       "result": null,
       "attendance": null
@@ -417,7 +417,7 @@
     {
       "date": "05/09/2026 04:00 PM",
       "opponent": "Auburn",
-      "location": null,
+      "location": "Starkville, MS",
       "isSEC": true,
       "result": null,
       "attendance": null
