@@ -2,12 +2,14 @@
   "_comment": "Manual pitcher-handedness overrides for pitchers whose NCAA roster data is blank or incomplete. Keys are 'Last Name' or 'Full Name' as seen in PBP. Values: 'R', 'L', or 'S' (switch).",
   "_comment_2": "parse_pbp.py applies these as a last resort if the roster cache lookup fails. Update this file when you see a pitcher in unresolved list — look up their handedness on the team's official roster page.",
   "overrides": {
-    "Doug Marose": "",
-    "Jonah Richardson": "",
-    "Jonah Richar": "",
-    "Brady Blum": "",
-    "Elias Conway": "",
-    "Jake Pollaro": "",
-    "Kevin Landry": ""
+    "Doug Marose": "R",
+    "Jonah Richardson": "R",
+    "Jonah Richar": "R",
+    "Brady Blum": "R",
+    "Elias Conway": "L",
+    "Jake Pollaro": "L",
+    "Kevin Landry": "R",
+    "Kevin Landry Farr": "R",
+    "Corey Richardson": "L"
   }
 }

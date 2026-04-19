@@ -1461,7 +1461,18 @@ def _lookup_hand_side(pitcher_name, hand_index, diag, side):
     Checks the manual overrides file first so NCAA-blank pitchers can be
     filled in by hand.
     """
-    # Manual override check (Strategy 0)
+    # Try the roster-based lookup first. Manual overrides are only a
+    # fallback, because last-name-only overrides are ambiguous when two
+    # different teams both have a pitcher with the same last name (e.g.
+    # Brady Richardson on Troy vs Corey Richardson on Jackson St.).
+    proxy = {"pitcher_hand_hits": 0, "pitcher_hand_misses": 0}
+    hand = _lookup_hand(pitcher_name, hand_index, proxy)
+    if hand:
+        if proxy["pitcher_hand_hits"]:
+            diag[f"{side}_hand_hits"] += proxy["pitcher_hand_hits"]
+        return hand
+
+    # Roster lookup failed — try manual overrides as a last resort.
     overrides = _load_hand_overrides()
     if overrides and pitcher_name:
         key_full = pitcher_name.lower().strip()
@@ -1473,16 +1484,10 @@ def _lookup_hand_side(pitcher_name, hand_index, diag, side):
             diag[f"{side}_hand_hits"] += 1
             return overrides[key_last]
 
-    # Use a side-local diag proxy so _lookup_hand's counters end up in the
-    # right bucket. We do this by passing a small shim dict with the same
-    # keys _lookup_hand expects, then merging after.
-    proxy = {"pitcher_hand_hits": 0, "pitcher_hand_misses": 0}
-    hand = _lookup_hand(pitcher_name, hand_index, proxy)
-    if proxy["pitcher_hand_hits"]:
-        diag[f"{side}_hand_hits"] += proxy["pitcher_hand_hits"]
+    # Both roster and overrides missed — count the miss.
     if proxy["pitcher_hand_misses"]:
         diag[f"{side}_hand_misses"] += proxy["pitcher_hand_misses"]
-    return hand
+    return None
 
 
 def _lookup_hand(pitcher_name, hand_index, diag):
