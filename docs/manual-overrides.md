@@ -50,7 +50,47 @@ official roster page and note their throwing hand.
 
 ---
 
-## 2. Game locations (city, state)
+## 2. Batter bat-side overrides
+
+**File:** [`data/batter-bat-overrides.json`](../data/batter-bat-overrides.json)
+
+**Why it exists:** Same root cause as the pitcher-hand overrides — NCAA
+rosters sometimes leave the "Bats" column blank for opposing batters, which
+prevents the Pitching Splits Tool from bucketing a PA as vs-LHB or vs-RHB.
+NCAA also truncates very long first-pass batter surnames in the PBP text
+(e.g. `Davi` for Vincent Davis, `Minc` for Matthew Minckler), so we add
+explicit truncated-form entries when those appear in the unresolved list.
+
+**Used by:** `scripts/parse_pbp.py` → `_lookup_hand_side()` with
+`side="opp_bat"`, as a **fallback** after the opponent team's roster cache
+lookup. The loader is selected based on the side being resolved — pitcher
+lookups read `pitcher-hand-overrides.json`, batter lookups read this file,
+and the two never cross-contaminate.
+
+**Format:** identical to the pitcher-hand file. `R` / `L` / `S`.
+
+**Current entries (as of 04/18/2026):**
+
+| Batter | Team | Bats | Notes |
+|---|---|---|---|
+| Evan Bouldin | Delaware | R | NCAA roster blank |
+| Vincent Davis | Delaware | R | NCAA roster blank |
+| Davi | Delaware | R | Truncated PBP form of Vincent Davis |
+| Matthew Minckler | Delaware | S | NCAA roster blank |
+| Minc | Delaware | S | Truncated PBP form of Matthew Minckler |
+| Jake Souders | Samford | R | NCAA roster blank |
+| Cade Carr | Samford | R | NCAA roster blank |
+| Trey Higgins | Samford | S | NCAA roster blank |
+| Jackson Harris | Samford | L | NCAA roster blank |
+| Gus Gandy | Samford | R | NCAA roster blank |
+| Jeffrey Ince | Samford | S | NCAA roster blank |
+
+To find a bat side for a new entry, look the batter up on their team's
+official roster page.
+
+---
+
+## 3. Game locations (city, state)
 
 **Source:** [`scripts/scrape-stats.py`](../scripts/scrape-stats.py) — the
 `GAME_LOCATIONS` dict near the top of the file.
@@ -83,12 +123,13 @@ entry here.
 
 ---
 
-## 3. Things that are *not* overrides (but might look like them)
+## 4. Things that are *not* overrides (but might look like them)
 
 - `data/roster-cache.json` — **rebuilt on every scrape**, so any manual edits
-  are wiped. Don't hand-edit this file. If a pitcher's handedness is wrong or
-  missing in the NCAA roster, add them to
-  `data/pitcher-hand-overrides.json` instead.
+  are wiped. Don't hand-edit this file. If a player's handedness is wrong or
+  missing in the NCAA roster, add them to `data/pitcher-hand-overrides.json`
+  (for pitcher throws) or `data/batter-bat-overrides.json` (for batter bats)
+  instead.
 - `data/scrape-cache.json` — transient per-game HTML cache. Safe to delete for
   a full re-scrape. Contains no manual overrides.
 - `public/data/*.json` — generated output files. Regenerated on every scrape;
@@ -96,7 +137,7 @@ entry here.
 
 ---
 
-## 4. Full re-scrape checklist
+## 5. Full re-scrape checklist
 
 When you need to burn down and rebuild from scratch (e.g. after adding new
 fields to the scraper):

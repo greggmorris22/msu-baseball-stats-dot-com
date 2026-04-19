@@ -50,10 +50,12 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT_DIR   = SCRIPT_DIR.parent
 CACHE_PATH        = ROOT_DIR / "data" / "scrape-cache.json"
 ROSTER_CACHE_PATH = ROOT_DIR / "data" / "roster-cache.json"
-HAND_OVERRIDES_PATH = ROOT_DIR / "data" / "pitcher-hand-overrides.json"
+HAND_OVERRIDES_PATH     = ROOT_DIR / "data" / "pitcher-hand-overrides.json"
+BAT_OVERRIDES_PATH      = ROOT_DIR / "data" / "batter-bat-overrides.json"
 LI_TABLE_PATH     = ROOT_DIR / "data" / "leverage-index.json"
 HITTING_STATS_PATH  = ROOT_DIR / "public" / "data" / "hitting-stats-2026.json"
 PITCHING_STATS_PATH = ROOT_DIR / "public" / "data" / "pitching-stats-2026.json"
+MSU_ROSTER_PATH     = ROOT_DIR / "public" / "data" / "roster-2026.json"
 OUTPUT_PATH       = ROOT_DIR / "public" / "data" / "pbp-events-2026.json"
 
 TEAM_NAME = "Mississippi St."
@@ -1427,43 +1429,67 @@ def _canonicalise_name(raw_name, canon_map):
 # own roster page lists a pitcher but leaves their throws field blank.
 
 _HAND_OVERRIDES_CACHE = None
+_BAT_OVERRIDES_CACHE  = None
+
+
+def _load_overrides_file(path):
+    """
+    Load a manual-overrides JSON file and return a dict of
+    {lowercase name: 'R'/'L'/'S'} with entries indexed by BOTH the
+    full name and the bare last name for prefix-match fallback.
+
+    Shared helper used by both _load_hand_overrides (for pitcher-throws
+    overrides) and _load_bat_overrides (for batter-bats overrides).
+    """
+    cache = {}
+    if not path.exists():
+        return cache
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        for name, hand in (data.get("overrides") or {}).items():
+            if hand and hand.strip().upper() in ("R", "L", "S"):
+                full = name.lower().strip()
+                cache[full] = hand.strip().upper()
+                last = full.split()[-1] if full else ""
+                if last:
+                    cache[last] = hand.strip().upper()
+    except Exception:
+        pass
+    return cache
 
 
 def _load_hand_overrides():
-    """Load & cache manual pitcher-hand overrides. Returns dict of {lowercase name: 'R'/'L'/'S'}."""
+    """Load & cache manual pitcher-THROWS overrides. Returns dict of {lowercase name: 'R'/'L'/'S'}."""
     global _HAND_OVERRIDES_CACHE
-    if _HAND_OVERRIDES_CACHE is not None:
-        return _HAND_OVERRIDES_CACHE
-    _HAND_OVERRIDES_CACHE = {}
-    if HAND_OVERRIDES_PATH.exists():
-        try:
-            with open(HAND_OVERRIDES_PATH, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            for name, hand in (data.get("overrides") or {}).items():
-                if hand and hand.strip().upper() in ("R", "L", "S"):
-                    # Index by both full name and last name (lowercase)
-                    full = name.lower().strip()
-                    _HAND_OVERRIDES_CACHE[full] = hand.strip().upper()
-                    last = full.split()[-1] if full else ""
-                    if last:
-                        _HAND_OVERRIDES_CACHE[last] = hand.strip().upper()
-        except Exception:
-            pass
+    if _HAND_OVERRIDES_CACHE is None:
+        _HAND_OVERRIDES_CACHE = _load_overrides_file(HAND_OVERRIDES_PATH)
     return _HAND_OVERRIDES_CACHE
+
+
+def _load_bat_overrides():
+    """Load & cache manual batter-BATS overrides. Returns dict of {lowercase name: 'R'/'L'/'S'}."""
+    global _BAT_OVERRIDES_CACHE
+    if _BAT_OVERRIDES_CACHE is None:
+        _BAT_OVERRIDES_CACHE = _load_overrides_file(BAT_OVERRIDES_PATH)
+    return _BAT_OVERRIDES_CACHE
 
 
 def _lookup_hand_side(pitcher_name, hand_index, diag, side):
     """
     Wrapper around _lookup_hand that routes hit/miss counters to the
-    correct diagnostic bucket (opp vs msu) so we can report the pitcher-
-    handedness resolve rate separately for each side.
+    correct diagnostic bucket (opp / msu / opp_bat) so we can report the
+    resolve rate separately for each side.
 
-    Checks the manual overrides file first so NCAA-blank pitchers can be
-    filled in by hand.
+    Checks the roster-based lookup first, then falls back to the
+    appropriate manual-overrides file. The overrides file is selected
+    based on the side being resolved:
+      - "opp" / "msu"  -> pitcher-hand-overrides.json (Throws)
+      - "opp_bat"      -> batter-bat-overrides.json  (Bats)
     """
     # Try the roster-based lookup first. Manual overrides are only a
     # fallback, because last-name-only overrides are ambiguous when two
-    # different teams both have a pitcher with the same last name (e.g.
+    # different teams both have a player with the same last name (e.g.
     # Brady Richardson on Troy vs Corey Richardson on Jackson St.).
     proxy = {"pitcher_hand_hits": 0, "pitcher_hand_misses": 0}
     hand = _lookup_hand(pitcher_name, hand_index, proxy)
@@ -1473,7 +1499,10 @@ def _lookup_hand_side(pitcher_name, hand_index, diag, side):
         return hand
 
     # Roster lookup failed — try manual overrides as a last resort.
-    overrides = _load_hand_overrides()
+    # Select the override source that matches what we're resolving:
+    # pitcher throws vs batter bats are two different lookups with
+    # different source files.
+    overrides = _load_bat_overrides() if side == "opp_bat" else _load_hand_overrides()
     if overrides and pitcher_name:
         key_full = pitcher_name.lower().strip()
         if key_full in overrides:
@@ -1977,12 +2006,51 @@ def main():
         except (json.JSONDecodeError, OSError) as e:
             print(f"WARNING: could not load pitching-stats-2026.json: {e}")
 
-    # MSU's own hand index. At the moment we don't scrape MSU's roster
-    # (it's not in the opponent rosters list), so this is empty — any
-    # filter that depends on opponent-batter handedness will fall back to
-    # "unknown" until a follow-up task wires in MSU's roster. The splits
-    # PAGE can still be built and all other filters work.
+    # MSU's own hand index. Built from the same roster data displayed on
+    # the /roster page (scraped by scrape-roster.py into roster-2026.json).
+    # That file stores each player as a row of values with a sibling
+    # "columns" header; we convert to the {name: {throws, bats}} shape
+    # that build_hand_index_from_roster expects.
     msu_hand_index = {}
+    if MSU_ROSTER_PATH.exists():
+        try:
+            with open(MSU_ROSTER_PATH, "r", encoding="utf-8") as f:
+                msu_roster = json.load(f)
+            cols = msu_roster.get("columns", [])
+            # Map column labels to their index. Case-insensitive to tolerate
+            # future header casing changes ("Throws" vs "throws").
+            lower_cols = [str(c).lower() for c in cols]
+            name_idx   = lower_cols.index("name")   if "name"   in lower_cols else None
+            bats_idx   = lower_cols.index("bats")   if "bats"   in lower_cols else None
+            throws_idx = lower_cols.index("throws") if "throws" in lower_cols else None
+
+            msu_players_dict = {}
+            if name_idx is not None:
+                def _norm_hand(v):
+                    # NCAA roster gives "Right"/"Left"/"Both"; convert to R/L/S.
+                    s = (v or "").strip().lower()
+                    return {"right": "R", "left": "L", "both": "S", "switch": "S"}.get(s, "")
+                for row in msu_roster.get("players", []):
+                    if not row or name_idx >= len(row):
+                        continue
+                    nm = str(row[name_idx]).strip()
+                    if not nm:
+                        continue
+                    msu_players_dict[nm] = {
+                        "throws": _norm_hand(row[throws_idx]) if throws_idx is not None and throws_idx < len(row) else "",
+                        "bats":   _norm_hand(row[bats_idx])   if bats_idx   is not None and bats_idx   < len(row) else "",
+                    }
+
+            msu_hand_index = build_hand_index_from_roster(
+                {"players": msu_players_dict},
+                field="throws",
+            )
+            print(
+                f"Loaded {len(msu_players_dict)} MSU roster player(s) "
+                f"from roster-2026.json (for MSU pitcher-hand resolution)."
+            )
+        except (json.JSONDecodeError, OSError, ValueError) as e:
+            print(f"WARNING: could not load roster-2026.json: {e}")
 
     # --- Walk games ---
     all_batter_pas  = []
@@ -2050,8 +2118,7 @@ def main():
     if msu_hits + msu_miss:
         pct = msu_hits / (msu_hits + msu_miss) * 100
         print(f"MSU pitcher hand resolved:      "
-              f"{msu_hits}/{msu_hits + msu_miss} ({pct:.1f}%)  "
-              f"[requires MSU roster scrape — follow-up]")
+              f"{msu_hits}/{msu_hits + msu_miss} ({pct:.1f}%)")
 
     bat_hits = total_diag["opp_bat_hand_hits"]
     bat_miss = total_diag["opp_bat_hand_misses"]

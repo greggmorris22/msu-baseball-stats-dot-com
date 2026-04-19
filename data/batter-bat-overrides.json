@@ -1,0 +1,17 @@
+{
+  "_comment": "Manual batter-bat-side overrides for opponent batters whose NCAA roster data has a blank 'Bats' field. Keys are 'Last Name' or 'Full Name' as seen in PBP. Values: 'R', 'L', or 'S' (switch).",
+  "_comment_2": "parse_pbp.py applies these as a last resort if the roster cache lookup fails (only for opp_bat side, never for pitcher-throws lookups). Update this file when you see a batter in the unresolved list from parse_pbp diagnostics — look up their bat side on the team's official roster page.",
+  "overrides": {
+    "Evan Bouldin":    "R",
+    "Vincent Davis":   "R",
+    "Davi":            "R",
+    "Matthew Minckler": "S",
+    "Minc":            "S",
+    "Jake Souders":    "R",
+    "Cade Carr":       "R",
+    "Trey Higgins":    "S",
+    "Jackson Harris":  "L",
+    "Gus Gandy":       "R",
+    "Jeffrey Ince":    "S"
+  }
+}
