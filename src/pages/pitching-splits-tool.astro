@@ -13,9 +13,9 @@
  *   5. Baserunners    — All / Empty / On Base / RISP
  *   6. Leverage       — All / Low / Medium / High
  *
- * Columns (19):
+ * Columns (17):
  *   Pitcher, IP, PA,
- *   K/9, BB/9, K%, BB%, K-BB%, WHIP, AVG, OBP, SLG, BABIP,
+ *   K%, BB%, K-BB%, WHIP, AVG, OBP, SLG, BABIP,
  *   BB, SO, 2B, 3B, HR, AB
  *
  * NOTE: HBP and SFA are tracked internally to keep OBP and BABIP accurate
@@ -323,8 +323,6 @@ import Layout from '../layouts/Layout.astro';
   const COLUMNS = [
     { key: 'Player', label: 'Pitcher', fmt: (v) => v,    group: null     },
     { key: 'PA',     label: 'PA',      fmt: fmtInt,   group: 'VOLUME'  },
-    { key: 'K9',     label: 'K/9',     fmt: fmtPer9,  group: 'RATE'     },
-    { key: 'BB9',    label: 'BB/9',    fmt: fmtPer9,  group: 'RATE'     },
     { key: 'Kpct',   label: 'K%',      fmt: fmtPct,   group: 'RATE'     },
     { key: 'BBpct',  label: 'BB%',     fmt: fmtPct,   group: 'RATE'     },
     { key: 'KBBpct', label: 'K-BB%',   fmt: fmtPct,   group: 'RATE'     },
@@ -433,7 +431,7 @@ import Layout from '../layouts/Layout.astro';
       HBP: 0, SFA: 0,
       outs: 0,           // total outs recorded → drives IP
       // Derived rate stats filled in by finalizeRow()
-      AVG: 0, OBP: 0, SLG: 0, BABIP: 0, K9: 0, BB9: 0, Kpct: 0, BBpct: 0,
+      AVG: 0, OBP: 0, SLG: 0, BABIP: 0, Kpct: 0, BBpct: 0,
       KBBpct: 0, WHIP: 0,
     };
   }
@@ -474,8 +472,6 @@ import Layout from '../layouts/Layout.astro';
    */
   function finalizeRow(row) {
     const ip = row.outs / 3;
-    row.K9     = ip > 0 ? (row.SO * 9) / ip : NaN;
-    row.BB9    = ip > 0 ? (row.BB * 9) / ip : NaN;
     row.Kpct   = row.PA > 0 ? row.SO / row.PA : NaN;
     row.BBpct  = row.PA > 0 ? row.BB / row.PA : NaN;
     row.KBBpct = (isFinite(row.Kpct) && isFinite(row.BBpct))
